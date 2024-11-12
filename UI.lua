@@ -816,7 +816,7 @@ do
 			Logo.BackgroundTransparency = 1
 			Logo.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			Logo.BorderSizePixel = 0
-			Logo.Position = UDim2.fromOffset(10, -20)
+			Logo.Position = UDim2.fromOffset(10, 10)
 			Logo.Size = UDim2.fromOffset(50, 50)
 			Logo.Parent = Holder
 
