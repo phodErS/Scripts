@@ -1,5 +1,3 @@
--- Library
--- Coded by _notportal
 local Library = {};
 do
 	Library = {
@@ -744,7 +742,7 @@ do
 			Outline.BorderColor3 = Color3.new(0,0,0)
 			Outline.AnchorPoint = Vector2.new(0.5,0.5)
 			Outline.ZIndex = 50
-			Outline.ClipsDescendants = true
+			Outline.ClipsDescendants = false
 			Library.Holder = Outline
 			Library.OldSize = Window.Size
 			--
@@ -2567,14 +2565,14 @@ do
 			
 			task.spawn(function()
 				while task.wait() do
-					for i = 1, #"Starhook.club" do
-						Watermark.AnimateText = string.sub("Starhook.club", 1, i) .. "";
+					for i = 1, #"Nixius.xyz" do
+						Watermark.AnimateText = string.sub("Nixius.xyz", 1, i) .. "";
 						Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
 						task.wait(0.4);
 					end;
 
-					for i = #"Starhook.club" - 1, 1, -1 do
-						Watermark.AnimateText = string.sub("Starhook.club", 1, i) .. "";
+					for i = #"Nixius.xyz" - 1, 1, -1 do
+						Watermark.AnimateText = string.sub("Nixius.xyz", 1, i) .. "";
 						Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
 						task.wait(0.4);
 					end;
