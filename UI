@@ -1,1 +1,2597 @@
-local v0={};do v0={Open=true,Accent=Color3.fromRGB(76,162,252),Pages={},Sections={},Flags={},UnNamedFlags=0,ThemeObjects={},Instances={},Holder=nil,OldSize=nil,ScreenGUI=nil,Keys={[Enum.KeyCode.Space]="Space",[Enum.KeyCode.Return]="Return",[Enum.KeyCode.LeftShift]="LShift",[Enum.KeyCode.RightShift]="RShift",[Enum.KeyCode.LeftControl]="LCtrl",[Enum.KeyCode.RightControl]="RCtrl",[Enum.KeyCode.LeftAlt]="LAlt",[Enum.KeyCode.RightAlt]="RAlt",[Enum.KeyCode.CapsLock]="CAPS",[Enum.KeyCode.One]="1",[Enum.KeyCode.Two]="2",[Enum.KeyCode.Three]="3",[Enum.KeyCode.Four]="4",[Enum.KeyCode.Five]="5",[Enum.KeyCode.Six]="6",[Enum.KeyCode.Seven]="7",[Enum.KeyCode.Eight]="8",[Enum.KeyCode.Nine]="9",[Enum.KeyCode.Zero]="0",[Enum.KeyCode.KeypadOne]="Num1",[Enum.KeyCode.KeypadTwo]="Num2",[Enum.KeyCode.KeypadThree]="Num3",[Enum.KeyCode.KeypadFour]="Num4",[Enum.KeyCode.KeypadFive]="Num5",[Enum.KeyCode.KeypadSix]="Num6",[Enum.KeyCode.KeypadSeven]="Num7",[Enum.KeyCode.KeypadEight]="Num8",[Enum.KeyCode.KeypadNine]="Num9",[Enum.KeyCode.KeypadZero]="Num0",[Enum.KeyCode.Minus]="-",[Enum.KeyCode.Equals]="=",[Enum.KeyCode.Tilde]="~",[Enum.KeyCode.LeftBracket]="[",[Enum.KeyCode.RightBracket]="]",[Enum.KeyCode.RightParenthesis]=")",[Enum.KeyCode.LeftParenthesis]="(",[Enum.KeyCode.Semicolon]=",",[Enum.KeyCode.Quote]="'",[Enum.KeyCode.BackSlash]="\\",[Enum.KeyCode.Comma]=",",[Enum.KeyCode.Period]=".",[Enum.KeyCode.Slash]="/",[Enum.KeyCode.Asterisk]="*",[Enum.KeyCode.Plus]="+",[Enum.KeyCode.Period]=".",[Enum.KeyCode.Backquote]="`",[Enum.UserInputType.MouseButton1]="MB1",[Enum.UserInputType.MouseButton2]="MB2",[Enum.UserInputType.MouseButton3]="MB3"},Connections={},FontSize=12,VisValues={},UIKey=Enum.KeyCode.End,Notifs={}};local v1={};local v2={};v0.__index=v0;v0.Pages.__index=v0.Pages;v0.Sections.__index=v0.Sections;local v8=game:GetService("Players").LocalPlayer;local v9=v8:GetMouse();local v10=game:GetService("Players");local v11=game:GetService("TweenService");do v0.Connection=function(v116,v117,v118) local v119=v117:Connect(v118);return v119;end;v0.Disconnect=function(v120,v121) v121:Disconnect();end;v0.Round=function(v122,v123,v124) return v124 * math.floor(v123/v124 ) ;end;v0.NextFlag=function() v0.UnNamedFlags=v0.UnNamedFlags + 1 ;return string.format("%.14g",v0.UnNamedFlags);end;v0.GetConfig=function(v126) local v127="";for v1100,v1101 in pairs(v126.Flags) do if ((v1100~="ConfigConfig_List") and (v1100~="ConfigConfig_Load") and (v1100~="ConfigConfig_Save")) then local v1305=v1101;local v1306="";if (typeof(v1305)=="Color3") then local v1346,v1347,v1348=v1305:ToHSV();v1306=("rgb(%s,%s,%s,%s)"):format(v1346,v1347,v1348,1);elseif ((typeof(v1305)=="table") and v1305.Color and v1305.Transparency) then local v1377,v1378,v1379=v1305.Color:ToHSV();v1306=("rgb(%s,%s,%s,%s)"):format(v1377,v1378,v1379,v1305.Transparency);elseif ((typeof(v1305)=="table") and v1101.Mode) then local v1398=v1101.current;v1306=("key(%s,%s,%s)"):format(v1398[1] or "nil" ,v1398[2] or "nil" ,v1101.Mode);elseif (v1305~=nil) then if (typeof(v1305)=="boolean") then v1305=("bool(%s)"):format(tostring(v1305));elseif (typeof(v1305)=="table") then local v1415="table(";for v1417,v1418 in pairs(v1305) do v1415=v1415   .. v1418   .. "," ;end if (v1415:sub( #v1415)==",") then v1415=v1415:sub(0, #v1415-1 );end v1305=v1415   .. ")" ;elseif (typeof(v1305)=="string") then v1305=("string(%s)"):format(v1305);elseif (typeof(v1305)=="number") then v1305=("number(%s)"):format(v1305);end v1306=v1305;end v127=v127   .. v1100   .. ": "   .. tostring(v1306)   .. "\n" ;end end return v127;end;v0.LoadConfig=function(v128,v129) local v130=string.split(v129,"\n");local v131={};for v1102,v1103 in pairs(v130) do local v1104=string.split(v1103,":");if ((v1104[1]~="ConfigConfig_List") and ( #v1104>=2)) then local v1307=v1104[2]:sub(2, #v1104[2]);if (v1307:sub(1,3)=="rgb") then local v1349=string.split(v1307:sub(5, #v1307-1 ),",");v1307=v1349;elseif (v1307:sub(1,3)=="key") then local v1380=string.split(v1307:sub(5, #v1307-1 ),",");if ((v1380[1]=="nil") and (v1380[2]=="nil")) then v1380[1]=nil;v1380[2]=nil;end v1307=v1380;elseif (v1307:sub(1,4)=="bool") then local v1401=v1307:sub(6, #v1307-1 );v1307=v1401=="true" ;elseif (v1307:sub(1,5)=="table") then local v1406=string.split(v1307:sub(7, #v1307-1 ),",");v1307=v1406;elseif (v1307:sub(1,6)=="string") then local v1412=v1307:sub(8, #v1307-1 );v1307=v1412;elseif (v1307:sub(1,6)=="number") then local v1416=tonumber(v1307:sub(8, #v1307-1 ));v1307=v1416;end v131[v1104[1]]=v1307;end end for v1105,v1106 in pairs(v131) do if v1[v1105] then if (typeof(v1[v1105])=="table") then v1[v1105]:Set(v1106);else v1[v1105](v1106);end end end end;v0.SetOpen=function(v132,v133) if (typeof(v133)=="boolean") then v0.Open=v133;if v0.Open then v0.Holder.Visible=true;game:GetService("TweenService"):Create(v0.Holder,TweenInfo.new(0.25,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{Size=UDim2.new(0,v0.OldSize.X.Offset,0,v0.OldSize.Y.Offset)}):Play();else game:GetService("TweenService"):Create(v0.Holder,TweenInfo.new(0.25,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{Size=UDim2.new(0,0,0,20)}):Play();task.wait(0.25);v0.Holder.Visible=false;end end end;v0.ChangeAccent=function(v134,v135) v0.Accent=v135;for v1107,v1108 in next,v0.ThemeObjects do if (v1108:IsA("Frame") or v1108:IsA("TextButton")) then v1108.BackgroundColor3=v135;elseif v1108:IsA("TextLabel") then v1108.TextColor3=v135;elseif v1108:IsA("ScrollingFrame") then v1108.ScrollBarImageColor3=v0.Accent;end end end;v0.IsMouseOverFrame=function(v137,v138) local v139,v140=v138.AbsolutePosition,v138.AbsoluteSize;if ((v9.X>=v139.X) and (v9.X<=(v139.X + v140.X)) and (v9.Y>=v139.Y) and (v9.Y<=(v139.Y + v140.Y))) then return true;end end;end do v0.NewPicker=function(v141,v142,v143,v144,v145,v146,v147) local v148=Instance.new("TextButton");v148.Name="Colorpicker_frame";v148.BackgroundColor3=v143;v148.BorderColor3=Color3.fromRGB(0,0,0);v148.BorderSizePixel=0;if (v145==1) then v148.Position=UDim2.new(1, -(v145 * 20),0.5,0);else v148.Position=UDim2.new(1, -(v145 * 20) -(v145 * 4) ,0.5,0);end v148.Size=UDim2.new(0,20,0,20);v148.AnchorPoint=Vector2.new(0,0.5);v148.Text="";v148.AutoButtonColor=false;local v157=Instance.new("UICorner");v157.Name="UICorner";v157.CornerRadius=UDim.new(0,4);v157.Parent=v148;local v161=Instance.new("UIStroke");v161.Name="UIStroke";v161.Color=Color3.fromRGB(40,40,40);v161.Parent=v148;v148.Parent=v144;local v166=Instance.new("TextButton");v166.Name="Colorpicker";v166.BackgroundColor3=Color3.fromRGB(20,20,20);v166.BorderColor3=Color3.fromRGB(0,0,0);v166.BorderSizePixel=0;v166.Position=UDim2.new(0,v148.AbsolutePosition.X-100 ,0,v148.AbsolutePosition.Y-50 );v166.Size=UDim2.new(0,180,0,180);v166.Parent=v0.ScreenGUI;v166.ZIndex=100;v166.Visible=false;v166.Text="";v166.AutoButtonColor=false;local v179,v180,v181=v143:ToHSV();local v182=Instance.new("ImageLabel");v182.Name="ImageLabel";v182.Image="rbxassetid://11970108040";v182.BackgroundColor3=Color3.fromHSV(v179,1,1);v182.BorderColor3=Color3.fromRGB(0,0,0);v182.BorderSizePixel=0;v182.Position=UDim2.new(0.0556,0,0.026,0);v182.Size=UDim2.new(0,160,0,154);v182.Parent=v166;local v157=Instance.new("UICorner");v157.Name="UICorner";v157.CornerRadius=UDim.new(0,6);v157.Parent=v166;local v191=Instance.new("ImageButton");v191.Name="ImageButton";v191.Image="rbxassetid://14684562507";v191.BackgroundColor3=Color3.fromHSV(v179,1,1);v191.BorderColor3=Color3.fromRGB(0,0,0);v191.BorderSizePixel=0;v191.Position=UDim2.new(0.056,0,0.026,0);v191.Size=UDim2.new(0,160,0,154);v191.AutoButtonColor=false;local v200=Instance.new("Frame");v200.Name="SV_slider";v200.BackgroundColor3=Color3.fromRGB(255,255,255);v200.BackgroundTransparency=1;v200.ClipsDescendants=true;v200.Position=UDim2.new(0.855,0,0.0966,0);v200.Size=UDim2.new(0,7,0,7);v200.ZIndex=3;local v208=Instance.new("ImageLabel");v208.Name="Val";v208.Image="http://www.roblox.com/asset/?id=14684563800";v208.BackgroundColor3=Color3.fromRGB(255,255,255);v208.BackgroundTransparency=1;v208.BorderColor3=Color3.fromRGB(0,0,0);v208.BorderSizePixel=0;v208.Size=UDim2.new(1,0,1,0);v208.Parent=v191;local v217=Instance.new("UICorner");v217.Name="UICorner";v217.CornerRadius=UDim.new(0,100);v217.Parent=v200;local v161=Instance.new("UIStroke");v161.Name="UIStroke";v161.Color=Color3.fromRGB(255,255,255);v161.Parent=v200;v200.Parent=v191;v191.Parent=v166;local v223=Instance.new("ImageButton");v223.Name="ImageButton";v223.Image="http://www.roblox.com/asset/?id=16789872274";v223.BackgroundColor3=Color3.fromRGB(255,255,255);v223.BorderColor3=Color3.fromRGB(0,0,0);v223.BorderSizePixel=0;v223.Position=UDim2.new(0.5,0,0,165);v223.Size=UDim2.new(0,160,0,8);v223.AutoButtonColor=false;v223.AnchorPoint=Vector2.new(0.5,0);v223.BackgroundTransparency=1;local v234=Instance.new("Frame");v234.Name="Frame";v234.BackgroundColor3=Color3.fromRGB(254,254,254);v234.BorderColor3=Color3.fromRGB(0,0,0);v234.BorderSizePixel=0;v234.Position=UDim2.new(0.926,0,0.5,0);v234.Size=UDim2.new(0,12,0,12);v234.AnchorPoint=Vector2.new(0,0.5);v234.ZIndex=45;local v243=Instance.new("UICorner");v243.Name="UICorner";v243.Parent=v234;v243.CornerRadius=UDim.new(1,0);local v247=Instance.new("UICorner");v247.Name="UICorner";v247.Parent=v223;v234.Parent=v223;v223.Parent=v166;local v252=false;local v253,v254,v255=v143:ToHSV();local v256=v143:ToHSV();local v257=v256;local v258=false;local v259=false;local v260=false;local function v261() local v1109=game:GetService("UserInputService"):GetMouseLocation();local v1110=Vector2.new(v1109.X,v1109.Y-30 );local v1111=v1110-v191.AbsolutePosition ;local v1112=v1110-v223.AbsolutePosition ;if v258 then v254=math.clamp(1 -(v1111.X/v191.AbsoluteSize.X) ,0,1);v255=math.clamp(1 -(v1111.Y/v191.AbsoluteSize.Y) ,0,1);elseif v259 then v253=math.clamp(v1112.X/v191.AbsoluteSize.X ,0,1);end v256=Color3.fromHSV(v253,v254,v255);v11:Create(v200,TweenInfo.new(0.05,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(math.clamp(1 -v254 ,0,1 -0.055 ),0,math.clamp(1 -v255 ,0,1 -0.045 ),0)}):Play();v191.BackgroundColor3=Color3.fromHSV(v253,1,1);v148.BackgroundColor3=v256;v11:Create(v234,TweenInfo.new(0.05,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(math.clamp(v253,0,0.982), -5,0.5,0)}):Play();if v146 then v0.Flags[v146]=Color3.fromRGB(v256.r * 255 ,v256.g * 255 ,v256.b * 255 );end v147(Color3.fromRGB(v256.r * 255 ,v256.g * 255 ,v256.b * 255 ));end local function v262(v1115) if (type(v1115)=="table") then v1115=Color3.fromHSV(v1115[1],v1115[2],v1115[3]);end if (type(v1115)=="string") then v1115=Color3.fromHex(v1115);end local v1116=v256;v253,v254,v255=v1115:ToHSV();v256=Color3.fromHSV(v253,v254,v255);if (v256~=v1116) then v148.BackgroundColor3=v256;v11:Create(v200,TweenInfo.new(0.05,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(math.clamp(1 -v254 ,0,1 -0.055 ),0,math.clamp(1 -v255 ,0,1 -0.045 ),0)}):Play();v191.BackgroundColor3=Color3.fromHSV(v253,1,1);v11:Create(v234,TweenInfo.new(0.05,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(math.clamp(v253,0,0.982), -5,0.5,0)}):Play();if v146 then v0.Flags[v146]=Color3.fromRGB(v256.r * 255 ,v256.g * 255 ,v256.b * 255 );end v147(Color3.fromRGB(v256.r * 255 ,v256.g * 255 ,v256.b * 255 ));end end v1[v146]=v262;v262(v143);v191.InputBegan:Connect(function(v1117) if (v1117.UserInputType==Enum.UserInputType.MouseButton1) then v258=true;v261();end end);v191.InputEnded:Connect(function(v1118) if (v1118.UserInputType==Enum.UserInputType.MouseButton1) then v258=false;v261();end end);v223.InputBegan:Connect(function(v1119) if (v1119.UserInputType==Enum.UserInputType.MouseButton1) then v259=true;v261();end end);v223.InputEnded:Connect(function(v1120) if (v1120.UserInputType==Enum.UserInputType.MouseButton1) then v259=false;v261();end end);v0:Connection(game:GetService("UserInputService").InputChanged,function(v1121) if (v1121.UserInputType==Enum.UserInputType.MouseMovement) then if v259 then v261();end if v258 then v261();end end end);local v264={};v264.Set=function(v1122,v1123,v1124) v262(v1123,v1124);end;v0:Connection(game:GetService("UserInputService").InputBegan,function(v1125) if (v166.Visible and (v1125.UserInputType==Enum.UserInputType.MouseButton1)) then if ( not v0:IsMouseOverFrame(v166) and  not v0:IsMouseOverFrame(v148)) then v166.Position=UDim2.new(0,v148.AbsolutePosition.X-100 ,0,v148.AbsolutePosition.Y + 25 );v11:Create(v166,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();v11:Create(v166,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Position=UDim2.new(0,v148.AbsolutePosition.X-100 ,0,v148.AbsolutePosition.Y)}):Play();task.spawn(function() task.wait(0.1);v166.Visible=false;v144.ZIndex=1;v0.Cooldown=false;end);for v1366,v1367 in next,v166:GetDescendants() do if (v1367:IsA("Frame") or v1367:IsA("TextButton") or v1367:IsA("ScrollingFrame")) then v11:Create(v1367,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();v0.VisValues[v1367]=v1367.BackgroundTransparency;elseif (v1367:IsA("TextLabel") or v1367:IsA("TextBox")) then v11:Create(v1367,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextTransparency=1}):Play();v0.VisValues[v1367]=v1367.TextTransparency;elseif (v1367:IsA("ImageLabel") or v1367:IsA("ImageButton")) then v11:Create(v1367,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{ImageTransparency=1}):Play();v0.VisValues[v1367]=v1367.ImageTransparency;elseif v1367:IsA("UIStroke") then v11:Create(v1367,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Transparency=1}):Play();v0.VisValues[v1367]=v1367.Transparency;end end end end end);v148.MouseButton1Down:Connect(function() if (v166.Visible==false) then v166.Position=UDim2.new(0,v148.AbsolutePosition.X-100 ,0,v148.AbsolutePosition.Y);v11:Create(v166,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,v148.AbsolutePosition.X-100 ,0,v148.AbsolutePosition.Y + 25 )}):Play();end v166.Visible=true;v144.ZIndex=100;v0.Cooldown=true;v11:Create(v166,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();for v1246,v1247 in next,v166:GetDescendants() do if (v1247:IsA("Frame") or v1247:IsA("TextButton") or v1247:IsA("ScrollingFrame")) then v11:Create(v1247,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=v0.VisValues[v1247]}):Play();elseif (v1247:IsA("TextLabel") or v1247:IsA("TextBox")) then v11:Create(v1247,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextTransparency=v0.VisValues[v1247]}):Play();elseif (v1247:IsA("ImageLabel") or v1247:IsA("ImageButton")) then v11:Create(v1247,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{ImageTransparency=v0.VisValues[v1247]}):Play();elseif v1247:IsA("UIStroke") then v11:Create(v1247,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{Transparency=0}):Play();end end if v259 then v259=false;end if v258 then v258=false;end end);return v264,v166;end;end v0.updateNotifsPositions=function(v24,v25) for v266,v267 in pairs(v0.Notifs) do local v268=Vector2.new(20,20);game:GetService("TweenService"):Create(v267.Container,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{Position=UDim2.new(0,v268.X,0,v268.Y + (v266 * 25) )}):Play();end end;v0.Notification=function(v26,v27,v28) local v29={Container=nil,Objects={}};local v30=Vector2.new(20,20);local v31=Instance.new("Frame");v31.Name="NewInd";v31.AutomaticSize=Enum.AutomaticSize.X;v31.Position=UDim2.new(0,20,0,20);v31.BackgroundColor3=Color3.fromRGB(50,50,50);v31.BackgroundTransparency=1;v31.BorderColor3=Color3.fromRGB(0,0,0);v31.Size=UDim2.fromOffset(0,20);v31.Parent=v0.ScreenGUI;v29.Container=v31;local v43=Instance.new("Frame");v43.Name="Outline";v43.AnchorPoint=Vector2.new(0,0);v43.AutomaticSize=Enum.AutomaticSize.X;v43.BackgroundColor3=Color3.fromRGB(50,50,50);v43.BorderColor3=Color3.fromRGB(0,0,0);v43.BorderSizePixel=1;v43.Position=UDim2.new(0,0,0,0);v43.Size=UDim2.fromOffset(0,20);v43.Visible=true;v43.ZIndex=50;v43.Parent=v31;v43.BackgroundTransparency=1;local v56=Instance.new("UICorner");v56.Name="UICorner";v56.CornerRadius=UDim.new(0,4);v56.Parent=v43;local v60=Instance.new("UIStroke");v60.Name="UIStroke";v60.Parent=v43;v60.Transparency=1;local v64=Instance.new("Frame");v64.Name="Inline";v64.BackgroundColor3=Color3.fromRGB(13,13,13);v64.BorderColor3=Color3.fromRGB(0,0,0);v64.BorderSizePixel=0;v64.Position=UDim2.fromOffset(1,1);v64.Size=UDim2.new(1, -2,1, -2);v64.ZIndex=51;v64.BackgroundTransparency=1;local v73=Instance.new("UICorner");v73.Name="UICorner_2";v73.CornerRadius=UDim.new(0,4);v73.Parent=v64;local v77=Instance.new("TextLabel");v77.Name="Title";v77.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v77.RichText=true;v77.Text=v27;v77.TextColor3=Color3.fromRGB(255,255,255);v77.TextSize=13;v77.TextXAlignment=Enum.TextXAlignment.Left;v77.AutomaticSize=Enum.AutomaticSize.X;v77.BackgroundColor3=Color3.fromRGB(255,255,255);v77.BackgroundTransparency=1;v77.BorderColor3=Color3.fromRGB(0,0,0);v77.BorderSizePixel=0;v77.Position=UDim2.fromOffset(5,0);v77.Size=UDim2.fromScale(0,1);v77.Parent=v64;v77.TextTransparency=1;local v95=Instance.new("UIPadding");v95.Name="UIPadding";v95.PaddingRight=UDim.new(0,6);v95.Parent=v64;v64.Parent=v43;v29.remove=function(v269) table.remove(v0.Notifs,table.find(v0.Notifs,v29));v0:updateNotifsPositions(v30);task.wait(0.5);v31:Destroy();end;task.spawn(function() v43.AnchorPoint=Vector2.new(1,0);for v1129,v1130 in next,v31:GetDescendants() do if v1130:IsA("Frame") then game:GetService("TweenService"):Create(v1130,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();elseif v1130:IsA("UIStroke") then game:GetService("TweenService"):Create(v1130,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{Transparency=0}):Play();end end local v271=game:GetService("TweenService"):Create(v43,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{AnchorPoint=Vector2.new(0,0)}):Play();game:GetService("TweenService"):Create(v77,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{TextTransparency=0}):Play();task.wait(v28);for v1131,v1132 in next,v31:GetDescendants() do if v1132:IsA("Frame") then game:GetService("TweenService"):Create(v1132,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();elseif v1132:IsA("UIStroke") then game:GetService("TweenService"):Create(v1132,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{Transparency=1}):Play();end end game:GetService("TweenService"):Create(v77,TweenInfo.new(1,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{TextTransparency=1}):Play();end);task.delay(v28 + 0.1 ,function() v29:remove();end);table.insert(v0.Notifs,v29);v0:updateNotifsPositions(v30);v31.Position=UDim2.new(0,v30.X,0,v30.Y + (table.find(v0.Notifs,v29) * 25) );return v29;end;do local v101=v0.Pages;local v102=v0.Sections;v0.New=function(v272,v273) if  not v273 then v273={};end local v274={Size=v273.Size or UDim2.new(0,600,0,450) ,Pages={},PageAxis=0,Dragging={false,UDim2.new(0,0,0,0)},Resized=nil,Elements={}};local v275=Instance.new("ScreenGui",(game:GetService("RunService"):IsStudio() and game.Players.LocalPlayer.PlayerGui) or game.CoreGui );local v276=Instance.new("Frame",v275);local v277=Instance.new("UICorner",v276);local v278=Instance.new("UIStroke",v276);local v279=Instance.new("Frame",v276);local v280=Instance.new("UICorner",v279);local v281=Instance.new("Frame",v279);local v277=Instance.new("UICorner",v281);local v282=Instance.new("Frame",v281);local v283=Instance.new("Frame",v279);local v284=Instance.new("UIListLayout",v283);local v285=Instance.new("TextButton",v279);v275.DisplayOrder=100;v275.ZIndexBehavior=Enum.ZIndexBehavior.Sibling;v0.ScreenGUI=v275;v276.Name="Outline";v276.Position=UDim2.new(0.5,0,0.5,0);v276.Size=UDim2.new(0,0,0,40);v276.BackgroundColor3=Color3.new(0.1961,0.1961,0.1961);v276.BorderColor3=Color3.new(0,0,0);v276.AnchorPoint=Vector2.new(0.5,0.5);v276.ZIndex=50;v276.ClipsDescendants=false;v0.Holder=v276;v0.OldSize=v274.Size;v279.Name="Inline";v279.Position=UDim2.new(0,1,0,1);v279.Size=UDim2.new(1, -2,1, -2);v279.BackgroundColor3=Color3.new(0.051,0.051,0.051);v279.BorderSizePixel=0;v279.BorderColor3=Color3.new(0,0,0);v279.ZIndex=51;v281.Name="Holder";v281.Position=UDim2.new(0,150,0,0);v281.Size=UDim2.new(1, -150,1,0);v281.BackgroundColor3=Color3.new(0.0588235,0.0588235,0.0588235);v281.BorderSizePixel=0;v281.BorderColor3=Color3.new(0,0,0);v281.ZIndex=52;v282.Size=UDim2.new(0,5,1,0);v282.BackgroundColor3=Color3.new(0.0588235,0.0588235,0.0588235);v282.BorderSizePixel=0;v282.BorderColor3=Color3.new(0,0,0);v283.Name="Tabs";v283.Position=UDim2.new(0,5,0,10);v283.Size=UDim2.new(0,140,1, -20);v283.BackgroundColor3=Color3.new(1,1,1);v283.BackgroundTransparency=1.01;v283.BorderSizePixel=0;v283.BorderColor3=Color3.new(0,0,0);v284.SortOrder=Enum.SortOrder.LayoutOrder;v284.Padding=UDim.new(0,4);v285.Size=UDim2.new(1,0,0,20);v285.BackgroundColor3=Color3.new(1,1,1);v285.BackgroundTransparency=1;v285.BorderSizePixel=0;v285.BorderColor3=Color3.new(0,0,0);v285.Text="";v285.TextColor3=Color3.new(0,0,0);v285.AutoButtonColor=false;v285.Font=Enum.Font.SourceSans;v285.TextSize=14;v285.ZIndex=100;local v341=Instance.new("Frame");v341.Name="Line1";v341.BackgroundColor3=Color3.fromRGB(50,50,50);v341.BorderColor3=Color3.fromRGB(0,0,0);v341.BorderSizePixel=0;v341.Position=UDim2.fromOffset(0,50);v341.Size=UDim2.new(1,0,0,1);v341.Parent=v281;local v349=Instance.new("Frame");v349.Name="Line2";v349.BackgroundColor3=Color3.fromRGB(50,50,50);v349.BorderColor3=Color3.fromRGB(0,0,0);v349.BorderSizePixel=0;v349.Size=UDim2.new(0,1,1,0);v349.Parent=v281;local v356=Instance.new("ImageLabel");v356.Name="Logo";v356.Image="http://www.roblox.com/asset/?id=17669613413";v356.ScaleType=Enum.ScaleType.Fit;v356.BackgroundColor3=Color3.fromRGB(255,255,255);v356.BackgroundTransparency=1;v356.BorderColor3=Color3.fromRGB(0,0,0);v356.BorderSizePixel=0;v356.Position=UDim2.fromOffset(10, -20);v356.Size=UDim2.fromOffset(90,90);v356.Parent=v281;local v368=Instance.new("Frame");v368.Name="FadeThing";v368.BackgroundColor3=Color3.fromRGB(15,15,15);v368.BorderColor3=Color3.fromRGB(0,0,0);v368.BorderSizePixel=0;v368.Position=UDim2.fromOffset(9,59);v368.Size=UDim2.new(1, -18,1, -63);v368.ZIndex=55;v368.Parent=v281;v368.Visible=false;v274.Elements={TabHolder=v283,Holder=v281,FadeThing=v368};v0:Connection(v285.MouseButton1Down,function() local v1133=game:GetService("UserInputService"):GetMouseLocation();v274.Dragging[1]=true;v274.Dragging[2]=UDim2.new(0,v1133.X-v276.AbsolutePosition.X ,0,v1133.Y-v276.AbsolutePosition.Y );end);v0:Connection(v285.MouseButton1Up,function() v274.Dragging[1]=false;v274.Dragging[2]=UDim2.new(0,0,0,0);end);v0:Connection(game:GetService("UserInputService").InputChanged,function(v1138) local v1139=game:GetService("UserInputService"):GetMouseLocation();local v1140=nil;if v274.Dragging[1] then game:GetService("TweenService"):Create(v276,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,(v1139.X-v274.Dragging[2].X.Offset) + (v276.Size.X.Offset * v276.AnchorPoint.X) ,0,(v1139.Y-v274.Dragging[2].Y.Offset) + (v276.Size.Y.Offset * v276.AnchorPoint.Y) )}):Play();end end);v274.UpdateTabs=function(v1141) for v1248,v1249 in pairs(v274.Pages) do v1249:Turn(v1249.Open);end end;v0:Connection(game:GetService("UserInputService").InputBegan,function(v1142) if (v1142.KeyCode==v0.UIKey) then v0:SetOpen( not v0.Open);end end);game:GetService("TweenService"):Create(v0.Holder,TweenInfo.new(0.25,Enum.EasingStyle.Exponential,Enum.EasingDirection.Out),{Size=UDim2.new(0,v274.Size.X.Offset,0,v274.Size.Y.Offset)}):Play();v0.Holder=v276;return setmetatable(v274,v0);end;v0.Seperator=function(v380,v381) if  not v381 then v381={};end local v382={Name=v381.Name or "Page" ,Window=v380,Elements={}};local v383=Instance.new("Frame",v382.Window.Elements.TabHolder);local v384=Instance.new("TextLabel",v383);v383.Name="TextSep";v383.Size=UDim2.new(1,0,0,20);v383.BackgroundColor3=Color3.new(1,1,1);v383.BackgroundTransparency=1;v383.BorderSizePixel=0;v383.BorderColor3=Color3.new(0,0,0);v384.Position=UDim2.new(0,8,0,0);v384.Size=UDim2.new(1, -10,1,0);v384.BackgroundColor3=Color3.new(1,1,1);v384.BackgroundTransparency=1;v384.BorderSizePixel=0;v384.BorderColor3=Color3.new(0,0,0);v384.Text=v382.Name;v384.TextColor3=Color3.new(0.7059,0.7059,0.7059);v384.Font=Enum.Font.Gotham;v384.TextSize=v0.FontSize;v384.TextXAlignment=Enum.TextXAlignment.Left;end;v0.Page=function(v406,v407) if  not v407 then v407={};end local v408={Name=v407.Name or "Page" ,Icon=v407.Icon or "http://www.roblox.com/asset/?id=6022668955" ,Window=v406,Open=false,Sections={},Elements={}};local v409=Instance.new("TextButton",v408.Window.Elements.TabHolder);local v410=Instance.new("UICorner",v409);local v411=Instance.new("Frame",v409);local v412=Instance.new("UICorner",v411);local v413=Instance.new("TextLabel",v409);local v414=Instance.new("ImageLabel",v409);local v415=Instance.new("Frame",v408.Window.Elements.Holder);local v416=Instance.new("Frame",v415);local v417=Instance.new("UIListLayout",v416);local v418=Instance.new("Frame",v415);local v419=Instance.new("UIListLayout",v418);v409.Name="TabButton";v409.Size=UDim2.new(1,0,0,30);v409.BackgroundColor3=Color3.new(0.0784,0.0784,0.0784);v409.BorderSizePixel=0;v409.BackgroundTransparency=1;v409.BorderColor3=Color3.new(0,0,0);v409.Text="";v409.TextColor3=Color3.new(0,0,0);v409.AutoButtonColor=false;v409.Font=Enum.Font.SourceSans;v409.TextSize=14;v409.ClipsDescendants=true;v411.Name="Accent";v411.Position=UDim2.new(0, -8,0,5);v411.Size=UDim2.new(0,10,1, -10);v411.BackgroundColor3=v0.Accent;v411.BorderSizePixel=0;v411.BorderColor3=Color3.new(0,0,0);v411.BackgroundTransparency=0;table.insert(v0.ThemeObjects,v411);v413.Name="Title";v413.Position=UDim2.new(0,35,0,0);v413.Size=UDim2.new(1, -10,1,0);v413.BackgroundColor3=Color3.new(1,1,1);v413.BackgroundTransparency=1;v413.BorderSizePixel=0;v413.BorderColor3=Color3.new(0,0,0);v413.Text=v408.Name;v413.TextColor3=Color3.fromRGB(120,120,120);v413.Font=Enum.Font.Gotham;v413.TextSize=v0.FontSize;v413.TextXAlignment=Enum.TextXAlignment.Left;v414.Name="Icon";v414.Position=UDim2.new(0,11,0,8);v414.Size=UDim2.new(0,15,0,15);v414.BackgroundColor3=Color3.new(1,1,1);v414.BackgroundTransparency=1;v414.BorderSizePixel=0;v414.BorderColor3=Color3.new(0,0,0);v414.Image=v408.Icon;v414.ImageColor3=Color3.fromRGB(120,120,120);v415.Name="NewPage";v415.Position=UDim2.new(0,10,0,60);v415.Size=UDim2.new(1, -20,1, -65);v415.BackgroundColor3=Color3.new(1,1,1);v415.BackgroundTransparency=1;v415.BorderSizePixel=0;v415.BorderColor3=Color3.new(0,0,0);v415.ZIndex=53;v415.Visible=false;v416.Name="Left";v416.Size=UDim2.new(0.5, -4,1,0);v416.BackgroundColor3=Color3.new(1,1,1);v416.BackgroundTransparency=1;v416.BorderSizePixel=0;v416.BorderColor3=Color3.new(0,0,0);v416.ZIndex=54;v417.Name="LeftLayout";v417.SortOrder=Enum.SortOrder.LayoutOrder;v417.Padding=UDim.new(0,8);v418.Name="Right";v418.Position=UDim2.new(0.5,4,0,0);v418.Size=UDim2.new(0.5, -4,1,0);v418.BackgroundColor3=Color3.new(1,1,1);v418.BackgroundTransparency=1;v418.BorderSizePixel=0;v418.BorderColor3=Color3.new(0,0,0);v418.ZIndex=53;v419.Name="RightLayout";v419.SortOrder=Enum.SortOrder.LayoutOrder;v419.Padding=UDim.new(0,8);v408.Turn=function(v1143,v1144) v408.Open=v1144;task.spawn(function() v408.Window.Elements.FadeThing.Visible=true;v11:Create(v408.Window.Elements.FadeThing,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();task.wait(0.1);v415.Visible=v408.Open;v11:Create(v408.Window.Elements.FadeThing,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();task.wait(0.1);v408.Window.Elements.FadeThing.Visible=false;end);game:GetService("TweenService"):Create(v409,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=(v408.Open and 0) or 1 }):Play();game:GetService("TweenService"):Create(v413,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3=(v408.Open and Color3.fromRGB(200,200,200)) or Color3.fromRGB(120,120,120) }):Play();game:GetService("TweenService"):Create(v414,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{ImageColor3=(v408.Open and Color3.fromRGB(200,200,200)) or Color3.fromRGB(120,120,120) }):Play();game:GetService("TweenService"):Create(v411,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{BackgroundTransparency=(v408.Open and 0) or 1 }):Play();end;v0:Connection(v409.MouseButton1Click,function() if  not v408.Open then v408:Turn(true);for v1331,v1332 in pairs(v408.Window.Pages) do if (v1332.Open and (v1332~=v408)) then v1332:Turn(false);end end end end);v0:Connection(v409.MouseEnter,function() if  not v408.Open then game:GetService("TweenService"):Create(v413,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(180,180,180)}):Play();game:GetService("TweenService"):Create(v414,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{ImageColor3=Color3.fromRGB(180,180,180)}):Play();end end);v0:Connection(v409.MouseLeave,function() if  not v408.Open then game:GetService("TweenService"):Create(v413,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v414,TweenInfo.new(0.1,Enum.EasingStyle.Linear,Enum.EasingDirection.Out),{ImageColor3=Color3.fromRGB(120,120,120)}):Play();end end);v408.Elements={Left=v416,Right=v418,TabButton=v409};if ( #v408.Window.Pages==0) then v408:Turn(true);end v408.Window.Pages[ #v408.Window.Pages + 1 ]=v408;v408.Window:UpdateTabs();return setmetatable(v408,v0.Pages);end;v101.Section=function(v501,v502) if  not v502 then v502={};end local v503={Name=v502.Name or "Section" ,Page=v501,Side=(v502.side or v502.Side or "left"):lower(),Size=v502.size or v502.Size or 200 ,Elements={},Content={}};local v504=Instance.new("Frame",((v503.Side=="left") and v503.Page.Elements.Left) or ((v503.Side=="right") and v503.Page.Elements.Right) );local v505=Instance.new("UIStroke",v504);local v506=Instance.new("UICorner",v504);local v507=Instance.new("Frame",v504);local v508=Instance.new("TextLabel",v504);local v509=Instance.new("Frame",v504);local v510=Instance.new("UIListLayout",v509);v504.Name="NewSection";v504.Size=((v503.Size=="Fill") and UDim2.new(1,0,1,0)) or UDim2.new(1,0,0,v503.Size) ;v504.BackgroundColor3=Color3.new(0.0784314,0.0784314,0.0784314);v504.BorderSizePixel=0;v504.BorderColor3=Color3.new(0,0,0);v504.ZIndex=53;v505.Color=Color3.new(0.137255,0.137255,0.137255);v507.Position=UDim2.new(0,0,0,20);v507.Size=UDim2.new(1,0,0,1);v507.BackgroundColor3=Color3.new(0.1569,0.1569,0.1569);v507.BorderSizePixel=0;v507.BorderColor3=Color3.new(0,0,0);v508.Name="Title";v508.Position=UDim2.new(0,8,0,1);v508.Size=UDim2.new(1, -10,0,20);v508.BackgroundColor3=Color3.new(1,1,1);v508.BackgroundTransparency=1;v508.BorderSizePixel=0;v508.BorderColor3=Color3.new(0,0,0);v508.Text=v503.Name;v508.TextColor3=Color3.new(0.7059,0.7059,0.7059);v508.Font=Enum.Font.Gotham;v508.TextSize=v0.FontSize;v508.TextXAlignment=Enum.TextXAlignment.Left;v509.Name="Content";v509.Position=UDim2.new(0,10,0,30);v509.Size=UDim2.new(1, -20,1, -40);v509.BackgroundColor3=Color3.new(1,1,1);v509.BackgroundTransparency=1;v509.BorderSizePixel=0;v509.BorderColor3=Color3.new(0,0,0);v509.ZIndex=53;v510.SortOrder=Enum.SortOrder.LayoutOrder;v510.Padding=UDim.new(0,8);v503.Elements={SectionContent=v509};v503.Page.Sections[ #v503.Page.Sections + 1 ]=v503;return setmetatable(v503,v0.Sections);end;v102.Toggle=function(v552,v553) if  not v553 then v553={};end local v554={Window=v552.Window,Page=v552.Page,Section=v552,Risk=v553.Risk or false ,Name=v553.Name or "Toggle" ,State=v553.state or v553.State or v553.def or v553.Def or v553.default or v553.Default or false ,Callback=v553.callback or v553.Callback or v553.callBack or v553.CallBack or function() end ,Flag=v553.flag or v553.Flag or v553.pointer or v553.Pointer or v0.NextFlag() ,Toggled=false};local v555=Instance.new("TextButton",v554.Section.Elements.SectionContent);local v556=Instance.new("TextLabel",v555);local v557=Instance.new("Frame",v555);local v558=Instance.new("UICorner",v557);local v559=Instance.new("Frame",v557);local v560=Instance.new("UICorner",v559);local v561=Instance.new("Frame",v557);local v562=Instance.new("UICorner",v561);v555.Name="NewToggle";v555.Size=UDim2.new(1,0,0,17);v555.BackgroundColor3=Color3.new(1,1,1);v555.BackgroundTransparency=1;v555.BorderSizePixel=0;v555.BorderColor3=Color3.new(0,0,0);v555.Text="";v555.TextColor3=Color3.new(0,0,0);v555.AutoButtonColor=false;v555.Font=Enum.Font.SourceSans;v555.TextSize=14;v555.ZIndex=53;v556.Name="ToggleTitle";v556.Size=UDim2.new(1, -10,0,17);v556.BackgroundColor3=Color3.new(1,1,1);v556.BackgroundTransparency=1;v556.BorderSizePixel=0;v556.BorderColor3=Color3.new(0,0,0);v556.Text=v554.Name;v556.TextColor3=Color3.new(0.7843,0.7843,0.7843);v556.Font=Enum.Font.Gotham;v556.TextSize=v0.FontSize;v556.TextXAlignment=Enum.TextXAlignment.Left;v557.Name="ToggleFrame";v557.Position=UDim2.new(1, -40,0,0);v557.Size=UDim2.new(0,40,1,0);v557.BackgroundColor3=Color3.new(0.051,0.051,0.051);v557.BorderSizePixel=0;v557.BorderColor3=Color3.new(0,0,0);v557.ZIndex=53;v559.Name="ToggleAccent";v559.Position=UDim2.new(0,1,0,1);v559.Size=UDim2.new(1, -2,1, -2);v559.BackgroundColor3=v0.Accent;v559.BackgroundTransparency=1;v559.BorderSizePixel=0;v559.BorderColor3=Color3.new(0,0,0);v559.ZIndex=53;table.insert(v0.ThemeObjects,v559);v561.Name="Circle";v561.Position=UDim2.new(0,5,0.5, -5);v561.Size=UDim2.new(0,10,0,10);v561.BackgroundColor3=Color3.new(1,1,1);v561.BorderSizePixel=0;v561.BorderColor3=Color3.new(0,0,0);v561.ZIndex=53;v562.CornerRadius=UDim.new(1,0);local function v615() v554.Toggled= not v554.Toggled;if v554.Toggled then game:GetService("TweenService"):Create(v559,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();game:GetService("TweenService"):Create(v561,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(1, -15,0.5, -5)}):Play();else game:GetService("TweenService"):Create(v559,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();game:GetService("TweenService"):Create(v561,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,5,0.5, -5)}):Play();end v0.Flags[v554.Flag]=v554.Toggled;v554.Callback(v554.Toggled);end v554.OptionList=function(v1148,v1149) if  not v1149 then v1149={};end local v1150={Elements={},Content={}};local v1151=Instance.new("ImageButton",v555);local v1152=Instance.new("Frame",v1151);local v1153=Instance.new("UICorner",v1152);local v1154=Instance.new("UIStroke",v1152);local v1155=Instance.new("Frame",v1152);local v1156=Instance.new("UIListLayout",v1155);v1151.Name="OptionButton";v1151.Position=UDim2.new(1, -65,0,1);v1151.Size=UDim2.new(0,15,0,15);v1151.BackgroundColor3=Color3.new(1,1,1);v1151.BackgroundTransparency=1;v1151.BorderSizePixel=0;v1151.BorderColor3=Color3.new(0,0,0);v1151.Image="http://www.roblox.com/asset/?id=6031280882";v1151.ImageColor3=Color3.new(0.7843,0.7843,0.7843);v1151.ZIndex=54;v1152.Name="OptionList";v1152.Position=UDim2.new(0,70,0, -10);v1152.Size=UDim2.new(0,200,0,10);v1152.BackgroundColor3=Color3.new(0.0784314,0.0784314,0.0784314);v1152.BorderSizePixel=0;v1152.BorderColor3=Color3.new(0,0,0);v1152.AutomaticSize=Enum.AutomaticSize.Y;v1152.Visible=false;v1152.ZIndex=54;v1154.Color=Color3.new(0.137255,0.137255,0.137255);v1155.Name="OptionContent";v1155.Position=UDim2.new(0,10,0,10);v1155.Size=UDim2.new(1, -20,1, -10);v1155.BackgroundColor3=Color3.new(1,1,1);v1155.BackgroundTransparency=1;v1155.BorderSizePixel=0;v1155.BorderColor3=Color3.new(0,0,0);v1155.AutomaticSize=Enum.AutomaticSize.Y;v1155.ZIndex=54;v1156.SortOrder=Enum.SortOrder.LayoutOrder;v1156.Padding=UDim.new(0,4);v0:Connection(v1151.MouseButton1Click,function() v1152.Visible= not v1152.Visible;end);v0:Connection(game:GetService("UserInputService").InputBegan,function(v1254) if (v1152.Visible and (v1254.UserInputType==Enum.UserInputType.MouseButton1)) then if ( not v0:IsMouseOverFrame(v1152) and  not v0:IsMouseOverFrame(v1151)) then v1152.Visible=false;end end end);v1150.Elements={SectionContent=v1155};return setmetatable(v1150,v0.Sections);end;v554.Set=function(v1191) v1191=((type(v1191)=="boolean") and v1191) or false ;if (v554.Toggled~=v1191) then v615();end end;v554.Set(v554.State);v0.Flags[v554.Flag]=v554.State;v1[v554.Flag]=v554.Set;v0:Connection(v555.MouseButton1Click,v615);return v554;end;v102.Nest=function(v621,v622) if  not v622 then v622={};end local v623={Name=v622.Name or "Section" ,RealSection=v621,Size=v622.size or v622.Size or 200 ,Elements={},Content={}};local v624=Instance.new("Frame",v623.RealSection.Elements.SectionContent);local v625=Instance.new("ScrollingFrame",v624);local v626=Instance.new("UICorner",v624);local v627=Instance.new("UIStroke",v624);local v628=Instance.new("Frame",v625);local v629=Instance.new("UIListLayout",v628);v624.Name="ScrollHolder";v624.Size=UDim2.new(1,0,0,v623.Size);v624.BackgroundColor3=Color3.new(0.0784314,0.0784314,0.0784314);v624.BorderSizePixel=0;v624.BorderColor3=Color3.new(0,0,0);v624.ClipsDescendants=true;v625.Name="NewScroll";v625.Size=UDim2.new(1,0,1,0);v625.BackgroundColor3=Color3.new(0.098,0.098,0.098);v625.BackgroundTransparency=1;v625.BorderSizePixel=0;v625.BorderColor3=Color3.new(0,0,0);v625.CanvasSize=UDim2.new(0,0,0,0);v625.AutomaticCanvasSize=Enum.AutomaticSize.Y;v625.ScrollBarThickness=2;v625.TopImage="";v625.BottomImage="";v625.VerticalScrollBarInset=Enum.ScrollBarInset.Always;v625.ScrollBarImageColor3=v0.Accent;v625.ClipsDescendants=true;table.insert(v0.ThemeObjects,v625);v627.Color=Color3.new(0.137255,0.137255,0.137255);v628.Name="ScrollContent";v628.Position=UDim2.new(0,10,0,5);v628.Size=UDim2.new(1, -20,0,0);v628.BackgroundColor3=Color3.new(1,1,1);v628.BackgroundTransparency=1;v628.BorderSizePixel=0;v628.BorderColor3=Color3.new(0,0,0);v628.AutomaticSize=Enum.AutomaticSize.Y;v629.SortOrder=Enum.SortOrder.LayoutOrder;v629.Padding=UDim.new(0,4);v623.Elements={SectionContent=v628};return setmetatable(v623,v0.Sections);end;v102.Slider=function(v666,v667) if  not v667 then v667={};end local v668={Window=v666.Window,Page=v666.Page,Section=v666,Name=v667.Name or "Slider" ,Min=v667.min or v667.Min or v667.minimum or v667.Minimum or 0 ,State=v667.state or v667.State or v667.def or v667.Def or v667.default or v667.Default or 10 ,Max=v667.max or v667.Max or v667.maximum or v667.Maximum or 100 ,Sub=v667.suffix or v667.Suffix or v667.ending or v667.Ending or v667.prefix or v667.Prefix or v667.measurement or v667.Measurement or "" ,Decimals=v667.decimals or v667.Decimals or 1 ,Callback=v667.callback or v667.Callback or v667.callBack or v667.CallBack or function() end ,Flag=v667.flag or v667.Flag or v667.pointer or v667.Pointer or v0.NextFlag() };local v669="[value]"   .. v668.Sub ;local v670=Instance.new("TextButton",v668.Section.Elements.SectionContent);local v671=Instance.new("TextLabel",v670);local v672=Instance.new("Frame",v670);local v673=Instance.new("UICorner",v672);local v674=Instance.new("Frame",v672);local v675=Instance.new("UICorner",v674);local v676=Instance.new("TextButton",v674);local v677=Instance.new("UICorner",v676);local v678=Instance.new("Frame",v676);local v677=Instance.new("UICorner",v678);local v679=Instance.new("TextLabel",v670);v670.Name="NewSlider";v670.Size=UDim2.new(1,0,0,32);v670.BackgroundColor3=Color3.new(1,1,1);v670.BackgroundTransparency=1;v670.BorderSizePixel=0;v670.BorderColor3=Color3.new(0,0,0);v670.Text="";v670.TextColor3=Color3.new(0,0,0);v670.AutoButtonColor=false;v670.Font=Enum.Font.SourceSans;v670.TextSize=14;v670.ZIndex=53;v671.Name="SliderTitle";v671.Size=UDim2.new(1, -10,0,17);v671.BackgroundColor3=Color3.new(1,1,1);v671.BackgroundTransparency=1;v671.BorderSizePixel=0;v671.BorderColor3=Color3.new(0,0,0);v671.Text=v668.Name;v671.TextColor3=Color3.new(0.7843,0.7843,0.7843);v671.Font=Enum.Font.Gotham;v671.TextSize=v0.FontSize;v671.TextXAlignment=Enum.TextXAlignment.Left;v672.Name="ToggleFrame";v672.Position=UDim2.new(0,0,1, -8);v672.Size=UDim2.new(1,0,0,8);v672.BackgroundColor3=Color3.new(0.051,0.051,0.051);v672.BorderSizePixel=0;v672.BorderColor3=Color3.new(0,0,0);v672.ZIndex=53;v674.Name="FillHold";v674.Position=UDim2.new(0,1,0,1);v674.Size=UDim2.new(1, -2,1, -2);v674.BackgroundColor3=Color3.new(0.6667,0.6667,1);v674.BackgroundTransparency=1;v674.BorderSizePixel=0;v674.BorderColor3=Color3.new(0,0,0);v674.ZIndex=53;v676.Name="Fill";v676.Size=UDim2.new(0,0,1,0);v676.BackgroundColor3=v0.Accent;v676.BorderSizePixel=0;v676.BorderColor3=Color3.new(0,0,0);v676.Text="";v676.TextColor3=Color3.new(0,0,0);v676.AutoButtonColor=false;v676.Font=Enum.Font.SourceSans;v676.TextSize=14;v676.ZIndex=53;table.insert(v0.ThemeObjects,v676);v678.Name="Circle";v678.Position=UDim2.new(1, -6,0.5, -6);v678.Size=UDim2.new(0,13,0,13);v678.BackgroundColor3=Color3.new(1,1,1);v678.BorderSizePixel=0;v678.BorderColor3=Color3.new(0,0,0);v678.ZIndex=53;v677.CornerRadius=UDim.new(1,0);v679.Name="SliderValue";v679.Size=UDim2.new(1,0,0,17);v679.BackgroundColor3=Color3.new(1,1,1);v679.BackgroundTransparency=1;v679.BorderSizePixel=0;v679.BorderColor3=Color3.new(0,0,0);v679.Text="";v679.TextColor3=Color3.new(0.4706,0.4706,0.4706);v679.Font=Enum.Font.Gotham;v679.TextSize=v0.FontSize;v679.TextXAlignment=Enum.TextXAlignment.Right;local v755=false;local v756=v668.State;local function v757(v1192) v1192=math.clamp(v0:Round(v1192,v668.Decimals),v668.Min,v668.Max);local v1193=(v1192-v668.Min)/(v668.Max-v668.Min) ;game:GetService("TweenService"):Create(v676,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Size=UDim2.new(v1193,0,1,0)}):Play();v679.Text=v669:gsub("%[value%]",string.format("%.14g",v1192));v756=v1192;v0.Flags[v668.Flag]=v1192;v668.Callback(v1192);end local function v758(v1196) local v1197=(v1196.Position.X-v670.AbsolutePosition.X)/v670.AbsoluteSize.X ;local v1198=((v668.Max-v668.Min) * v1197) + v668.Min ;v757(v1198);end v0:Connection(v670.InputBegan,function(v1199) if (v1199.UserInputType==Enum.UserInputType.MouseButton1) then v755=true;v758(v1199);end end);v0:Connection(v670.InputEnded,function(v1200) if (v1200.UserInputType==Enum.UserInputType.MouseButton1) then v755=false;end end);v0:Connection(v676.InputBegan,function(v1201) if (v1201.UserInputType==Enum.UserInputType.MouseButton1) then v755=true;v758(v1201);end end);v0:Connection(v676.InputEnded,function(v1202) if (v1202.UserInputType==Enum.UserInputType.MouseButton1) then v755=false;end end);v0:Connection(game:GetService("UserInputService").InputChanged,function(v1203) if (v1203.UserInputType==Enum.UserInputType.MouseMovement) then if v755 then v758(v1203);end end end);v668.Set=function(v1204,v1205) v757(v1205);end;v1[v668.Flag]=v757;v0.Flags[v668.Flag]=v668.State;v757(v668.State);return v668;end;v102.List=function(v763,v764) local v764=v764 or {} ;local v765={Window=v763.Window,Page=v763.Page,Section=v763,Open=false,Name=v764.Name or v764.name or nil ,Options=v764.options or v764.Options or v764.values or v764.Values or {"1","2","3"} ,Max=v764.Max or v764.max or nil ,State=v764.state or v764.State or v764.def or v764.Def or v764.default or v764.Default or nil ,Callback=v764.callback or v764.Callback or v764.callBack or v764.CallBack or function() end ,Flag=v764.flag or v764.Flag or v764.pointer or v764.Pointer or v0.NextFlag() ,OptionInsts={}};local v766=Instance.new("Frame",v765.Section.Elements.SectionContent);local v767=Instance.new("TextLabel",v766);local v768=Instance.new("TextButton",v766);local v769=Instance.new("UICorner",v768);local v770=Instance.new("Frame",v768);local v771=Instance.new("UICorner",v770);local v772=Instance.new("UIListLayout",v770);local v773=Instance.new("TextLabel",v768);local v774=Instance.new("ImageLabel",v768);v766.Name="NewDropdown";v766.Size=UDim2.new(1,0,0,48);v766.BackgroundColor3=Color3.new(1,1,1);v766.BackgroundTransparency=1;v766.BorderSizePixel=0;v766.BorderColor3=Color3.new(0,0,0);v766.ZIndex=54;v767.Name="DropdownTitle";v767.Size=UDim2.new(1, -10,0,17);v767.BackgroundColor3=Color3.new(1,1,1);v767.BackgroundTransparency=1;v767.BorderSizePixel=0;v767.BorderColor3=Color3.new(0,0,0);v767.Text=v765.Name;v767.TextColor3=Color3.new(0.7843,0.7843,0.7843);v767.Font=Enum.Font.Gotham;v767.TextSize=v0.FontSize;v767.TextXAlignment=Enum.TextXAlignment.Left;v768.Name="ToggleFrame";v768.Position=UDim2.new(0,0,1, -24);v768.Size=UDim2.new(1,0,0,24);v768.BackgroundColor3=Color3.new(0.098,0.098,0.098);v768.BorderSizePixel=0;v768.BorderColor3=Color3.new(0,0,0);v768.ZIndex=54;v768.AutoButtonColor=false;v768.Text="";v769.CornerRadius=UDim.new(0,4);v770.Name="ToggleContent";v770.Position=UDim2.new(0,0,1,0);v770.Size=UDim2.new(1,0,0,0);v770.BackgroundColor3=Color3.new(0.0706,0.0706,0.0706);v770.BorderSizePixel=0;v770.BorderColor3=Color3.new(0,0,0);v770.ZIndex=54;v770.ClipsDescendants=true;v771.CornerRadius=UDim.new(0,4);v772.SortOrder=Enum.SortOrder.LayoutOrder;v773.Name="DropdownTitle";v773.Position=UDim2.new(0,4,0,0);v773.Size=UDim2.new(1, -10,1,0);v773.BackgroundColor3=Color3.new(1,1,1);v773.BackgroundTransparency=1;v773.BorderSizePixel=0;v773.BorderColor3=Color3.new(0,0,0);v773.Text="";v773.TextColor3=Color3.new(0.7843,0.7843,0.7843);v773.Font=Enum.Font.Gotham;v773.TextSize=v0.FontSize;v773.TextXAlignment=Enum.TextXAlignment.Left;v774.Name="Icon";v774.Position=UDim2.new(1, -25,0,5);v774.Size=UDim2.new(0,20,0,15);v774.BackgroundColor3=Color3.new(1,1,1);v774.BackgroundTransparency=1;v774.BorderSizePixel=0;v774.BorderColor3=Color3.new(0,0,0);v774.Image="http://www.roblox.com/asset/?id=6034818372";v774.ImageColor3=Color3.new(0.4706,0.4706,0.4706);v774.ZIndex=54;local v840=false;local v841=0;v0:Connection(v768.MouseButton1Click,function() v840= not v840;if v840 then v766.ZIndex=55;game:GetService("TweenService"):Create(v774,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Rotation=180}):Play();game:GetService("TweenService"):Create(v774,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{ImageColor3=Color3.fromRGB(200,200,200)}):Play();game:GetService("TweenService"):Create(v770,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Size=UDim2.new(1,0,0,v841 * 22 )}):Play();else game:GetService("TweenService"):Create(v774,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Rotation=0}):Play();game:GetService("TweenService"):Create(v774,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{ImageColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v770,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Size=UDim2.new(1,0,0,0)}):Play();task.wait(0.2);v766.ZIndex=54;end end);v0:Connection(game:GetService("UserInputService").InputBegan,function(v1206) if (v770.Visible and (v1206.UserInputType==Enum.UserInputType.MouseButton1)) then if ( not v0:IsMouseOverFrame(v770) and  not v0:IsMouseOverFrame(v768)) then v840=false;game:GetService("TweenService"):Create(v774,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{ImageColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v774,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Rotation=0}):Play();game:GetService("TweenService"):Create(v770,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Size=UDim2.new(1,0,0,0)}):Play();task.wait(0.2);v766.ZIndex=54;end end end);local v842=(v765.Max and {}) or nil ;local function v843(v1207,v1208,v1209,v1210) v1208.MouseButton1Click:Connect(function() if v765.Max then if table.find(v842,v1207) then table.remove(v842,table.find(v842,v1207));local v1369={};local v1370=false;for v1383,v1384 in next,v842 do table.insert(v1369,v1384);end v773.Text=(( #v842==0) and "") or (table.concat(v1369,", ")   .. ((v1370 and ", ...") or "")) ;game:GetService("TweenService"):Create(v1209,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v1210,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();game:GetService("TweenService"):Create(v1209,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,4,0,0)}):Play();v0.Flags[v765.Flag]=v842;v765.Callback(v842);else if ( #v842==v765.Max) then v765.OptionInsts[v842[1]].text.Visible=false;table.remove(v842,1);end table.insert(v842,v1207);local v1373={};local v1374=false;for v1385,v1386 in next,v842 do table.insert(v1373,v1386);end v773.Text=(( #v842==0) and "") or (table.concat(v1373,", ")   .. ((v1374 and ", ...") or "")) ;game:GetService("TweenService"):Create(v1209,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(200,200,200)}):Play();game:GetService("TweenService"):Create(v1210,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();game:GetService("TweenService"):Create(v1209,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,20,0,0)}):Play();v0.Flags[v765.Flag]=v842;v765.Callback(v842);end else for v1354,v1355 in next,v765.OptionInsts do if (v1354~=v1207) then game:GetService("TweenService"):Create(v1355.text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v1355.text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,4,0,0)}):Play();game:GetService("TweenService"):Create(v1355.dot,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();end end v842=v1207;v773.Text=v1207;game:GetService("TweenService"):Create(v1209,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(200,200,200)}):Play();game:GetService("TweenService"):Create(v1210,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();game:GetService("TweenService"):Create(v1209,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,20,0,0)}):Play();v0.Flags[v765.Flag]=v1207;v765.Callback(v1207);end end);end local function v844(v1211) for v1255,v1256 in next,v1211 do v765.OptionInsts[v1256]={};local v1258=Instance.new("TextButton",v770);local v1259=Instance.new("TextLabel",v1258);local v1260=Instance.new("Frame",v1258);local v1261=Instance.new("UICorner",v1260);v1258.Size=UDim2.new(1,0,0,22);v1258.BackgroundColor3=Color3.new(1,1,1);v1258.BackgroundTransparency=1;v1258.BorderSizePixel=0;v1258.BorderColor3=Color3.new(0,0,0);v1258.Text="";v1258.TextColor3=Color3.new(0,0,0);v1258.AutoButtonColor=false;v1258.Font=Enum.Font.SourceSans;v1258.TextSize=14;v765.OptionInsts[v1256].button=v1258;v1259.Name="DropdownTitle";v1259.Position=UDim2.new(0,20,0,0);v1259.Size=UDim2.new(1, -10,1,0);v1259.BackgroundColor3=Color3.new(1,1,1);v1259.BackgroundTransparency=1;v1259.BorderSizePixel=0;v1259.BorderColor3=Color3.new(0,0,0);v1259.Text=v1256;v1259.TextColor3=Color3.fromRGB(120,120,120);v1259.Font=Enum.Font.Gotham;v1259.TextSize=v0.FontSize;v1259.TextXAlignment=Enum.TextXAlignment.Left;v765.OptionInsts[v1256].text=v1259;v1260.Name="AccentDot";v1260.Position=UDim2.new(0,8,0,8);v1260.Size=UDim2.new(0,6,0,6);v1260.BackgroundColor3=v0.Accent;v1260.BorderSizePixel=0;v1260.BorderColor3=Color3.new(0,0,0);table.insert(v0.ThemeObjects,v1260);v765.OptionInsts[v1256].dot=v1260;v1261.CornerRadius=UDim.new(1,0);v841+=1 v843(v1256,v1258,v1259,v1260);end end v844(v765.Options);local function v845(v1212) if v765.Max then table.clear(v842);v1212=((type(v1212)=="table") and v1212) or {} ;for v1335,v1336 in next,v765.OptionInsts do if  not table.find(v1212,v1335) then game:GetService("TweenService"):Create(v1336.text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v1336.text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,4,0,0)}):Play();game:GetService("TweenService"):Create(v1336.dot,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();end end for v1337,v1338 in next,v1212 do if (table.find(v765.Options,v1338) and ( #v842<v765.Max)) then table.insert(v842,v1338);game:GetService("TweenService"):Create(v765.OptionInsts[v1338].text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(200,200,200)}):Play();game:GetService("TweenService"):Create(v765.OptionInsts[v1338].dot,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();game:GetService("TweenService"):Create(v765.OptionInsts[v1338].text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,20,0,0)}):Play();end end local v1316={};local v1317=false;for v1339,v1340 in next,v842 do table.insert(v1316,v1340);end v773.Text=(( #v842==0) and "") or (table.concat(v1316,", ")   .. ((v1317 and ", ...") or "")) ;v0.Flags[v765.Flag]=v842;v765.Callback(v842);end end v765.Set=function(v1213,v1214) if v765.Max then v845(v1214);else for v1341,v1342 in next,v765.OptionInsts do if (v1341~=v1214) then game:GetService("TweenService"):Create(v1342.text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(120,120,120)}):Play();game:GetService("TweenService"):Create(v1342.text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,4,0,0)}):Play();game:GetService("TweenService"):Create(v1342.dot,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=1}):Play();end end if table.find(v765.Options,v1214) then v842=v1214;v773.Text=v1214;game:GetService("TweenService"):Create(v765.OptionInsts[v1214].text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(200,200,200)}):Play();game:GetService("TweenService"):Create(v765.OptionInsts[v1214].dot,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{BackgroundTransparency=0}):Play();game:GetService("TweenService"):Create(v765.OptionInsts[v1214].text,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{Position=UDim2.new(0,20,0,0)}):Play();v0.Flags[v765.Flag]=v842;v765.Callback(v842);else v842=nil;v773.Text="";v0.Flags[v765.Flag]=v842;v765.Callback(v842);end end end;v765.Refresh=function(v1215,v1216) v841=0;for v1299,v1300 in next,v765.OptionInsts do coroutine.wrap(function() v1300.button:Destroy();end)();end table.clear(v765.OptionInsts);v844(v1216);v842=nil;v0.Flags[v765.Flag]=v842;v765.Callback(v842);end;if v765.Max then v1[v765.Flag]=v845;else v1[v765.Flag]=v765;end v765:Set(v765.State);return v765;end;v102.Colorpicker=function(v848,v849) local v849=v849 or {} ;local v850={Window=v848.Window,Page=v848.Page,Section=v848,Name=v849.Name or "Colorpicker" ,State=v849.state or v849.State or v849.def or v849.Def or v849.default or v849.Default or Color3.fromRGB(255,0,0) ,Callback=v849.callback or v849.Callback or v849.callBack or v849.CallBack or function() end ,Flag=v849.flag or v849.Flag or v849.pointer or v849.Pointer or v0.NextFlag() ,Colorpickers=0};local v851=Instance.new("TextButton");v851.Name="NewColor";v851.FontFace=Font.new("rbxasset://fonts/families/SourceSansPro.json");v851.Text="";v851.TextColor3=Color3.fromRGB(0,0,0);v851.TextSize=14;v851.AutoButtonColor=false;v851.BackgroundColor3=Color3.fromRGB(255,255,255);v851.BackgroundTransparency=1;v851.BorderColor3=Color3.fromRGB(0,0,0);v851.BorderSizePixel=0;v851.Size=UDim2.new(1,0,0,17);v851.ZIndex=54;v851.Parent=v850.Section.Elements.SectionContent;local v866=Instance.new("TextLabel");v866.Name="ToggleTitle";v866.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v866.Text=v850.Name;v866.TextColor3=Color3.fromRGB(200,200,200);v866.TextSize=13;v866.TextXAlignment=Enum.TextXAlignment.Left;v866.BackgroundColor3=Color3.fromRGB(255,255,255);v866.BackgroundTransparency=1;v866.BorderColor3=Color3.fromRGB(0,0,0);v866.BorderSizePixel=0;v866.Size=UDim2.new(1, -10,0,17);v866.Parent=v851;v850.Colorpickers=v850.Colorpickers + 1 ;local v882=v0:NewPicker(v850.Name,v850.State,v851,v850.Colorpickers,v850.Flag,v850.Callback);v850.Set=function(v1218,v1219) v882:Set(v1219,false,true);end;v850.Colorpicker=function(v1220,v1221) local v1221=v1221 or {} ;local v1222={State=v1221.state or v1221.State or v1221.def or v1221.Def or v1221.default or v1221.Default or Color3.fromRGB(255,0,0) ,Callback=v1221.callback or v1221.Callback or v1221.callBack or v1221.CallBack or function() end ,Flag=v1221.flag or v1221.Flag or v1221.pointer or v1221.Pointer or v0.NextFlag() };v850.Colorpickers=v850.Colorpickers + 1 ;local v1224=v0:NewPicker("",v1222.State,v851,v850.Colorpickers,v1222.Flag,v1222.Callback);v1222.Set=function(v1303,v1304) v1224:Set(v1304);end;return v1222;end;return v850;end;v102.Keybind=function(v885,v886) local v886=v886 or {} ;local v887={Section=v885,Name=v886.name or v886.Name or "Keybind" ,State=v886.state or v886.State or v886.def or v886.Def or v886.default or v886.Default or Enum.KeyCode.E ,Mode=v886.mode or v886.Mode or "Toggle" ,UseKey=v886.UseKey or false ,Callback=v886.callback or v886.Callback or v886.callBack or v886.CallBack or function() end ,Flag=v886.flag or v886.Flag or v886.pointer or v886.Pointer or v0.NextFlag() ,Binding=nil};local v888;local v889=false;local v890=Instance.new("TextButton");v890.Name="NewKey";v890.FontFace=Font.new("rbxasset://fonts/families/SourceSansPro.json");v890.Text="";v890.TextColor3=Color3.fromRGB(0,0,0);v890.TextSize=14;v890.AutoButtonColor=false;v890.BackgroundColor3=Color3.fromRGB(255,255,255);v890.BackgroundTransparency=1;v890.BorderColor3=Color3.fromRGB(0,0,0);v890.BorderSizePixel=0;v890.Size=UDim2.new(1,0,0,17);v890.ZIndex=54;v890.Parent=v887.Section.Elements.SectionContent;local v905=Instance.new("TextLabel");v905.Name="ToggleTitle";v905.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v905.Text=v887.Name;v905.TextColor3=Color3.fromRGB(200,200,200);v905.TextSize=13;v905.TextXAlignment=Enum.TextXAlignment.Left;v905.BackgroundColor3=Color3.fromRGB(255,255,255);v905.BackgroundTransparency=1;v905.BorderColor3=Color3.fromRGB(0,0,0);v905.BorderSizePixel=0;v905.Size=UDim2.new(1, -10,0,17);v905.Parent=v890;local v920=Instance.new("TextLabel");v920.Name="KeyText";v920.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v920.Text="None";v920.TextColor3=Color3.fromRGB(200,200,200);v920.TextSize=13;v920.TextXAlignment=Enum.TextXAlignment.Right;v920.BackgroundColor3=Color3.fromRGB(255,255,255);v920.BackgroundTransparency=1;v920.BorderColor3=Color3.fromRGB(0,0,0);v920.BorderSizePixel=0;v920.Position=UDim2.new(1, -180,0,0);v920.Size=UDim2.new(1, -10,0,17);v920.Parent=v890;local function v935(v1226) if string.find(tostring(v1226),"Enum") then if c then c:Disconnect();if v887.Flag then v0.Flags[v887.Flag]=false;end v887.Callback(false);end if tostring(v1226):find("Enum.KeyCode.") then v1226=Enum.KeyCode[tostring(v1226):gsub("Enum.KeyCode.","")];elseif tostring(v1226):find("Enum.UserInputType.") then v1226=Enum.UserInputType[tostring(v1226):gsub("Enum.UserInputType.","")];end if (v1226==Enum.KeyCode.Backspace) then v888=nil;if v887.UseKey then if v887.Flag then v0.Flags[v887.Flag]=v888;end v887.Callback(v888);end local v1361="None";v920.Text=v1361;elseif (v1226~=nil) then v888=v1226;if v887.UseKey then if v887.Flag then v0.Flags[v887.Flag]=v888;end v887.Callback(v888);end local v1389=v0.Keys[v1226] or tostring(v1226):gsub("Enum.KeyCode.","") ;v920.Text=v1389;end v0.Flags[v887.Flag   .. "_KEY" ]=v1226;elseif table.find({"Always","Toggle","Hold"},v1226) then if  not v887.UseKey then v0.Flags[v887.Flag   .. "_KEY STATE" ]=v1226;v887.Mode=v1226;if (v887.Mode=="Always") then v889=true;if v887.Flag then v0.Flags[v887.Flag]=v889;end v887.Callback(true);end end else v889=v1226;if v887.Flag then v0.Flags[v887.Flag]=v1226;end v887.Callback(v1226);end end v935(v887.State);v935(v887.Mode);v890.MouseButton1Click:Connect(function() if  not v887.Binding then v920.Text="...";v11:Create(v920,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(255,255,255)}):Play();v887.Binding=v0:Connection(game:GetService("UserInputService").InputBegan,function(v1343,v1344) v935(((v1343.UserInputType==Enum.UserInputType.Keyboard) and v1343.KeyCode) or v1343.UserInputType );v0:Disconnect(v887.Binding);task.wait();v887.Binding=nil;v11:Create(v920,TweenInfo.new(0.25,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(200,200,200)}):Play();end);end end);v0:Connection(game:GetService("UserInputService").InputBegan,function(v1227) if (((v1227.KeyCode==v888) or (v1227.UserInputType==v888)) and  not v887.Binding and  not v887.UseKey) then if (v887.Mode=="Hold") then if v887.Flag then v0.Flags[v887.Flag]=true;end c=v0:Connection(game:GetService("RunService").RenderStepped,function() if v887.Callback then v887.Callback(true);end end);elseif (v887.Mode=="Toggle") then v889= not v889;if v887.Flag then v0.Flags[v887.Flag]=v889;end v887.Callback(v889);end end end);v0:Connection(game:GetService("UserInputService").InputEnded,function(v1228) if ((v887.Mode=="Hold") and  not v887.UseKey) then if ((v888~="") or (v888~=nil)) then if ((v1228.KeyCode==v888) or (v1228.UserInputType==v888)) then if c then c:Disconnect();if v887.Flag then v0.Flags[v887.Flag]=false;end if v887.Callback then v887.Callback(false);end end end end end end);v0.Flags[v887.Flag   .. "_KEY" ]=v887.State;v0.Flags[v887.Flag   .. "_KEY STATE" ]=v887.Mode;v1[v887.Flag]=v935;v1[v887.Flag   .. "_KEY" ]=v935;v1[v887.Flag   .. "_KEY STATE" ]=v935;v887.Set=function(v1229,v1230) v935(v1230);end;return v887;end;v102.Textbox=function(v944,v945) local v945=v945 or {} ;local v946={Window=v944.Window,Page=v944.Page,Section=v944,Placeholder=v945.placeholder or v945.Placeholder or v945.holder or v945.Holder or "Enter your text here" ,State=v945.state or v945.State or v945.def or v945.Def or v945.default or v945.Default or "" ,Callback=v945.callback or v945.Callback or v945.callBack or v945.CallBack or function() end ,Flag=v945.flag or v945.Flag or v945.pointer or v945.Pointer or v0.NextFlag() };local v947=Instance.new("Frame");v947.Name="NewBox";v947.BackgroundColor3=Color3.fromRGB(255,255,255);v947.BackgroundTransparency=1;v947.BorderColor3=Color3.fromRGB(0,0,0);v947.BorderSizePixel=0;v947.Size=UDim2.new(1,0,0,24);v947.ZIndex=54;v947.Parent=v946.Section.Elements.SectionContent;local v957=Instance.new("Frame");v957.Name="ToggleFrame";v957.BackgroundColor3=Color3.fromRGB(13,13,13);v957.BorderColor3=Color3.fromRGB(0,0,0);v957.BorderSizePixel=0;v957.Position=UDim2.new(0,0,1, -24);v957.Size=UDim2.new(1,0,0,24);v957.ZIndex=55;local v965=Instance.new("UICorner");v965.Name="UICorner_2";v965.CornerRadius=UDim.new(0,4);v965.Parent=v957;local v969=Instance.new("TextBox");v969.Name="DropdownTitle";v969.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v969.Text=v946.State;v969.PlaceholderText=v946.Placeholder;v969.PlaceholderColor3=Color3.fromRGB(145,145,145);v969.TextColor3=Color3.fromRGB(200,200,200);v969.TextSize=13;v969.ClearTextOnFocus=false;v969.TextXAlignment=Enum.TextXAlignment.Left;v969.BackgroundColor3=Color3.fromRGB(255,255,255);v969.BackgroundTransparency=1;v969.BorderColor3=Color3.fromRGB(0,0,0);v969.BorderSizePixel=0;v969.Position=UDim2.fromOffset(4,0);v969.Size=UDim2.new(1, -10,1,0);v969.ZIndex=53;v969.Parent=v957;v969.TextTruncate=Enum.TextTruncate.SplitWord;v957.Parent=v947;v969.FocusLost:Connect(function() v946.Callback(v969.Text);v0.Flags[v946.Flag]=v969.Text;end);local function v993(v1233) v969.Text=v1233;v0.Flags[v946.Flag]=v1233;v946.Callback(v1233);end v1[v946.Flag]=v993;return v946;end;v102.Button=function(v995,v996) local v996=v996 or {} ;local v997={Window=v995.Window,Page=v995.Page,Section=v995,Name=v996.Name or "button" ,Callback=v996.callback or v996.Callback or v996.callBack or v996.CallBack or function() end };local v998=Instance.new("TextButton");v998.Name="NewButton";v998.FontFace=Font.new("rbxasset://fonts/families/SourceSansPro.json");v998.Text="";v998.TextColor3=Color3.fromRGB(0,0,0);v998.TextSize=14;v998.AutoButtonColor=false;v998.BackgroundColor3=Color3.fromRGB(255,255,255);v998.BackgroundTransparency=1;v998.BorderColor3=Color3.fromRGB(0,0,0);v998.BorderSizePixel=0;v998.Size=UDim2.new(1,0,0,24);v998.ZIndex=54;v998.Parent=v997.Section.Elements.SectionContent;local v1013=Instance.new("Frame");v1013.Name="ToggleFrame";v1013.BackgroundColor3=Color3.fromRGB(25,25,25);v1013.BorderColor3=Color3.fromRGB(0,0,0);v1013.BorderSizePixel=0;v1013.Position=UDim2.new(0,0,1, -24);v1013.Size=UDim2.new(1,0,0,24);v1013.ZIndex=55;local v1021=Instance.new("UICorner");v1021.Name="UICorner_2";v1021.CornerRadius=UDim.new(0,4);v1021.Parent=v1013;local v1025=Instance.new("TextLabel");v1025.Name="DropdownTitle";v1025.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v1025.Text=v997.Name;v1025.TextColor3=Color3.fromRGB(200,200,200);v1025.TextSize=13;v1025.BackgroundColor3=Color3.fromRGB(255,255,255);v1025.BackgroundTransparency=1;v1025.BorderColor3=Color3.fromRGB(0,0,0);v1025.BorderSizePixel=0;v1025.Size=UDim2.fromScale(1,1);v1025.ZIndex=53;v1025.Parent=v1013;v1013.Parent=v998;v0:Connection(v998.MouseButton1Down,function() v997.Callback();v11:Create(v1025,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(255,255,255)}):Play();task.spawn(function() task.wait(0.1);v11:Create(v1025,TweenInfo.new(0.1,Enum.EasingStyle.Quad,Enum.EasingDirection.Out),{TextColor3=Color3.fromRGB(200,200,200)}):Play();end);end);end;v0.Watermark=function(v1040,v1041) local v1042={Name=v1041.Name or v1041.name or "Starhook.club | placeholder" ,AnimateText=nil};local v1043=Instance.new("Frame");v1043.Name="Outline";v1043.AnchorPoint=Vector2.new(1,0);v1043.AutomaticSize=Enum.AutomaticSize.X;v1043.BackgroundColor3=Color3.fromRGB(50,50,50);v1043.BorderColor3=Color3.fromRGB(0,0,0);v1043.Position=UDim2.new(1, -10,0,10);v1043.Size=UDim2.fromOffset(100,20);v1043.Visible=false;v1043.ZIndex=50;v1043.Parent=v0.ScreenGUI;local v1056=Instance.new("UICorner");v1056.Name="UICorner";v1056.CornerRadius=UDim.new(0,4);v1056.Parent=v1043;local v1060=Instance.new("UIStroke");v1060.Name="UIStroke";v1060.Parent=v1043;local v1063=Instance.new("Frame");v1063.Name="Inline";v1063.BackgroundColor3=Color3.fromRGB(13,13,13);v1063.BorderColor3=Color3.fromRGB(0,0,0);v1063.BorderSizePixel=0;v1063.Position=UDim2.fromOffset(1,1);v1063.Size=UDim2.new(1, -2,1, -2);v1063.ZIndex=51;local v1071=Instance.new("UICorner");v1071.Name="UICorner_2";v1071.CornerRadius=UDim.new(0,4);v1071.Parent=v1063;local v1075=Instance.new("TextLabel");v1075.Name="Title";v1075.FontFace=Font.new("rbxasset://fonts/families/GothamSSm.json");v1075.RichText=true;v1075.Text=v1042.Name;v1075.TextColor3=Color3.fromRGB(255,255,255);v1075.TextSize=13;v1075.TextXAlignment=Enum.TextXAlignment.Left;v1075.AutomaticSize=Enum.AutomaticSize.X;v1075.BackgroundColor3=Color3.fromRGB(255,255,255);v1075.BackgroundTransparency=1;v1075.BorderColor3=Color3.fromRGB(0,0,0);v1075.BorderSizePixel=0;v1075.Position=UDim2.fromOffset(5,0);v1075.Size=UDim2.fromScale(0,1);v1075.Parent=v1063;local v1093=Instance.new("UIPadding");v1093.Name="UIPadding";v1093.PaddingRight=UDim.new(0,6);v1093.Parent=v1063;v1063.Parent=v1043;task.spawn(function() while task.wait() do for v1323=1, #"Nixius.xyz" do v1042.AnimateText=string.sub("Nixius.xyz",1,v1323)   .. "" ;v1075.Text=v1042.AnimateText   .. " "   .. v1042.Name ;task.wait(0.4);end for v1326= #"Nixius.xyz" -1 ,1, -1 do v1042.AnimateText=string.sub("Nixius.xyz",1,v1326)   .. "" ;v1075.Text=v1042.AnimateText   .. " "   .. v1042.Name ;task.wait(0.4);end end end);v1042.UpdateText=function(v1236,v1237) v1042.Name=v1237;v1075.Text=v1042.AnimateText   .. " "   .. v1042.Name ;end;v1042.SetVisible=function(v1240,v1241) v1043.Visible=v1241;end;return v1042;end;end end return v0,v0.Flags;
+
+local Library = {};
+do
+	Library = {
+		Open = true;
+		Accent = Color3.fromRGB(76, 162, 252);
+		Pages = {};
+		Sections = {};
+		Flags = {};
+		UnNamedFlags = 0;
+		ThemeObjects = {};
+		Instances = {};
+		Holder = nil;
+		OldSize = nil;
+		ScreenGUI = nil;
+		Keys = {
+			[Enum.KeyCode.Space] = "Space",
+			[Enum.KeyCode.Return] = "Return",
+			[Enum.KeyCode.LeftShift] = "LShift",
+			[Enum.KeyCode.RightShift] = "RShift",
+			[Enum.KeyCode.LeftControl] = "LCtrl",
+			[Enum.KeyCode.RightControl] = "RCtrl",
+			[Enum.KeyCode.LeftAlt] = "LAlt",
+			[Enum.KeyCode.RightAlt] = "RAlt",
+			[Enum.KeyCode.CapsLock] = "CAPS",
+			[Enum.KeyCode.One] = "1",
+			[Enum.KeyCode.Two] = "2",
+			[Enum.KeyCode.Three] = "3",
+			[Enum.KeyCode.Four] = "4",
+			[Enum.KeyCode.Five] = "5",
+			[Enum.KeyCode.Six] = "6",
+			[Enum.KeyCode.Seven] = "7",
+			[Enum.KeyCode.Eight] = "8",
+			[Enum.KeyCode.Nine] = "9",
+			[Enum.KeyCode.Zero] = "0",
+			[Enum.KeyCode.KeypadOne] = "Num1",
+			[Enum.KeyCode.KeypadTwo] = "Num2",
+			[Enum.KeyCode.KeypadThree] = "Num3",
+			[Enum.KeyCode.KeypadFour] = "Num4",
+			[Enum.KeyCode.KeypadFive] = "Num5",
+			[Enum.KeyCode.KeypadSix] = "Num6",
+			[Enum.KeyCode.KeypadSeven] = "Num7",
+			[Enum.KeyCode.KeypadEight] = "Num8",
+			[Enum.KeyCode.KeypadNine] = "Num9",
+			[Enum.KeyCode.KeypadZero] = "Num0",
+			[Enum.KeyCode.Minus] = "-",
+			[Enum.KeyCode.Equals] = "=",
+			[Enum.KeyCode.Tilde] = "~",
+			[Enum.KeyCode.LeftBracket] = "[",
+			[Enum.KeyCode.RightBracket] = "]",
+			[Enum.KeyCode.RightParenthesis] = ")",
+			[Enum.KeyCode.LeftParenthesis] = "(",
+			[Enum.KeyCode.Semicolon] = ",",
+			[Enum.KeyCode.Quote] = "'",
+			[Enum.KeyCode.BackSlash] = "\\",
+			[Enum.KeyCode.Comma] = ",",
+			[Enum.KeyCode.Period] = ".",
+			[Enum.KeyCode.Slash] = "/",
+			[Enum.KeyCode.Asterisk] = "*",
+			[Enum.KeyCode.Plus] = "+",
+			[Enum.KeyCode.Period] = ".",
+			[Enum.KeyCode.Backquote] = "`",
+			[Enum.UserInputType.MouseButton1] = "MB1",
+			[Enum.UserInputType.MouseButton2] = "MB2",
+			[Enum.UserInputType.MouseButton3] = "MB3"
+		};
+		Connections = {};
+		FontSize = 12;
+		VisValues = {};
+		UIKey = Enum.KeyCode.End;
+		Notifs = {};
+	}
+
+	-- // Ignores
+	local Flags = {} -- Ignore
+	local ColorHolders = {}
+
+
+	-- // Extension
+	Library.__index = Library
+	Library.Pages.__index = Library.Pages
+	Library.Sections.__index = Library.Sections
+	local LocalPlayer = game:GetService('Players').LocalPlayer;
+	local Mouse = LocalPlayer:GetMouse();
+	local Players = game:GetService("Players")
+	local TweenService = game:GetService("TweenService")
+
+	-- // Misc Functions
+	do
+		function Library:Connection(Signal, Callback)
+			local Con = Signal:Connect(Callback)
+			return Con
+		end
+		--
+		function Library:Disconnect(Connection)
+			Connection:Disconnect()
+		end
+		--
+		function Library:Round(Number, Float)
+			return Float * math.floor(Number / Float)
+		end
+		--
+		function Library.NextFlag()
+			Library.UnNamedFlags = Library.UnNamedFlags + 1
+			return string.format("%.14g", Library.UnNamedFlags)
+		end
+		--
+		function Library:GetConfig()
+			local Config = ""
+			for Index, Value in pairs(self.Flags) do
+				if
+					Index ~= "ConfigConfig_List"
+					and Index ~= "ConfigConfig_Load"
+					and Index ~= "ConfigConfig_Save"
+				then
+					local Value2 = Value
+					local Final = ""
+					--
+					if typeof(Value2) == "Color3" then
+						local hue, sat, val = Value2:ToHSV()
+						--
+						Final = ("rgb(%s,%s,%s,%s)"):format(hue, sat, val, 1)
+					elseif typeof(Value2) == "table" and Value2.Color and Value2.Transparency then
+						local hue, sat, val = Value2.Color:ToHSV()
+						--
+						Final = ("rgb(%s,%s,%s,%s)"):format(hue, sat, val, Value2.Transparency)
+					elseif typeof(Value2) == "table" and Value.Mode then
+						local Values = Value.current
+						--
+						Final = ("key(%s,%s,%s)"):format(Values[1] or "nil", Values[2] or "nil", Value.Mode)
+					elseif Value2 ~= nil then
+						if typeof(Value2) == "boolean" then
+							Value2 = ("bool(%s)"):format(tostring(Value2))
+						elseif typeof(Value2) == "table" then
+							local New = "table("
+							--
+							for Index2, Value3 in pairs(Value2) do
+								New = New .. Value3 .. ","
+							end
+							--
+							if New:sub(#New) == "," then
+								New = New:sub(0, #New - 1)
+							end
+							--
+							Value2 = New .. ")"
+						elseif typeof(Value2) == "string" then
+							Value2 = ("string(%s)"):format(Value2)
+						elseif typeof(Value2) == "number" then
+							Value2 = ("number(%s)"):format(Value2)
+						end
+						--
+						Final = Value2
+					end
+					--
+					Config = Config .. Index .. ": " .. tostring(Final) .. "\n"
+				end
+			end
+			--
+			return Config
+		end
+		--
+		function Library:LoadConfig(Config)
+			local Table = string.split(Config, "\n")
+			local Table2 = {}
+			for Index, Value in pairs(Table) do
+				local Table3 = string.split(Value, ":")
+				--
+				if Table3[1] ~= "ConfigConfig_List" and #Table3 >= 2 then
+					local Value = Table3[2]:sub(2, #Table3[2])
+					--
+					if Value:sub(1, 3) == "rgb" then
+						local Table4 = string.split(Value:sub(5, #Value - 1), ",")
+						--
+						Value = Table4
+					elseif Value:sub(1, 3) == "key" then
+						local Table4 = string.split(Value:sub(5, #Value - 1), ",")
+						--
+						if Table4[1] == "nil" and Table4[2] == "nil" then
+							Table4[1] = nil
+							Table4[2] = nil
+						end
+						--
+						Value = Table4
+					elseif Value:sub(1, 4) == "bool" then
+						local Bool = Value:sub(6, #Value - 1)
+						--
+						Value = Bool == "true"
+					elseif Value:sub(1, 5) == "table" then
+						local Table4 = string.split(Value:sub(7, #Value - 1), ",")
+						--
+						Value = Table4
+					elseif Value:sub(1, 6) == "string" then
+						local String = Value:sub(8, #Value - 1)
+						--
+						Value = String
+					elseif Value:sub(1, 6) == "number" then
+						local Number = tonumber(Value:sub(8, #Value - 1))
+						--
+						Value = Number
+					end
+					--
+					Table2[Table3[1]] = Value
+				end
+			end
+			--
+			for i, v in pairs(Table2) do
+				if Flags[i] then
+					if typeof(Flags[i]) == "table" then
+						Flags[i]:Set(v)
+					else
+						Flags[i](v)
+					end
+				end
+			end
+		end
+		--
+		function Library:SetOpen(bool)
+			if typeof(bool) == 'boolean' then
+				Library.Open = bool;
+				--Library.Holder.Visible = Library.Open
+				if Library.Open then
+					Library.Holder.Visible = true
+					--game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Library.OldSize.X.Offset,0,40)}):Play()
+					game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Library.OldSize.X.Offset,0,Library.OldSize.Y.Offset)}):Play()
+				else
+					--game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Library.OldSize.X.Offset,0,40)}):Play()
+					game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0,0,20)}):Play()
+					task.wait(0.25)
+					Library.Holder.Visible = false
+				end
+			end
+		end;
+		--
+		function Library:ChangeAccent(Color)
+			Library.Accent = Color
+
+			for obj, theme in next, Library.ThemeObjects do
+				if theme:IsA("Frame") or theme:IsA("TextButton") then
+					theme.BackgroundColor3 = Color
+				elseif theme:IsA("TextLabel") then
+					theme.TextColor3 = Color
+				elseif theme:IsA("ScrollingFrame") then
+					theme.ScrollBarImageColor3 = Library.Accent
+				end
+			end
+		end
+		--
+		function Library:IsMouseOverFrame(Frame)
+			local AbsPos, AbsSize = Frame.AbsolutePosition, Frame.AbsoluteSize;
+
+			if Mouse.X >= AbsPos.X and Mouse.X <= AbsPos.X + AbsSize.X
+				and Mouse.Y >= AbsPos.Y and Mouse.Y <= AbsPos.Y + AbsSize.Y then
+
+				return true;
+			end;
+		end;
+	end
+
+	-- // Colorpicker Element
+	do
+		function Library:NewPicker(name, default, parent, count, flag, callback)
+			-- // Instances
+			local ColorpickerFrame = Instance.new("TextButton")
+			ColorpickerFrame.Name = "Colorpicker_frame"
+			ColorpickerFrame.BackgroundColor3 = default
+			ColorpickerFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ColorpickerFrame.BorderSizePixel = 0
+			if count == 1 then
+				ColorpickerFrame.Position = UDim2.new(1, - (count * 20),0.5,0)
+			else
+				ColorpickerFrame.Position = UDim2.new(1, - (count * 20) - (count * 4),0.5,0)
+			end
+			ColorpickerFrame.Size = UDim2.new(0, 20, 0, 20)
+			ColorpickerFrame.AnchorPoint = Vector2.new(0,0.5)
+			ColorpickerFrame.Text = ""
+			ColorpickerFrame.AutoButtonColor = false
+
+			local UICorner = Instance.new("UICorner")
+			UICorner.Name = "UICorner"
+			UICorner.CornerRadius = UDim.new(0, 4)
+			UICorner.Parent = ColorpickerFrame
+
+			local UIStroke = Instance.new("UIStroke")
+			UIStroke.Name = "UIStroke"
+			UIStroke.Color = Color3.fromRGB(40, 40, 40)
+			UIStroke.Parent = ColorpickerFrame
+
+			ColorpickerFrame.Parent = parent
+
+			local Colorpicker = Instance.new("TextButton")
+			Colorpicker.Name = "Colorpicker"
+			Colorpicker.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+			Colorpicker.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Colorpicker.BorderSizePixel = 0
+			Colorpicker.Position = UDim2.new(0, ColorpickerFrame.AbsolutePosition.X - 100, 0, ColorpickerFrame.AbsolutePosition.Y - 50)
+			Colorpicker.Size = UDim2.new(0, 180, 0, 180)
+			Colorpicker.Parent = Library.ScreenGUI
+			Colorpicker.ZIndex = 100
+			Colorpicker.Visible = false
+			Colorpicker.Text = ""
+			Colorpicker.AutoButtonColor = false
+			local H,S,V = default:ToHSV()
+			local ImageLabel = Instance.new("ImageLabel")
+			ImageLabel.Name = "ImageLabel"
+			ImageLabel.Image = "rbxassetid://11970108040"
+			ImageLabel.BackgroundColor3 = Color3.fromHSV(H, 1, 1)
+			ImageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ImageLabel.BorderSizePixel = 0
+			ImageLabel.Position = UDim2.new(0.0556, 0, 0.026, 0)
+			ImageLabel.Size = UDim2.new(0, 160, 0, 154)
+			ImageLabel.Parent = Colorpicker
+
+			local UICorner = Instance.new("UICorner")
+			UICorner.Name = "UICorner"
+			UICorner.CornerRadius = UDim.new(0, 6)
+			UICorner.Parent = Colorpicker
+
+			local ImageButton = Instance.new("ImageButton")
+			ImageButton.Name = "ImageButton"
+			ImageButton.Image = "rbxassetid://14684562507"
+			ImageButton.BackgroundColor3 = Color3.fromHSV(H, 1, 1)
+			ImageButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ImageButton.BorderSizePixel = 0
+			ImageButton.Position = UDim2.new(0.056, 0, 0.026, 0)
+			ImageButton.Size = UDim2.new(0, 160, 0, 154)
+			ImageButton.AutoButtonColor = false
+
+			local SVSlider = Instance.new("Frame")
+			SVSlider.Name = "SV_slider"
+			SVSlider.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			SVSlider.BackgroundTransparency = 1
+			SVSlider.ClipsDescendants = true
+			SVSlider.Position = UDim2.new(0.855, 0, 0.0966, 0)
+			SVSlider.Size = UDim2.new(0,7,0,7)
+			SVSlider.ZIndex = 3
+
+			local Val = Instance.new("ImageLabel")
+			Val.Name = "Val"
+			Val.Image = "http://www.roblox.com/asset/?id=14684563800"
+			Val.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Val.BackgroundTransparency = 1
+			Val.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Val.BorderSizePixel = 0
+			Val.Size = UDim2.new(1, 0, 1, 0)
+			Val.Parent = ImageButton
+
+			local UICorner1 = Instance.new("UICorner")
+			UICorner1.Name = "UICorner"
+			UICorner1.CornerRadius = UDim.new(0, 100)
+			UICorner1.Parent = SVSlider
+
+			local UIStroke = Instance.new("UIStroke")
+			UIStroke.Name = "UIStroke"
+			UIStroke.Color = Color3.fromRGB(255, 255, 255)
+			UIStroke.Parent = SVSlider
+
+			SVSlider.Parent = ImageButton
+
+			ImageButton.Parent = Colorpicker
+
+			local ImageButton1 = Instance.new("ImageButton")
+			ImageButton1.Name = "ImageButton"
+			ImageButton1.Image = "http://www.roblox.com/asset/?id=16789872274"
+			ImageButton1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			ImageButton1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ImageButton1.BorderSizePixel = 0
+			ImageButton1.Position = UDim2.new(0.5, 0,0, 165)
+			ImageButton1.Size = UDim2.new(0, 160,0, 8)
+			ImageButton1.AutoButtonColor = false
+			ImageButton1.AnchorPoint = Vector2.new(0.5,0)
+			ImageButton1.BackgroundTransparency = 1
+
+			local Frame = Instance.new("Frame")
+			Frame.Name = "Frame"
+			Frame.BackgroundColor3 = Color3.fromRGB(254, 254, 254)
+			Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Frame.BorderSizePixel = 0
+			Frame.Position = UDim2.new(0.926, 0,0.5, 0)
+			Frame.Size = UDim2.new(0, 12,0, 12)
+			Frame.AnchorPoint = Vector2.new(0,0.5)
+			Frame.ZIndex = 45
+
+			local UICorner2 = Instance.new("UICorner")
+			UICorner2.Name = "UICorner"
+			UICorner2.Parent = Frame
+			UICorner2.CornerRadius = UDim.new(1,0)
+
+			local UICorner3 = Instance.new("UICorner")
+			UICorner3.Name = "UICorner"
+			UICorner3.Parent = ImageButton1
+
+			Frame.Parent = ImageButton1
+
+			ImageButton1.Parent = Colorpicker
+
+			-- // Connections
+			local mouseover = false
+			local hue, sat, val = default:ToHSV()
+			local hsv = default:ToHSV()
+			local oldcolor = hsv
+			local slidingsaturation = false
+			local slidinghue = false
+			local slidingalpha = false
+
+			local function update()
+				local real_pos = game:GetService("UserInputService"):GetMouseLocation()
+				local mouse_position = Vector2.new(real_pos.X, real_pos.Y - 30)
+				local relative_palette = (mouse_position - ImageButton.AbsolutePosition)
+				local relative_hue     = (mouse_position - ImageButton1.AbsolutePosition)
+				--
+				if slidingsaturation then
+					sat = math.clamp(1 - relative_palette.X / ImageButton.AbsoluteSize.X, 0, 1)
+					val = math.clamp(1 - relative_palette.Y / ImageButton.AbsoluteSize.Y, 0, 1)
+				elseif slidinghue then
+					hue = math.clamp(relative_hue.X / ImageButton.AbsoluteSize.X, 0, 1)
+				end
+
+				hsv = Color3.fromHSV(hue, sat, val)
+				TweenService:Create(SVSlider, TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(math.clamp(1 - sat, 0.000, 1 - 0.055), 0, math.clamp(1 - val, 0.000, 1 - 0.045), 0)}):Play()
+				ImageButton.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
+				ColorpickerFrame.BackgroundColor3 = hsv
+
+				TweenService:Create(Frame, TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(math.clamp(hue, 0.000, 0.982),-5,0.5,0)}):Play()
+
+				if flag then
+					Library.Flags[flag] = Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255)
+				end
+
+				callback(Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255))
+			end
+
+			local function set(color)
+				if type(color) == "table" then
+					color = Color3.fromHSV(color[1], color[2], color[3])
+				end
+				if type(color) == "string" then
+					color = Color3.fromHex(color)
+				end
+
+				local oldcolor = hsv
+
+				hue, sat, val = color:ToHSV()
+				hsv = Color3.fromHSV(hue, sat, val)
+
+				if hsv ~= oldcolor then
+					ColorpickerFrame.BackgroundColor3 = hsv
+					TweenService:Create(SVSlider, TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(math.clamp(1 - sat, 0.000, 1 - 0.055), 0, math.clamp(1 - val, 0.000, 1 - 0.045), 0)}):Play()
+					ImageButton.BackgroundColor3 = Color3.fromHSV(hue, 1, 1)
+					TweenService:Create(Frame, TweenInfo.new(0.05, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(math.clamp(hue, 0.000, 0.982),-5,0.5,0)}):Play()
+
+					if flag then
+						Library.Flags[flag] = Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255)
+					end
+
+					callback(Color3.fromRGB(hsv.r * 255, hsv.g * 255, hsv.b * 255))
+				end
+			end
+
+			Flags[flag] = set
+
+			set(default)
+
+			ImageButton.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					slidingsaturation = true
+					update()
+				end
+			end)
+
+			ImageButton.InputEnded:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					slidingsaturation = false
+					update()
+				end
+			end)
+
+			ImageButton1.InputBegan:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					slidinghue = true
+					update()
+				end
+			end)
+
+			ImageButton1.InputEnded:Connect(function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					slidinghue = false
+					update()
+				end
+			end)
+
+			Library:Connection(game:GetService("UserInputService").InputChanged, function(input)
+				if input.UserInputType == Enum.UserInputType.MouseMovement then
+					if slidinghue then
+						update()
+					end
+
+					if slidingsaturation then
+						update()
+					end
+				end
+			end)
+
+			local colorpickertypes = {}
+
+			function colorpickertypes:Set(color, newalpha)
+				set(color, newalpha)
+			end
+
+			Library:Connection(game:GetService("UserInputService").InputBegan, function(Input)
+				if Colorpicker.Visible and Input.UserInputType == Enum.UserInputType.MouseButton1 then
+					if not Library:IsMouseOverFrame(Colorpicker) and not Library:IsMouseOverFrame(ColorpickerFrame) then
+						Colorpicker.Position = UDim2.new(0, ColorpickerFrame.AbsolutePosition.X - 100, 0, ColorpickerFrame.AbsolutePosition.Y + 25)
+						TweenService:Create(Colorpicker, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+						TweenService:Create(Colorpicker, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Position = UDim2.new(0, ColorpickerFrame.AbsolutePosition.X - 100, 0, ColorpickerFrame.AbsolutePosition.Y)}):Play()
+						task.spawn(function()
+							task.wait(0.1)
+							Colorpicker.Visible = false
+							parent.ZIndex = 1
+							Library.Cooldown = false
+						end)
+						for _,V in next, Colorpicker:GetDescendants() do
+							if V:IsA("Frame") or V:IsA("TextButton") or V:IsA("ScrollingFrame") then
+								TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+								Library.VisValues[V] = V.BackgroundTransparency
+							elseif V:IsA("TextLabel") or V:IsA("TextBox") then
+								TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
+								Library.VisValues[V] = V.TextTransparency
+							elseif V:IsA("ImageLabel") or V:IsA("ImageButton") then
+								TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {ImageTransparency = 1}):Play();
+								Library.VisValues[V] = V.ImageTransparency
+							elseif V:IsA("UIStroke") then
+								TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Transparency = 1}):Play()
+								Library.VisValues[V] = V.Transparency
+							end
+						end
+					end
+				end
+			end)
+
+			ColorpickerFrame.MouseButton1Down:Connect(function()
+				if Colorpicker.Visible == false then
+					Colorpicker.Position = UDim2.new(0, ColorpickerFrame.AbsolutePosition.X - 100, 0, ColorpickerFrame.AbsolutePosition.Y)
+					TweenService:Create(Colorpicker, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0, ColorpickerFrame.AbsolutePosition.X - 100, 0, ColorpickerFrame.AbsolutePosition.Y + 25)}):Play()
+				end
+				Colorpicker.Visible = true
+				parent.ZIndex = 100
+				Library.Cooldown = true
+				TweenService:Create(Colorpicker, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+				for _,V in next, Colorpicker:GetDescendants() do
+					if V:IsA("Frame") or V:IsA("TextButton") or V:IsA("ScrollingFrame") then
+						TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = Library.VisValues[V]}):Play()
+					elseif V:IsA("TextLabel") or V:IsA("TextBox") then
+						TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {TextTransparency = Library.VisValues[V]}):Play()
+					elseif V:IsA("ImageLabel") or V:IsA("ImageButton") then
+						TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {ImageTransparency = Library.VisValues[V]}):Play();
+					elseif V:IsA("UIStroke") then
+						TweenService:Create(V, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Transparency = 0}):Play()
+					end
+				end
+
+				if slidinghue then
+					slidinghue = false
+				end
+
+				if slidingsaturation then
+					slidingsaturation = false
+				end
+			end)
+
+			return colorpickertypes, Colorpicker
+		end
+	end
+
+
+	function Library:updateNotifsPositions(position)
+		for i, v in pairs(Library.Notifs) do 
+			local Position = Vector2.new(20, 20)
+			game:GetService("TweenService"):Create(v.Container, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Position = UDim2.new(0,Position.X,0,Position.Y + (i * 25))}):Play()
+		end 
+	end
+
+	function Library:Notification(message, duration)
+		local notification = {Container = nil, Objects = {}}
+		--
+		local Position = Vector2.new(20, 20)
+		--
+		local NewInd = Instance.new("Frame")
+		NewInd.Name = "NewInd"
+		NewInd.AutomaticSize = Enum.AutomaticSize.X
+		NewInd.Position = UDim2.new(0,20,0,20)
+		NewInd.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+		NewInd.BackgroundTransparency = 1
+		NewInd.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		NewInd.Size = UDim2.fromOffset(0, 20)
+		NewInd.Parent = Library.ScreenGUI
+		notification.Container = NewInd
+
+		local Outline = Instance.new("Frame")
+		Outline.Name = "Outline"
+		Outline.AnchorPoint = Vector2.new(0, 0)
+		Outline.AutomaticSize = Enum.AutomaticSize.X
+		Outline.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+		Outline.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Outline.BorderSizePixel = 1
+		Outline.Position = UDim2.new(0,0,0,0)
+		Outline.Size = UDim2.fromOffset(0, 20)
+		Outline.Visible = true
+		Outline.ZIndex = 50
+		Outline.Parent = NewInd
+		Outline.BackgroundTransparency = 1
+
+		local UICorner = Instance.new("UICorner")
+		UICorner.Name = "UICorner"
+		UICorner.CornerRadius = UDim.new(0, 4)
+		UICorner.Parent = Outline
+
+		local UIStroke = Instance.new("UIStroke")
+		UIStroke.Name = "UIStroke"
+		UIStroke.Parent = Outline
+		UIStroke.Transparency = 1
+
+		local Inline = Instance.new("Frame")
+		Inline.Name = "Inline"
+		Inline.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+		Inline.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Inline.BorderSizePixel = 0
+		Inline.Position = UDim2.fromOffset(1, 1)
+		Inline.Size = UDim2.new(1, -2, 1, -2)
+		Inline.ZIndex = 51
+		Inline.BackgroundTransparency = 1
+
+		local UICorner2 = Instance.new("UICorner")
+		UICorner2.Name = "UICorner_2"
+		UICorner2.CornerRadius = UDim.new(0, 4)
+		UICorner2.Parent = Inline
+
+		local Title = Instance.new("TextLabel")
+		Title.Name = "Title"
+		Title.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+		Title.RichText = true
+		Title.Text = message
+		Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+		Title.TextSize = 13
+		Title.TextXAlignment = Enum.TextXAlignment.Left
+		Title.AutomaticSize = Enum.AutomaticSize.X
+		Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Title.BackgroundTransparency = 1
+		Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Title.BorderSizePixel = 0
+		Title.Position = UDim2.fromOffset(5, 0)
+		Title.Size = UDim2.fromScale(0, 1)
+		Title.Parent = Inline
+		Title.TextTransparency = 1
+
+		local UIPadding = Instance.new("UIPadding")
+		UIPadding.Name = "UIPadding"
+		UIPadding.PaddingRight = UDim.new(0, 6)
+		UIPadding.Parent = Inline
+
+		Inline.Parent = Outline
+
+
+		function notification:remove()
+			table.remove(Library.Notifs, table.find(Library.Notifs, notification))
+			Library:updateNotifsPositions(Position)
+			task.wait(0.5)
+			NewInd:Destroy()
+		end
+
+		task.spawn(function()
+			Outline.AnchorPoint = Vector2.new(1,0)
+			for i,v in next, NewInd:GetDescendants() do
+				if v:IsA("Frame") then
+					game:GetService("TweenService"):Create(v, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+				elseif v:IsA("UIStroke") then
+					game:GetService("TweenService"):Create(v, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Transparency = 0}):Play()
+				end
+			end
+			local Tween1 = game:GetService("TweenService"):Create(Outline, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {AnchorPoint = Vector2.new(0,0)}):Play()
+			game:GetService("TweenService"):Create(Title, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {TextTransparency = 0}):Play()
+			task.wait(duration)
+			--game:GetService("TweenService"):Create(ActualInd, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {AnchorPoint = Vector2.new(1,0)}):Play()
+			for i,v in next, NewInd:GetDescendants() do
+				if v:IsA("Frame") then
+					game:GetService("TweenService"):Create(v, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+				elseif v:IsA("UIStroke") then
+					game:GetService("TweenService"):Create(v, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Transparency = 1}):Play()
+				end
+			end
+			game:GetService("TweenService"):Create(Title, TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {TextTransparency = 1}):Play()
+		end)
+
+		task.delay(duration + 0.1, function()
+			notification:remove()
+		end)
+
+		table.insert(Library.Notifs, notification)
+		Library:updateNotifsPositions(Position)
+		NewInd.Position = UDim2.new(0,Position.X,0,Position.Y + (table.find(Library.Notifs, notification) * 25))
+		return notification
+	end
+
+	-- // Main
+	do
+		local Pages = Library.Pages;
+		local Sections = Library.Sections;
+		--
+		function Library:New(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Window = {
+				Size = Properties.Size or UDim2.new(0,600,0,450),
+				Pages = {},
+				PageAxis = 0,
+				Dragging = { false, UDim2.new(0, 0, 0, 0) },
+				Resized = nil,
+				Elements = {},
+			}
+			--
+			local ScreenGui = Instance.new('ScreenGui', game:GetService("RunService"):IsStudio() and game.Players.LocalPlayer.PlayerGui or game.CoreGui)
+			local Outline = Instance.new('Frame', ScreenGui)
+			local UICorner = Instance.new('UICorner', Outline)
+			local UIStroke = Instance.new('UIStroke', Outline)
+			local Inline = Instance.new('Frame', Outline)
+			local UICorner_2 = Instance.new('UICorner', Inline)
+			local Holder = Instance.new('Frame', Inline)
+			local UICorner = Instance.new('UICorner', Holder)
+			local Frame = Instance.new('Frame', Holder)
+			local Tabs = Instance.new('Frame', Inline)
+			local UIListLayout = Instance.new('UIListLayout', Tabs)
+			local TextButton = Instance.new('TextButton', Inline)
+			--
+			ScreenGui.DisplayOrder = 100
+			ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+			Library.ScreenGUI = ScreenGui
+			--
+			Outline.Name = "Outline"
+			Outline.Position = UDim2.new(0.5,0,0.5,0)
+			Outline.Size = UDim2.new(0,0,0,40)
+			Outline.BackgroundColor3 = Color3.new(0.1961,0.1961,0.1961)
+			Outline.BorderColor3 = Color3.new(0,0,0)
+			Outline.AnchorPoint = Vector2.new(0.5,0.5)
+			Outline.ZIndex = 50
+			Outline.ClipsDescendants = false
+			Library.Holder = Outline
+			Library.OldSize = Window.Size
+			--
+			Inline.Name = "Inline"
+			Inline.Position = UDim2.new(0,1,0,1)
+			Inline.Size = UDim2.new(1,-2,1,-2)
+			Inline.BackgroundColor3 = Color3.new(0.051,0.051,0.051)
+			Inline.BorderSizePixel = 0
+			Inline.BorderColor3 = Color3.new(0,0,0)
+			Inline.ZIndex = 51
+			--
+			Holder.Name = "Holder"
+			Holder.Position = UDim2.new(0,150,0,0)
+			Holder.Size = UDim2.new(1,-150,1,0)
+			Holder.BackgroundColor3 = Color3.new(0.0588235, 0.0588235, 0.0588235)
+			Holder.BorderSizePixel = 0
+			Holder.BorderColor3 = Color3.new(0,0,0)
+			Holder.ZIndex = 52
+			--
+			Frame.Size = UDim2.new(0,5,1,0)
+			Frame.BackgroundColor3 = Color3.new(0.0588235, 0.0588235, 0.0588235)
+			Frame.BorderSizePixel = 0
+			Frame.BorderColor3 = Color3.new(0,0,0)
+			--
+			Tabs.Name = "Tabs"
+			Tabs.Position = UDim2.new(0,5,0,10)
+			Tabs.Size = UDim2.new(0,140,1,-20)
+			Tabs.BackgroundColor3 = Color3.new(1,1,1)
+			Tabs.BackgroundTransparency = 1.01
+			Tabs.BorderSizePixel = 0
+			Tabs.BorderColor3 = Color3.new(0,0,0)
+			--
+			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			UIListLayout.Padding = UDim.new(0,4)
+			--
+			TextButton.Size = UDim2.new(1,0,0,20)
+			TextButton.BackgroundColor3 = Color3.new(1,1,1)
+			TextButton.BackgroundTransparency = 1
+			TextButton.BorderSizePixel = 0
+			TextButton.BorderColor3 = Color3.new(0,0,0)
+			TextButton.Text = ""
+			TextButton.TextColor3 = Color3.new(0,0,0)
+			TextButton.AutoButtonColor = false
+			TextButton.Font = Enum.Font.SourceSans
+			TextButton.TextSize = 14
+			TextButton.ZIndex = 100
+
+			local Line1 = Instance.new("Frame")
+			Line1.Name = "Line1"
+			Line1.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Line1.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Line1.BorderSizePixel = 0
+			Line1.Position = UDim2.fromOffset(0, 50)
+			Line1.Size = UDim2.new(1, 0, 0, 1)
+			Line1.Parent = Holder
+
+			local Line2 = Instance.new("Frame")
+			Line2.Name = "Line2"
+			Line2.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Line2.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Line2.BorderSizePixel = 0
+			Line2.Size = UDim2.new(0, 1, 1, 0)
+			Line2.Parent = Holder
+
+			local Logo = Instance.new("ImageLabel")
+			Logo.Name = "Logo"
+			Logo.Image = "http://www.roblox.com/asset/?id=17669613413"
+			Logo.ScaleType = Enum.ScaleType.Fit
+			Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Logo.BackgroundTransparency = 1
+			Logo.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Logo.BorderSizePixel = 0
+			Logo.Position = UDim2.fromOffset(10, -20)
+			Logo.Size = UDim2.fromOffset(90, 90)
+			Logo.Parent = Holder
+
+			local FadeThing = Instance.new("Frame")
+			FadeThing.Name = "FadeThing"
+			FadeThing.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+			FadeThing.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			FadeThing.BorderSizePixel = 0
+			FadeThing.Position = UDim2.fromOffset(9, 59)
+			FadeThing.Size = UDim2.new(1, -18, 1, -63)
+			FadeThing.ZIndex = 55
+			FadeThing.Parent = Holder
+			FadeThing.Visible = false
+
+			-- // Elements
+			Window.Elements = {
+				TabHolder = Tabs,
+				Holder = Holder,
+				FadeThing = FadeThing
+			}
+
+			-- // Dragging
+			Library:Connection(TextButton.MouseButton1Down, function()
+				local Location = game:GetService("UserInputService"):GetMouseLocation()
+				Window.Dragging[1] = true
+				Window.Dragging[2] =
+					UDim2.new(0, Location.X - Outline.AbsolutePosition.X, 0, Location.Y - Outline.AbsolutePosition.Y)
+			end)
+			Library:Connection(TextButton.MouseButton1Up, function()
+				Window.Dragging[1] = false
+				Window.Dragging[2] = UDim2.new(0, 0, 0, 0)
+			end)
+			Library:Connection(game:GetService("UserInputService").InputChanged, function(Input)
+				local Location = game:GetService("UserInputService"):GetMouseLocation()
+				local ActualLocation = nil
+
+				-- Dragging
+				if Window.Dragging[1] then
+
+					game:GetService("TweenService"):Create(Outline, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,Location.X - Window.Dragging[2].X.Offset + (Outline.Size.X.Offset * Outline.AnchorPoint.X),0,Location.Y - Window.Dragging[2].Y.Offset + (Outline.Size.Y.Offset * Outline.AnchorPoint.Y))}):Play()
+				end
+			end)
+
+			-- // Functions
+			function Window:UpdateTabs()
+				for Index, Page in pairs(Window.Pages) do
+					Page:Turn(Page.Open)
+				end
+			end
+
+			Library:Connection(game:GetService("UserInputService").InputBegan, function(Inp)
+				if Inp.KeyCode == Library.UIKey then
+					Library:SetOpen(not Library.Open)
+				end
+			end)
+
+			game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Window.Size.X.Offset,0,Window.Size.Y.Offset)}):Play()
+
+			-- // Returns
+			Library.Holder = Outline
+			return setmetatable(Window, Library)
+		end
+		--
+		function Library:Seperator(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Page = {
+				Name = Properties.Name or "Page",
+				Window = self,
+				Elements = {},
+			}
+			--
+			local TextSep = Instance.new('Frame', Page.Window.Elements.TabHolder)
+			local TextLabel = Instance.new('TextLabel', TextSep)
+			--
+			TextSep.Name = "TextSep"
+			TextSep.Size = UDim2.new(1,0,0,20)
+			TextSep.BackgroundColor3 = Color3.new(1,1,1)
+			TextSep.BackgroundTransparency = 1
+			TextSep.BorderSizePixel = 0
+			TextSep.BorderColor3 = Color3.new(0,0,0)
+			--
+			TextLabel.Position = UDim2.new(0,8,0,0)
+			TextLabel.Size = UDim2.new(1,-10,1,0)
+			TextLabel.BackgroundColor3 = Color3.new(1,1,1)
+			TextLabel.BackgroundTransparency = 1
+			TextLabel.BorderSizePixel = 0
+			TextLabel.BorderColor3 = Color3.new(0,0,0)
+			TextLabel.Text = Page.Name
+			TextLabel.TextColor3 = Color3.new(0.7059,0.7059,0.7059)
+			TextLabel.Font = Enum.Font.Gotham
+			TextLabel.TextSize = Library.FontSize
+			TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+		end
+		--
+		function Library:Page(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Page = {
+				Name = Properties.Name or "Page",
+				Icon = Properties.Icon or "http://www.roblox.com/asset/?id=6022668955",
+				Window = self,
+				Open = false,
+				Sections = {},
+				Elements = {},
+			}
+			--
+			local TabButton = Instance.new('TextButton', Page.Window.Elements.TabHolder)
+			local UICorner_3 = Instance.new('UICorner', TabButton)
+			local Accent = Instance.new('Frame', TabButton)
+			local UICorner = Instance.new('UICorner', Accent)
+			local Title = Instance.new('TextLabel', TabButton)
+			local Icon = Instance.new('ImageLabel', TabButton)
+			local NewPage = Instance.new('Frame', Page.Window.Elements.Holder)
+			local Left = Instance.new('Frame', NewPage)
+			local LeftLayout = Instance.new('UIListLayout', Left)
+			local Right = Instance.new('Frame', NewPage)
+			local RightLayout = Instance.new('UIListLayout', Right)
+			--
+			TabButton.Name = "TabButton"
+			TabButton.Size = UDim2.new(1,0,0,30)
+			TabButton.BackgroundColor3 = Color3.new(0.0784,0.0784,0.0784)
+			TabButton.BorderSizePixel = 0
+			TabButton.BackgroundTransparency = 1
+			TabButton.BorderColor3 = Color3.new(0,0,0)
+			TabButton.Text = ""
+			TabButton.TextColor3 = Color3.new(0,0,0)
+			TabButton.AutoButtonColor = false
+			TabButton.Font = Enum.Font.SourceSans
+			TabButton.TextSize = 14
+			TabButton.ClipsDescendants = true
+			--
+			Accent.Name = "Accent"
+			Accent.Position = UDim2.new(0,-8,0,5)
+			Accent.Size = UDim2.new(0,10,1,-10)
+			Accent.BackgroundColor3 = Library.Accent
+			Accent.BorderSizePixel = 0
+			Accent.BorderColor3 = Color3.new(0,0,0)
+			Accent.BackgroundTransparency = 0
+			table.insert(Library.ThemeObjects, Accent)
+			--
+			Title.Name = "Title"
+			Title.Position = UDim2.new(0,35,0,0)
+			Title.Size = UDim2.new(1,-10,1,0)
+			Title.BackgroundColor3 = Color3.new(1,1,1)
+			Title.BackgroundTransparency = 1
+			Title.BorderSizePixel = 0
+			Title.BorderColor3 = Color3.new(0,0,0)
+			Title.Text = Page.Name
+			Title.TextColor3 = Color3.fromRGB(120,120,120)
+			Title.Font = Enum.Font.Gotham
+			Title.TextSize = Library.FontSize
+			Title.TextXAlignment = Enum.TextXAlignment.Left
+			--
+			Icon.Name = "Icon"
+			Icon.Position = UDim2.new(0,11,0,8)
+			Icon.Size = UDim2.new(0,15,0,15)
+			Icon.BackgroundColor3 = Color3.new(1,1,1)
+			Icon.BackgroundTransparency = 1
+			Icon.BorderSizePixel = 0
+			Icon.BorderColor3 = Color3.new(0,0,0)
+			Icon.Image = Page.Icon
+			Icon.ImageColor3 = Color3.fromRGB(120,120,120)
+			--
+			NewPage.Name = "NewPage"
+			NewPage.Position = UDim2.new(0,10,0,60)
+			NewPage.Size = UDim2.new(1,-20,1,-65)
+			NewPage.BackgroundColor3 = Color3.new(1,1,1)
+			NewPage.BackgroundTransparency = 1
+			NewPage.BorderSizePixel = 0
+			NewPage.BorderColor3 = Color3.new(0,0,0)
+			NewPage.ZIndex = 53
+			NewPage.Visible = false
+			--
+			Left.Name = "Left"
+			Left.Size = UDim2.new(0.5,-4,1,0)
+			Left.BackgroundColor3 = Color3.new(1,1,1)
+			Left.BackgroundTransparency = 1
+			Left.BorderSizePixel = 0
+			Left.BorderColor3 = Color3.new(0,0,0)
+			Left.ZIndex = 54
+			--
+			LeftLayout.Name = "LeftLayout"
+			LeftLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			LeftLayout.Padding = UDim.new(0,8)
+			--
+			Right.Name = "Right"
+			Right.Position = UDim2.new(0.5,4,0,0)
+			Right.Size = UDim2.new(0.5,-4,1,0)
+			Right.BackgroundColor3 = Color3.new(1,1,1)
+			Right.BackgroundTransparency = 1
+			Right.BorderSizePixel = 0
+			Right.BorderColor3 = Color3.new(0,0,0)
+			Right.ZIndex = 53
+			--
+			RightLayout.Name = "RightLayout"
+			RightLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			RightLayout.Padding = UDim.new(0,8)
+
+			-- // Functions
+			function Page:Turn(bool)
+				Page.Open = bool
+				task.spawn(function()
+					Page.Window.Elements.FadeThing.Visible = true
+					TweenService:Create(Page.Window.Elements.FadeThing, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+					task.wait(0.1)
+					NewPage.Visible = Page.Open
+					TweenService:Create(Page.Window.Elements.FadeThing, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+					task.wait(0.1)
+					Page.Window.Elements.FadeThing.Visible = false
+				end)
+				game:GetService("TweenService"):Create(TabButton, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = Page.Open and 0 or 1}):Play()
+				game:GetService("TweenService"):Create(Title, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {TextColor3 = Page.Open and Color3.fromRGB(200,200,200) or Color3.fromRGB(120,120,120)}):Play()
+				game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {ImageColor3 = Page.Open and Color3.fromRGB(200,200,200) or Color3.fromRGB(120,120,120)}):Play()
+				game:GetService("TweenService"):Create(Accent, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {BackgroundTransparency = Page.Open and 0 or 1}):Play()
+			end
+			--
+			Library:Connection(TabButton.MouseButton1Click, function()
+				if not Page.Open then
+					Page:Turn(true)
+					for _, Pages in pairs(Page.Window.Pages) do
+						if Pages.Open and Pages ~= Page then
+							Pages:Turn(false)
+						end
+					end
+				end
+			end)
+			--
+			Library:Connection(TabButton.MouseEnter, function()
+				if not Page.Open then
+					game:GetService("TweenService"):Create(Title, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(180,180,180)}):Play()
+					game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(180,180,180)}):Play()
+				end
+			end)
+			--
+			Library:Connection(TabButton.MouseLeave, function()
+				if not Page.Open then
+					game:GetService("TweenService"):Create(Title, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(120,120,120)}):Play()
+					game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(120,120,120)}):Play()
+				end
+			end)
+
+			-- // Elements
+			Page.Elements = {
+				Left = Left,
+				Right = Right,
+				TabButton = TabButton
+			}
+
+			-- // Drawings
+			if #Page.Window.Pages == 0 then
+				Page:Turn(true)
+			end
+			Page.Window.Pages[#Page.Window.Pages + 1] = Page
+			Page.Window:UpdateTabs()
+			return setmetatable(Page, Library.Pages)
+		end
+		--
+		function Pages:Section(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Section = {
+				Name = Properties.Name or "Section",
+				Page = self,
+				Side = (Properties.side or Properties.Side or "left"):lower(),
+				Size = Properties.size or Properties.Size or 200,
+				Elements = {},
+				Content = {},
+			}
+			--
+			local NewSection = Instance.new('Frame', Section.Side == "left" and Section.Page.Elements.Left or Section.Side == "right" and Section.Page.Elements.Right)
+			local UIStroke = Instance.new('UIStroke', NewSection)
+			local UICorner = Instance.new('UICorner', NewSection)
+			local Frame = Instance.new('Frame', NewSection)
+			local Title = Instance.new('TextLabel', NewSection)
+			local Content = Instance.new('Frame', NewSection)
+			local UIListLayout = Instance.new('UIListLayout', Content)
+			--
+			NewSection.Name = "NewSection"
+			NewSection.Size = Section.Size == "Fill" and UDim2.new(1,0,1,0) or UDim2.new(1,0,0,Section.Size)
+			NewSection.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
+			NewSection.BorderSizePixel = 0
+			NewSection.BorderColor3 = Color3.new(0,0,0)
+			NewSection.ZIndex = 53
+			--
+			UIStroke.Color = Color3.new(0.137255, 0.137255, 0.137255)
+			--
+			Frame.Position = UDim2.new(0,0,0,20)
+			Frame.Size = UDim2.new(1,0,0,1)
+			Frame.BackgroundColor3 = Color3.new(0.1569,0.1569,0.1569)
+			Frame.BorderSizePixel = 0
+			Frame.BorderColor3 = Color3.new(0,0,0)
+			--
+			Title.Name = "Title"
+			Title.Position = UDim2.new(0,8,0,1)
+			Title.Size = UDim2.new(1,-10,0,20)
+			Title.BackgroundColor3 = Color3.new(1,1,1)
+			Title.BackgroundTransparency = 1
+			Title.BorderSizePixel = 0
+			Title.BorderColor3 = Color3.new(0,0,0)
+			Title.Text = Section.Name
+			Title.TextColor3 = Color3.new(0.7059,0.7059,0.7059)
+			Title.Font = Enum.Font.Gotham
+			Title.TextSize = Library.FontSize
+			Title.TextXAlignment = Enum.TextXAlignment.Left
+			--
+			Content.Name = "Content"
+			Content.Position = UDim2.new(0,10,0,30)
+			Content.Size = UDim2.new(1,-20,1,-40)
+			Content.BackgroundColor3 = Color3.new(1,1,1)
+			Content.BackgroundTransparency = 1
+			Content.BorderSizePixel = 0
+			Content.BorderColor3 = Color3.new(0,0,0)
+			Content.ZIndex = 53
+			--
+			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			UIListLayout.Padding = UDim.new(0,8)
+
+			-- // Elements
+			Section.Elements = {
+				SectionContent = Content
+			}
+
+			-- // Returning
+			Section.Page.Sections[#Section.Page.Sections + 1] = Section
+			return setmetatable(Section, Library.Sections)
+		end
+		--
+		function Sections:Toggle(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Toggle = {
+				Window = self.Window,
+				Page = self.Page,
+				Section = self,
+				Risk = Properties.Risk or false,
+				Name = Properties.Name or "Toggle",
+				State = (
+					Properties.state
+						or Properties.State
+						or Properties.def
+						or Properties.Def
+						or Properties.default
+						or Properties.Default
+						or false
+				),
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+				Flag = (
+					Properties.flag
+						or Properties.Flag
+						or Properties.pointer
+						or Properties.Pointer
+						or Library.NextFlag()
+				),
+				Toggled = false,
+			}
+			--
+			local NewToggle = Instance.new('TextButton', Toggle.Section.Elements.SectionContent)
+			local ToggleTitle = Instance.new('TextLabel', NewToggle)
+			local ToggleFrame = Instance.new('Frame', NewToggle)
+			local UICorner_2 = Instance.new('UICorner', ToggleFrame)
+			local ToggleAccent = Instance.new('Frame', ToggleFrame)
+			local UICorner_3 = Instance.new('UICorner', ToggleAccent)
+			local Circle = Instance.new('Frame', ToggleFrame)
+			local UICorner_4 = Instance.new('UICorner', Circle)
+			--
+			NewToggle.Name = "NewToggle"
+			NewToggle.Size = UDim2.new(1,0,0,17)
+			NewToggle.BackgroundColor3 = Color3.new(1,1,1)
+			NewToggle.BackgroundTransparency = 1
+			NewToggle.BorderSizePixel = 0
+			NewToggle.BorderColor3 = Color3.new(0,0,0)
+			NewToggle.Text = ""
+			NewToggle.TextColor3 = Color3.new(0,0,0)
+			NewToggle.AutoButtonColor = false
+			NewToggle.Font = Enum.Font.SourceSans
+			NewToggle.TextSize = 14
+			NewToggle.ZIndex = 53
+			--
+			ToggleTitle.Name = "ToggleTitle"
+			ToggleTitle.Size = UDim2.new(1,-10,0,17)
+			ToggleTitle.BackgroundColor3 = Color3.new(1,1,1)
+			ToggleTitle.BackgroundTransparency = 1
+			ToggleTitle.BorderSizePixel = 0
+			ToggleTitle.BorderColor3 = Color3.new(0,0,0)
+			ToggleTitle.Text = Toggle.Name
+			ToggleTitle.TextColor3 = Color3.new(0.7843,0.7843,0.7843)
+			ToggleTitle.Font = Enum.Font.Gotham
+			ToggleTitle.TextSize = Library.FontSize
+			ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
+			--
+			ToggleFrame.Name = "ToggleFrame"
+			ToggleFrame.Position = UDim2.new(1,-40,0,0)
+			ToggleFrame.Size = UDim2.new(0,40,1,0)
+			ToggleFrame.BackgroundColor3 = Color3.new(0.051,0.051,0.051)
+			ToggleFrame.BorderSizePixel = 0
+			ToggleFrame.BorderColor3 = Color3.new(0,0,0)
+			ToggleFrame.ZIndex = 53
+			--
+			ToggleAccent.Name = "ToggleAccent"
+			ToggleAccent.Position = UDim2.new(0,1,0,1)
+			ToggleAccent.Size = UDim2.new(1,-2,1,-2)
+			ToggleAccent.BackgroundColor3 = Library.Accent
+			ToggleAccent.BackgroundTransparency = 1
+			ToggleAccent.BorderSizePixel = 0
+			ToggleAccent.BorderColor3 = Color3.new(0,0,0)
+			ToggleAccent.ZIndex = 53
+			table.insert(Library.ThemeObjects, ToggleAccent)
+			--
+			Circle.Name = "Circle"
+			Circle.Position = UDim2.new(0,5,0.5,-5)
+			Circle.Size = UDim2.new(0,10,0,10)
+			Circle.BackgroundColor3 = Color3.new(1,1,1)
+			Circle.BorderSizePixel = 0
+			Circle.BorderColor3 = Color3.new(0,0,0)
+			Circle.ZIndex = 53
+			--
+			UICorner_4.CornerRadius = UDim.new(1,0)
+
+			-- // Functions
+			local function SetState()
+				Toggle.Toggled = not Toggle.Toggled
+				if Toggle.Toggled then
+					game:GetService("TweenService"):Create(ToggleAccent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+					game:GetService("TweenService"):Create(Circle, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(1,-15,0.5,-5)}):Play()
+				else
+					game:GetService("TweenService"):Create(ToggleAccent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+					game:GetService("TweenService"):Create(Circle, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,5,0.5,-5)}):Play()
+				end
+				Library.Flags[Toggle.Flag] = Toggle.Toggled
+				Toggle.Callback(Toggle.Toggled)
+			end
+
+			-- // Options List
+			function Toggle:OptionList(Properties)
+				if not Properties then
+					Properties = {}
+				end
+				--
+				local Section = {
+					Elements = {},
+					Content = {},
+				}
+				--
+				local OptionButton = Instance.new('ImageButton', NewToggle)
+				local OptionList = Instance.new('Frame', OptionButton)
+				local UICorner = Instance.new('UICorner', OptionList)
+				local UIStroke = Instance.new('UIStroke', OptionList)
+				local OptionContent = Instance.new('Frame', OptionList)
+				local UIListLayout = Instance.new('UIListLayout', OptionContent)
+				--
+				OptionButton.Name = "OptionButton"
+				OptionButton.Position = UDim2.new(1,-65,0,1)
+				OptionButton.Size = UDim2.new(0,15,0,15)
+				OptionButton.BackgroundColor3 = Color3.new(1,1,1)
+				OptionButton.BackgroundTransparency = 1
+				OptionButton.BorderSizePixel = 0
+				OptionButton.BorderColor3 = Color3.new(0,0,0)
+				OptionButton.Image = "http://www.roblox.com/asset/?id=6031280882"
+				OptionButton.ImageColor3 = Color3.new(0.7843,0.7843,0.7843)
+				OptionButton.ZIndex = 54
+				--
+				OptionList.Name = "OptionList"
+				OptionList.Position = UDim2.new(0,70,0,-10)
+				OptionList.Size = UDim2.new(0,200,0,10)
+				OptionList.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
+				OptionList.BorderSizePixel = 0
+				OptionList.BorderColor3 = Color3.new(0,0,0)
+				OptionList.AutomaticSize = Enum.AutomaticSize.Y
+				OptionList.Visible = false
+				OptionList.ZIndex = 54
+				--
+				UIStroke.Color = Color3.new(0.137255, 0.137255, 0.137255)
+				--
+				OptionContent.Name = "OptionContent"
+				OptionContent.Position = UDim2.new(0,10,0,10)
+				OptionContent.Size = UDim2.new(1,-20,1,-10)
+				OptionContent.BackgroundColor3 = Color3.new(1,1,1)
+				OptionContent.BackgroundTransparency = 1
+				OptionContent.BorderSizePixel = 0
+				OptionContent.BorderColor3 = Color3.new(0,0,0)
+				OptionContent.AutomaticSize = Enum.AutomaticSize.Y
+				OptionContent.ZIndex = 54
+				--
+				UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+				UIListLayout.Padding = UDim.new(0,4)
+				--
+				Library:Connection(OptionButton.MouseButton1Click, function()
+					OptionList.Visible = not OptionList.Visible
+				end)
+				--
+				Library:Connection(game:GetService("UserInputService").InputBegan, function(Input)
+					if OptionList.Visible and Input.UserInputType == Enum.UserInputType.MouseButton1 then
+						if not Library:IsMouseOverFrame(OptionList) and not Library:IsMouseOverFrame(OptionButton) then
+							OptionList.Visible = false
+						end
+					end
+				end)
+
+				-- // Elements
+				Section.Elements = {
+					SectionContent = OptionContent
+				}
+
+				-- // Returning
+				return setmetatable(Section, Library.Sections)
+			end
+
+			-- // Misc Functions
+			function Toggle.Set(bool)
+				bool = type(bool) == "boolean" and bool or false
+				if Toggle.Toggled ~= bool then
+					SetState()
+				end
+			end
+			Toggle.Set(Toggle.State)
+			Library.Flags[Toggle.Flag] = Toggle.State
+			Flags[Toggle.Flag] = Toggle.Set
+
+			-- // Returning
+			Library:Connection(NewToggle.MouseButton1Click, SetState)
+			return Toggle
+		end
+		--
+		function Sections:Nest(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Section = {
+				Name = Properties.Name or "Section",
+				RealSection = self,
+				Size = Properties.size or Properties.Size or 200,
+				Elements = {},
+				Content = {},
+			}
+			--
+			local ScrollHolder = Instance.new("Frame", Section.RealSection.Elements.SectionContent)
+			local NewScroll = Instance.new('ScrollingFrame', ScrollHolder)
+			local UICorner2 = Instance.new('UICorner', ScrollHolder)
+			local UIStroke = Instance.new('UIStroke', ScrollHolder)
+			local ScrollContent = Instance.new('Frame', NewScroll)
+			local UIListLayout = Instance.new('UIListLayout', ScrollContent)
+			--
+			ScrollHolder.Name = "ScrollHolder"
+			ScrollHolder.Size = UDim2.new(1,0,0,Section.Size)
+			ScrollHolder.BackgroundColor3 = Color3.new(0.0784314, 0.0784314, 0.0784314)
+			ScrollHolder.BorderSizePixel = 0
+			ScrollHolder.BorderColor3 = Color3.new(0,0,0)
+			ScrollHolder.ClipsDescendants = true
+			--
+			NewScroll.Name = "NewScroll"
+			NewScroll.Size = UDim2.new(1,0,1,0)
+			NewScroll.BackgroundColor3 = Color3.new(0.098,0.098,0.098)
+			NewScroll.BackgroundTransparency = 1
+			NewScroll.BorderSizePixel = 0
+			NewScroll.BorderColor3 = Color3.new(0,0,0)
+			NewScroll.CanvasSize = UDim2.new(0,0,0,0)
+			NewScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+			NewScroll.ScrollBarThickness = 2
+			NewScroll.TopImage = ""
+			NewScroll.BottomImage = ""
+			NewScroll.VerticalScrollBarInset = Enum.ScrollBarInset.Always
+			NewScroll.ScrollBarImageColor3 = Library.Accent
+			NewScroll.ClipsDescendants = true
+			table.insert(Library.ThemeObjects, NewScroll)
+			--
+			UIStroke.Color = Color3.new(0.137255, 0.137255, 0.137255)
+			--
+			ScrollContent.Name = "ScrollContent"
+			ScrollContent.Position = UDim2.new(0,10,0,5)
+			ScrollContent.Size = UDim2.new(1,-20,0,0)
+			ScrollContent.BackgroundColor3 = Color3.new(1,1,1)
+			ScrollContent.BackgroundTransparency = 1
+			ScrollContent.BorderSizePixel = 0
+			ScrollContent.BorderColor3 = Color3.new(0,0,0)
+			ScrollContent.AutomaticSize = Enum.AutomaticSize.Y
+			--
+			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			UIListLayout.Padding = UDim.new(0,4)
+
+			-- // Elements
+			Section.Elements = {
+				SectionContent = ScrollContent
+			}
+
+			-- // Returning
+			return setmetatable(Section, Library.Sections)
+		end
+		--
+		function Sections:Slider(Properties)
+			if not Properties then
+				Properties = {}
+			end
+			--
+			local Slider = {
+				Window = self.Window,
+				Page = self.Page,
+				Section = self,
+				Name = Properties.Name or "Slider",
+				Min = (Properties.min or Properties.Min or Properties.minimum or Properties.Minimum or 0),
+				State = (
+					Properties.state
+						or Properties.State
+						or Properties.def
+						or Properties.Def
+						or Properties.default
+						or Properties.Default
+						or 10
+				),
+				Max = (Properties.max or Properties.Max or Properties.maximum or Properties.Maximum or 100),
+				Sub = (
+					Properties.suffix
+						or Properties.Suffix
+						or Properties.ending
+						or Properties.Ending
+						or Properties.prefix
+						or Properties.Prefix
+						or Properties.measurement
+						or Properties.Measurement
+						or ""
+				),
+				Decimals = (Properties.decimals or Properties.Decimals or 1),
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+				Flag = (
+					Properties.flag
+						or Properties.Flag
+						or Properties.pointer
+						or Properties.Pointer
+						or Library.NextFlag()
+				),
+			}
+			local TextValue = ("[value]" .. Slider.Sub)
+			--
+			local NewSlider = Instance.new('TextButton', Slider.Section.Elements.SectionContent)
+			local SliderTitle = Instance.new('TextLabel', NewSlider)
+			local ToggleFrame = Instance.new('Frame', NewSlider)
+			local UICorner_2 = Instance.new('UICorner', ToggleFrame)
+			local FillHold = Instance.new('Frame', ToggleFrame)
+			local UICorner_3 = Instance.new('UICorner', FillHold)
+			local Fill = Instance.new('TextButton', FillHold)
+			local UICorner_4 = Instance.new('UICorner', Fill)
+			local Circle = Instance.new('Frame', Fill)
+			local UICorner_4 = Instance.new('UICorner', Circle)
+			local SliderValue = Instance.new('TextLabel', NewSlider)
+			--
+			NewSlider.Name = "NewSlider"
+			NewSlider.Size = UDim2.new(1,0,0,32)
+			NewSlider.BackgroundColor3 = Color3.new(1,1,1)
+			NewSlider.BackgroundTransparency = 1
+			NewSlider.BorderSizePixel = 0
+			NewSlider.BorderColor3 = Color3.new(0,0,0)
+			NewSlider.Text = ""
+			NewSlider.TextColor3 = Color3.new(0,0,0)
+			NewSlider.AutoButtonColor = false
+			NewSlider.Font = Enum.Font.SourceSans
+			NewSlider.TextSize = 14
+			NewSlider.ZIndex = 53
+			--
+			SliderTitle.Name = "SliderTitle"
+			SliderTitle.Size = UDim2.new(1,-10,0,17)
+			SliderTitle.BackgroundColor3 = Color3.new(1,1,1)
+			SliderTitle.BackgroundTransparency = 1
+			SliderTitle.BorderSizePixel = 0
+			SliderTitle.BorderColor3 = Color3.new(0,0,0)
+			SliderTitle.Text = Slider.Name
+			SliderTitle.TextColor3 = Color3.new(0.7843,0.7843,0.7843)
+			SliderTitle.Font = Enum.Font.Gotham
+			SliderTitle.TextSize = Library.FontSize
+			SliderTitle.TextXAlignment = Enum.TextXAlignment.Left
+			--
+			ToggleFrame.Name = "ToggleFrame"
+			ToggleFrame.Position = UDim2.new(0,0,1,-8)
+			ToggleFrame.Size = UDim2.new(1,0,0,8)
+			ToggleFrame.BackgroundColor3 = Color3.new(0.051,0.051,0.051)
+			ToggleFrame.BorderSizePixel = 0
+			ToggleFrame.BorderColor3 = Color3.new(0,0,0)
+			ToggleFrame.ZIndex = 53
+			--
+			FillHold.Name = "FillHold"
+			FillHold.Position = UDim2.new(0,1,0,1)
+			FillHold.Size = UDim2.new(1,-2,1,-2)
+			FillHold.BackgroundColor3 = Color3.new(0.6667,0.6667,1)
+			FillHold.BackgroundTransparency = 1
+			FillHold.BorderSizePixel = 0
+			FillHold.BorderColor3 = Color3.new(0,0,0)
+			FillHold.ZIndex = 53
+			--
+			Fill.Name = "Fill"
+			Fill.Size = UDim2.new(0,0,1,0)
+			Fill.BackgroundColor3 = Library.Accent
+			Fill.BorderSizePixel = 0
+			Fill.BorderColor3 = Color3.new(0,0,0)
+			Fill.Text = ""
+			Fill.TextColor3 = Color3.new(0,0,0)
+			Fill.AutoButtonColor = false
+			Fill.Font = Enum.Font.SourceSans
+			Fill.TextSize = 14
+			Fill.ZIndex = 53
+			table.insert(Library.ThemeObjects, Fill)
+			--
+			Circle.Name = "Circle"
+			Circle.Position = UDim2.new(1,-6,0.5,-6)
+			Circle.Size = UDim2.new(0,13,0,13)
+			Circle.BackgroundColor3 = Color3.new(1,1,1)
+			Circle.BorderSizePixel = 0
+			Circle.BorderColor3 = Color3.new(0,0,0)
+			Circle.ZIndex = 53
+			--
+			UICorner_4.CornerRadius = UDim.new(1,0)
+			--
+			SliderValue.Name = "SliderValue"
+			SliderValue.Size = UDim2.new(1,0,0,17)
+			SliderValue.BackgroundColor3 = Color3.new(1,1,1)
+			SliderValue.BackgroundTransparency = 1
+			SliderValue.BorderSizePixel = 0
+			SliderValue.BorderColor3 = Color3.new(0,0,0)
+			SliderValue.Text = ""
+			SliderValue.TextColor3 = Color3.new(0.4706,0.4706,0.4706)
+			SliderValue.Font = Enum.Font.Gotham
+			SliderValue.TextSize = Library.FontSize
+			SliderValue.TextXAlignment = Enum.TextXAlignment.Right
+
+			-- // Functions
+			local Sliding = false
+			local Val = Slider.State
+			local function Set(value)
+				value = math.clamp(Library:Round(value, Slider.Decimals), Slider.Min, Slider.Max)
+
+				local sizeX = ((value - Slider.Min) / (Slider.Max - Slider.Min))
+				--Fill.Size = UDim2.new(sizeX, 0, 1, 0)
+				game:GetService("TweenService"):Create(Fill, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(sizeX, 0, 1, 0)}):Play()
+				SliderValue.Text = TextValue:gsub("%[value%]", string.format("%.14g", value))
+				Val = value
+
+				Library.Flags[Slider.Flag] = value
+				Slider.Callback(value)
+			end				
+			--
+			local function Slide(input)
+				local sizeX = (input.Position.X - NewSlider.AbsolutePosition.X) / NewSlider.AbsoluteSize.X
+				local value = ((Slider.Max - Slider.Min) * sizeX) + Slider.Min
+				Set(value)
+			end
+			--
+			Library:Connection(NewSlider.InputBegan, function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					Sliding = true
+					Slide(input)
+				end
+			end)
+			Library:Connection(NewSlider.InputEnded, function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					Sliding = false
+				end
+			end)
+			Library:Connection(Fill.InputBegan, function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					Sliding = true
+					Slide(input)
+				end
+			end)
+			Library:Connection(Fill.InputEnded, function(input)
+				if input.UserInputType == Enum.UserInputType.MouseButton1 then
+					Sliding = false
+				end
+			end)
+			Library:Connection(game:GetService("UserInputService").InputChanged, function(input)
+				if input.UserInputType == Enum.UserInputType.MouseMovement then
+					if Sliding then
+						Slide(input)
+					end
+				end
+			end)
+			--
+			function Slider:Set(Value)
+				Set(Value)
+			end
+			--
+			Flags[Slider.Flag] = Set
+			Library.Flags[Slider.Flag] = Slider.State
+			Set(Slider.State)
+
+			-- // Returning
+			return Slider
+		end
+		--
+		function Sections:List(Properties)
+			local Properties = Properties or {};
+			local Dropdown = {
+				Window = self.Window,
+				Page = self.Page,
+				Section = self,
+				Open = false,
+				Name = Properties.Name or Properties.name or nil,
+				Options = (Properties.options or Properties.Options or Properties.values or Properties.Values or {
+					"1",
+					"2",
+					"3",
+				}),
+				Max = (Properties.Max or Properties.max or nil),
+				State = (
+					Properties.state
+						or Properties.State
+						or Properties.def
+						or Properties.Def
+						or Properties.default
+						or Properties.Default
+						or nil
+				),
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+				Flag = (
+					Properties.flag
+						or Properties.Flag
+						or Properties.pointer
+						or Properties.Pointer
+						or Library.NextFlag()
+				),
+				OptionInsts = {},
+			}
+			--
+			local NewDropdown = Instance.new('Frame', Dropdown.Section.Elements.SectionContent)
+			local DropdownTitle = Instance.new('TextLabel', NewDropdown)
+			local ToggleFrame = Instance.new('TextButton', NewDropdown)
+			local UICorner_2 = Instance.new('UICorner', ToggleFrame)
+			local ToggleContent = Instance.new('Frame', ToggleFrame)
+			local UICorner_3 = Instance.new('UICorner', ToggleContent)
+			local UIListLayout = Instance.new('UIListLayout', ToggleContent)
+			local DropdownTitle_2 = Instance.new('TextLabel', ToggleFrame)
+			local Icon = Instance.new('ImageLabel', ToggleFrame)
+			--
+			NewDropdown.Name = "NewDropdown"
+			NewDropdown.Size = UDim2.new(1,0,0,48)
+			NewDropdown.BackgroundColor3 = Color3.new(1,1,1)
+			NewDropdown.BackgroundTransparency = 1
+			NewDropdown.BorderSizePixel = 0
+			NewDropdown.BorderColor3 = Color3.new(0,0,0)
+			NewDropdown.ZIndex = 54
+			--
+			DropdownTitle.Name = "DropdownTitle"
+			DropdownTitle.Size = UDim2.new(1,-10,0,17)
+			DropdownTitle.BackgroundColor3 = Color3.new(1,1,1)
+			DropdownTitle.BackgroundTransparency = 1
+			DropdownTitle.BorderSizePixel = 0
+			DropdownTitle.BorderColor3 = Color3.new(0,0,0)
+			DropdownTitle.Text = Dropdown.Name
+			DropdownTitle.TextColor3 = Color3.new(0.7843,0.7843,0.7843)
+			DropdownTitle.Font = Enum.Font.Gotham
+			DropdownTitle.TextSize = Library.FontSize
+			DropdownTitle.TextXAlignment = Enum.TextXAlignment.Left
+			--
+			ToggleFrame.Name = "ToggleFrame"
+			ToggleFrame.Position = UDim2.new(0,0,1,-24)
+			ToggleFrame.Size = UDim2.new(1,0,0,24)
+			ToggleFrame.BackgroundColor3 = Color3.new(0.098,0.098,0.098)
+			ToggleFrame.BorderSizePixel = 0
+			ToggleFrame.BorderColor3 = Color3.new(0,0,0)
+			ToggleFrame.ZIndex = 54
+			ToggleFrame.AutoButtonColor = false
+			ToggleFrame.Text = ""
+			--
+			UICorner_2.CornerRadius = UDim.new(0,4)
+			--
+			ToggleContent.Name = "ToggleContent"
+			ToggleContent.Position = UDim2.new(0,0,1,0)
+			ToggleContent.Size = UDim2.new(1,0,0,0)
+			ToggleContent.BackgroundColor3 = Color3.new(0.0706,0.0706,0.0706)
+			ToggleContent.BorderSizePixel = 0
+			ToggleContent.BorderColor3 = Color3.new(0,0,0)
+			ToggleContent.ZIndex = 54
+			ToggleContent.ClipsDescendants = true
+			--
+			UICorner_3.CornerRadius = UDim.new(0,4)
+			--
+			UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+			--
+			DropdownTitle_2.Name = "DropdownTitle"
+			DropdownTitle_2.Position = UDim2.new(0,4,0,0)
+			DropdownTitle_2.Size = UDim2.new(1,-10,1,0)
+			DropdownTitle_2.BackgroundColor3 = Color3.new(1,1,1)
+			DropdownTitle_2.BackgroundTransparency = 1
+			DropdownTitle_2.BorderSizePixel = 0
+			DropdownTitle_2.BorderColor3 = Color3.new(0,0,0)
+			DropdownTitle_2.Text = ""
+			DropdownTitle_2.TextColor3 = Color3.new(0.7843,0.7843,0.7843)
+			DropdownTitle_2.Font = Enum.Font.Gotham
+			DropdownTitle_2.TextSize = Library.FontSize
+			DropdownTitle_2.TextXAlignment = Enum.TextXAlignment.Left
+			--
+			Icon.Name = "Icon"
+			Icon.Position = UDim2.new(1,-25,0,5)
+			Icon.Size = UDim2.new(0,20,0,15)
+			Icon.BackgroundColor3 = Color3.new(1,1,1)
+			Icon.BackgroundTransparency = 1
+			Icon.BorderSizePixel = 0
+			Icon.BorderColor3 = Color3.new(0,0,0)
+			Icon.Image = "http://www.roblox.com/asset/?id=6034818372"
+			Icon.ImageColor3 = Color3.new(0.4706,0.4706,0.4706)
+			Icon.ZIndex = 54
+
+			local Toggled = false
+			local Count = 0
+
+			Library:Connection(ToggleFrame.MouseButton1Click, function()
+				Toggled = not Toggled
+				if Toggled then
+					NewDropdown.ZIndex = 55
+					game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 180}):Play()
+					game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(200,200,200)}):Play()
+					game:GetService("TweenService"):Create(ToggleContent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1,0,0,Count * 22)}):Play()
+				else
+					game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 0}):Play()
+					game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(120,120,120)}):Play()
+					game:GetService("TweenService"):Create(ToggleContent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1,0,0,0)}):Play()
+					task.wait(0.20)
+					NewDropdown.ZIndex = 54
+				end
+			end)
+			--
+			Library:Connection(game:GetService("UserInputService").InputBegan, function(Input)
+				if ToggleContent.Visible and Input.UserInputType == Enum.UserInputType.MouseButton1 then
+					if not Library:IsMouseOverFrame(ToggleContent) and not Library:IsMouseOverFrame(ToggleFrame) then
+						Toggled = false
+						game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(120,120,120)}):Play()
+						game:GetService("TweenService"):Create(Icon, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Rotation = 0}):Play()
+						game:GetService("TweenService"):Create(ToggleContent, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(1,0,0,0)}):Play()
+						task.wait(0.20)
+						NewDropdown.ZIndex = 54
+					end
+				end
+			end)
+			--
+			local Chosen = Dropdown.Max and {} or nil
+			--
+			local function handleoptionclick(option, button, text, dot)
+				button.MouseButton1Click:Connect(function()
+					if Dropdown.Max then
+						if table.find(Chosen, option) then
+							table.remove(Chosen, table.find(Chosen, option))
+
+							local textchosen = {}
+							local cutobject = false
+
+							for _, opt in next, Chosen do
+								table.insert(textchosen, opt)
+							end
+
+							DropdownTitle_2.Text = #Chosen == 0 and "" or table.concat(textchosen, ", ") .. (cutobject and ", ..." or "")
+							game:GetService("TweenService"):Create(text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(120,120,120)}):Play()
+							game:GetService("TweenService"):Create(dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+							game:GetService("TweenService"):Create(text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,4,0,0)}):Play()
+
+							Library.Flags[Dropdown.Flag] = Chosen
+							Dropdown.Callback(Chosen)
+						else
+							if #Chosen == Dropdown.Max then
+								Dropdown.OptionInsts[Chosen[1]].text.Visible = false
+								table.remove(Chosen, 1)
+							end
+
+							table.insert(Chosen, option)
+
+							local textchosen = {}
+							local cutobject = false
+
+							for _, opt in next, Chosen do
+								table.insert(textchosen, opt)
+							end
+
+							DropdownTitle_2.Text = #Chosen == 0 and "" or table.concat(textchosen, ", ") .. (cutobject and ", ..." or "")
+							game:GetService("TweenService"):Create(text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(200,200,200)}):Play()
+							game:GetService("TweenService"):Create(dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+							game:GetService("TweenService"):Create(text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,20,0,0)}):Play()
+
+							Library.Flags[Dropdown.Flag] = Chosen
+							Dropdown.Callback(Chosen)
+						end
+					else
+						for opt, tbl in next, Dropdown.OptionInsts do
+							if opt ~= option then
+								game:GetService("TweenService"):Create(tbl.text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(120,120,120)}):Play()
+								game:GetService("TweenService"):Create(tbl.text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,4,0,0)}):Play()
+								game:GetService("TweenService"):Create(tbl.dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+							end
+						end
+						Chosen = option
+						DropdownTitle_2.Text = option
+						game:GetService("TweenService"):Create(text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(200,200,200)}):Play()
+						game:GetService("TweenService"):Create(dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+						game:GetService("TweenService"):Create(text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,20,0,0)}):Play()
+						Library.Flags[Dropdown.Flag] = option
+						Dropdown.Callback(option)
+					end
+				end)
+			end
+			--
+			local function createoptions(tbl)
+				for _, option in next, tbl do
+					Dropdown.OptionInsts[option] = {}
+					local TextButton = Instance.new('TextButton', ToggleContent)
+					local DropdownTitle3 = Instance.new('TextLabel', TextButton)
+					local AccentDot = Instance.new('Frame', TextButton)
+					local OptionCorner = Instance.new('UICorner', AccentDot)
+					--
+					TextButton.Size = UDim2.new(1,0,0,22)
+					TextButton.BackgroundColor3 = Color3.new(1,1,1)
+					TextButton.BackgroundTransparency = 1
+					TextButton.BorderSizePixel = 0
+					TextButton.BorderColor3 = Color3.new(0,0,0)
+					TextButton.Text = ""
+					TextButton.TextColor3 = Color3.new(0,0,0)
+					TextButton.AutoButtonColor = false
+					TextButton.Font = Enum.Font.SourceSans
+					TextButton.TextSize = 14
+					Dropdown.OptionInsts[option].button = TextButton
+					--
+					DropdownTitle3.Name = "DropdownTitle"
+					DropdownTitle3.Position = UDim2.new(0,20,0,0)
+					DropdownTitle3.Size = UDim2.new(1,-10,1,0)
+					DropdownTitle3.BackgroundColor3 = Color3.new(1,1,1)
+					DropdownTitle3.BackgroundTransparency = 1
+					DropdownTitle3.BorderSizePixel = 0
+					DropdownTitle3.BorderColor3 = Color3.new(0,0,0)
+					DropdownTitle3.Text = option
+					DropdownTitle3.TextColor3 = Color3.fromRGB(120,120,120)
+					DropdownTitle3.Font = Enum.Font.Gotham
+					DropdownTitle3.TextSize = Library.FontSize
+					DropdownTitle3.TextXAlignment = Enum.TextXAlignment.Left
+					Dropdown.OptionInsts[option].text = DropdownTitle3
+					--
+					AccentDot.Name = "AccentDot"
+					AccentDot.Position = UDim2.new(0,8,0,8)
+					AccentDot.Size = UDim2.new(0,6,0,6)
+					AccentDot.BackgroundColor3 = Library.Accent
+					AccentDot.BorderSizePixel = 0
+					AccentDot.BorderColor3 = Color3.new(0,0,0)
+					table.insert(Library.ThemeObjects, AccentDot)
+					Dropdown.OptionInsts[option].dot = AccentDot
+					--
+					OptionCorner.CornerRadius = UDim.new(1,0)
+					Count += 1
+
+					handleoptionclick(option, TextButton, DropdownTitle3, AccentDot)
+				end
+			end
+			createoptions(Dropdown.Options)
+			--
+			local set
+			set = function(option)
+				if Dropdown.Max then
+					table.clear(Chosen)
+					option = type(option) == "table" and option or {}
+
+					for opt, tbl in next, Dropdown.OptionInsts do
+						if not table.find(option, opt) then
+							game:GetService("TweenService"):Create(tbl.text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(120,120,120)}):Play()
+							game:GetService("TweenService"):Create(tbl.text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,4,0,0)}):Play()
+							game:GetService("TweenService"):Create(tbl.dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+						end
+					end
+
+					for i, opt in next, option do
+						if table.find(Dropdown.Options, opt) and #Chosen < Dropdown.Max then
+							table.insert(Chosen, opt)
+							game:GetService("TweenService"):Create(Dropdown.OptionInsts[opt].text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(200,200,200)}):Play()
+							game:GetService("TweenService"):Create(Dropdown.OptionInsts[opt].dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+							game:GetService("TweenService"):Create(Dropdown.OptionInsts[opt].text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,20,0,0)}):Play()
+						end
+					end
+
+					local textchosen = {}
+					local cutobject = false
+
+					for _, opt in next, Chosen do
+						table.insert(textchosen, opt)
+					end
+
+					DropdownTitle_2.Text = #Chosen == 0 and "" or table.concat(textchosen, ", ") .. (cutobject and ", ..." or "")
+
+					Library.Flags[Dropdown.Flag] = Chosen
+					Dropdown.Callback(Chosen)
+				end
+			end
+			--
+			function Dropdown:Set(option)
+				if Dropdown.Max then
+					set(option)
+				else
+					for opt, tbl in next, Dropdown.OptionInsts do
+						if opt ~= option then
+							game:GetService("TweenService"):Create(tbl.text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(120,120,120)}):Play()
+							game:GetService("TweenService"):Create(tbl.text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,4,0,0)}):Play()
+							game:GetService("TweenService"):Create(tbl.dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1}):Play()
+						end
+					end
+					if table.find(Dropdown.Options, option) then
+						Chosen = option
+						DropdownTitle_2.Text = option
+						game:GetService("TweenService"):Create(Dropdown.OptionInsts[option].text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(200,200,200)}):Play()
+						game:GetService("TweenService"):Create(Dropdown.OptionInsts[option].dot, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0}):Play()
+						game:GetService("TweenService"):Create(Dropdown.OptionInsts[option].text, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Position = UDim2.new(0,20,0,0)}):Play()
+						Library.Flags[Dropdown.Flag] = Chosen
+						Dropdown.Callback(Chosen)
+					else
+						Chosen = nil
+						DropdownTitle_2.Text = ""
+						Library.Flags[Dropdown.Flag] = Chosen
+						Dropdown.Callback(Chosen)
+					end
+				end
+			end
+			--
+			function Dropdown:Refresh(tbl)
+				Count = 0
+				for _, opt in next, Dropdown.OptionInsts do
+					coroutine.wrap(function()
+						opt.button:Destroy()
+					end)()
+				end
+				table.clear(Dropdown.OptionInsts)
+
+				createoptions(tbl)
+				Chosen = nil
+
+				Library.Flags[Dropdown.Flag] = Chosen
+				Dropdown.Callback(Chosen)
+			end
+
+
+			-- // Returning
+			if Dropdown.Max then
+				Flags[Dropdown.Flag] = set
+			else
+				Flags[Dropdown.Flag] = Dropdown
+			end
+			Dropdown:Set(Dropdown.State)
+			return Dropdown
+		end
+		--
+		function Sections:Colorpicker(Properties)
+			local Properties = Properties or {}
+			local Colorpicker = {
+				Window = self.Window,
+				Page = self.Page,
+				Section = self,
+				Name = (Properties.Name or "Colorpicker"),
+				State = (
+					Properties.state
+						or Properties.State
+						or Properties.def
+						or Properties.Def
+						or Properties.default
+						or Properties.Default
+						or Color3.fromRGB(255, 0, 0)
+				),
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+				Flag = (
+					Properties.flag
+						or Properties.Flag
+						or Properties.pointer
+						or Properties.Pointer
+						or Library.NextFlag()
+				),
+				Colorpickers = 0,
+			}
+			--
+			local NewColor = Instance.new("TextButton")
+			NewColor.Name = "NewColor"
+			NewColor.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+			NewColor.Text = ""
+			NewColor.TextColor3 = Color3.fromRGB(0, 0, 0)
+			NewColor.TextSize = 14
+			NewColor.AutoButtonColor = false
+			NewColor.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			NewColor.BackgroundTransparency = 1
+			NewColor.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			NewColor.BorderSizePixel = 0
+			NewColor.Size = UDim2.new(1, 0, 0, 17)
+			NewColor.ZIndex = 54
+			NewColor.Parent = Colorpicker.Section.Elements.SectionContent
+
+			local ToggleTitle = Instance.new("TextLabel")
+			ToggleTitle.Name = "ToggleTitle"
+			ToggleTitle.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+			ToggleTitle.Text = Colorpicker.Name
+			ToggleTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+			ToggleTitle.TextSize = 13
+			ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
+			ToggleTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			ToggleTitle.BackgroundTransparency = 1
+			ToggleTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ToggleTitle.BorderSizePixel = 0
+			ToggleTitle.Size = UDim2.new(1, -10, 0, 17)
+			ToggleTitle.Parent = NewColor
+
+			-- // Functions
+			Colorpicker.Colorpickers = Colorpicker.Colorpickers + 1
+			local colorpickertypes = Library:NewPicker(
+				Colorpicker.Name,
+				Colorpicker.State,
+				NewColor,
+				Colorpicker.Colorpickers,
+				Colorpicker.Flag,
+				Colorpicker.Callback
+			)
+
+			function Colorpicker:Set(color)
+				colorpickertypes:Set(color, false, true)
+			end
+
+			function Colorpicker:Colorpicker(Properties)
+				local Properties = Properties or {}
+				local NewColorpicker = {
+					State = (
+						Properties.state
+							or Properties.State
+							or Properties.def
+							or Properties.Def
+							or Properties.default
+							or Properties.Default
+							or Color3.fromRGB(255, 0, 0)
+					),
+					Callback = (
+						Properties.callback
+							or Properties.Callback
+							or Properties.callBack
+							or Properties.CallBack
+							or function() end
+					),
+					Flag = (
+						Properties.flag
+							or Properties.Flag
+							or Properties.pointer
+							or Properties.Pointer
+							or Library.NextFlag()
+					),
+				}
+				-- // Functions
+				Colorpicker.Colorpickers = Colorpicker.Colorpickers + 1
+				local Newcolorpickertypes = Library:NewPicker(
+					"",
+					NewColorpicker.State,
+					NewColor,
+					Colorpicker.Colorpickers,
+					NewColorpicker.Flag,
+					NewColorpicker.Callback
+				)
+
+				function NewColorpicker:Set(color)
+					Newcolorpickertypes:Set(color)
+				end
+
+				-- // Returning
+				return NewColorpicker
+			end
+
+			-- // Returning
+			return Colorpicker
+		end
+		--
+		function Sections:Keybind(Properties)
+			local Properties = Properties or {}
+			local Keybind = {
+				Section = self,
+				Name = Properties.name or Properties.Name or "Keybind",
+				State = (
+					Properties.state
+						or Properties.State
+						or Properties.def
+						or Properties.Def
+						or Properties.default
+						or Properties.Default
+						or Enum.KeyCode.E
+				),
+				Mode = (Properties.mode or Properties.Mode or "Toggle"),
+				UseKey = (Properties.UseKey or false),
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+				Flag = (
+					Properties.flag
+						or Properties.Flag
+						or Properties.pointer
+						or Properties.Pointer
+						or Library.NextFlag()
+				),
+				Binding = nil,
+			}
+			local Key
+			local State = false
+			--
+			local NewKey = Instance.new("TextButton")
+			NewKey.Name = "NewKey"
+			NewKey.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+			NewKey.Text = ""
+			NewKey.TextColor3 = Color3.fromRGB(0, 0, 0)
+			NewKey.TextSize = 14
+			NewKey.AutoButtonColor = false
+			NewKey.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			NewKey.BackgroundTransparency = 1
+			NewKey.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			NewKey.BorderSizePixel = 0
+			NewKey.Size = UDim2.new(1, 0, 0, 17)
+			NewKey.ZIndex = 54
+			NewKey.Parent = Keybind.Section.Elements.SectionContent
+
+			local ToggleTitle = Instance.new("TextLabel")
+			ToggleTitle.Name = "ToggleTitle"
+			ToggleTitle.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+			ToggleTitle.Text = Keybind.Name
+			ToggleTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+			ToggleTitle.TextSize = 13
+			ToggleTitle.TextXAlignment = Enum.TextXAlignment.Left
+			ToggleTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			ToggleTitle.BackgroundTransparency = 1
+			ToggleTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ToggleTitle.BorderSizePixel = 0
+			ToggleTitle.Size = UDim2.new(1, -10, 0, 17)
+			ToggleTitle.Parent = NewKey
+
+			local KeyText = Instance.new("TextLabel")
+			KeyText.Name = "KeyText"
+			KeyText.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+			KeyText.Text = "None"
+			KeyText.TextColor3 = Color3.fromRGB(200, 200, 200)
+			KeyText.TextSize = 13
+			KeyText.TextXAlignment = Enum.TextXAlignment.Right
+			KeyText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			KeyText.BackgroundTransparency = 1
+			KeyText.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			KeyText.BorderSizePixel = 0
+			KeyText.Position = UDim2.new(1, -180, 0, 0)
+			KeyText.Size = UDim2.new(1, -10, 0, 17)
+			KeyText.Parent = NewKey
+
+			-- // Functions
+			local function set(newkey)
+				if string.find(tostring(newkey), "Enum") then
+					if c then
+						c:Disconnect()
+						if Keybind.Flag then
+							Library.Flags[Keybind.Flag] = false
+						end
+						Keybind.Callback(false)
+					end
+					if tostring(newkey):find("Enum.KeyCode.") then
+						newkey = Enum.KeyCode[tostring(newkey):gsub("Enum.KeyCode.", "")]
+					elseif tostring(newkey):find("Enum.UserInputType.") then
+						newkey = Enum.UserInputType[tostring(newkey):gsub("Enum.UserInputType.", "")]
+					end
+					if newkey == Enum.KeyCode.Backspace then
+						Key = nil
+						if Keybind.UseKey then
+							if Keybind.Flag then
+								Library.Flags[Keybind.Flag] = Key
+							end
+							Keybind.Callback(Key)
+						end
+						local text = "None"
+
+						KeyText.Text = text
+					elseif newkey ~= nil then
+						Key = newkey
+						if Keybind.UseKey then
+							if Keybind.Flag then
+								Library.Flags[Keybind.Flag] = Key
+							end
+							Keybind.Callback(Key)
+						end
+						local text = (Library.Keys[newkey] or tostring(newkey):gsub("Enum.KeyCode.", ""))
+
+						KeyText.Text = text
+					end
+
+					Library.Flags[Keybind.Flag .. "_KEY"] = newkey
+				elseif table.find({ "Always", "Toggle", "Hold" }, newkey) then
+					if not Keybind.UseKey then
+						Library.Flags[Keybind.Flag .. "_KEY STATE"] = newkey
+						Keybind.Mode = newkey
+						if Keybind.Mode == "Always" then
+							State = true
+							if Keybind.Flag then
+								Library.Flags[Keybind.Flag] = State
+							end
+							Keybind.Callback(true)
+						end
+					end
+				else
+					State = newkey
+					if Keybind.Flag then
+						Library.Flags[Keybind.Flag] = newkey
+					end
+					Keybind.Callback(newkey)
+				end
+			end
+			--
+			set(Keybind.State)
+			set(Keybind.Mode)
+			NewKey.MouseButton1Click:Connect(function()
+				if not Keybind.Binding then
+
+					KeyText.Text = "..."
+					TweenService:Create(KeyText, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
+
+
+					Keybind.Binding = Library:Connection(
+						game:GetService("UserInputService").InputBegan,
+						function(input, gpe)
+							set(
+								input.UserInputType == Enum.UserInputType.Keyboard and input.KeyCode
+									or input.UserInputType
+							)
+							Library:Disconnect(Keybind.Binding)
+							task.wait()
+							Keybind.Binding = nil
+							TweenService:Create(KeyText, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(200, 200, 200)}):Play()
+						end
+					)
+				end
+			end)
+			--
+			Library:Connection(game:GetService("UserInputService").InputBegan, function(inp)
+				if (inp.KeyCode == Key or inp.UserInputType == Key) and not Keybind.Binding and not Keybind.UseKey then
+					if Keybind.Mode == "Hold" then
+						if Keybind.Flag then
+							Library.Flags[Keybind.Flag] = true
+						end
+						c = Library:Connection(game:GetService("RunService").RenderStepped, function()
+							if Keybind.Callback then
+								Keybind.Callback(true)
+							end
+						end)
+					elseif Keybind.Mode == "Toggle" then
+						State = not State
+						if Keybind.Flag then
+							Library.Flags[Keybind.Flag] = State
+						end
+						Keybind.Callback(State)
+					end
+				end
+			end)
+			--
+			Library:Connection(game:GetService("UserInputService").InputEnded, function(inp)
+				if Keybind.Mode == "Hold" and not Keybind.UseKey then
+					if Key ~= "" or Key ~= nil then
+						if inp.KeyCode == Key or inp.UserInputType == Key then
+							if c then
+								c:Disconnect()
+								if Keybind.Flag then
+									Library.Flags[Keybind.Flag] = false
+								end
+								if Keybind.Callback then
+									Keybind.Callback(false)
+								end
+							end
+						end
+					end
+				end
+			end)
+			--
+			Library.Flags[Keybind.Flag .. "_KEY"] = Keybind.State
+			Library.Flags[Keybind.Flag .. "_KEY STATE"] = Keybind.Mode
+			Flags[Keybind.Flag] = set
+			Flags[Keybind.Flag .. "_KEY"] = set
+			Flags[Keybind.Flag .. "_KEY STATE"] = set
+			--
+			function Keybind:Set(key)
+				set(key)
+			end
+
+			-- // Returning
+			return Keybind
+		end
+		--
+		function Sections:Textbox(Properties)
+			local Properties = Properties or {}
+			local Textbox = {
+				Window = self.Window,
+				Page = self.Page,
+				Section = self,
+				Placeholder = (
+					Properties.placeholder
+						or Properties.Placeholder
+						or Properties.holder
+						or Properties.Holder
+						or "Enter your text here"
+				),
+				State = (
+					Properties.state
+						or Properties.State
+						or Properties.def
+						or Properties.Def
+						or Properties.default
+						or Properties.Default
+						or ""
+				),
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+				Flag = (
+					Properties.flag
+						or Properties.Flag
+						or Properties.pointer
+						or Properties.Pointer
+						or Library.NextFlag()
+				),
+			}
+			--
+			local NewBox = Instance.new("Frame")
+			NewBox.Name = "NewBox"
+			NewBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			NewBox.BackgroundTransparency = 1
+			NewBox.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			NewBox.BorderSizePixel = 0
+			NewBox.Size = UDim2.new(1, 0, 0, 24)
+			NewBox.ZIndex = 54
+			NewBox.Parent = Textbox.Section.Elements.SectionContent
+
+			local ToggleFrame = Instance.new("Frame")
+			ToggleFrame.Name = "ToggleFrame"
+			ToggleFrame.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+			ToggleFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ToggleFrame.BorderSizePixel = 0
+			ToggleFrame.Position = UDim2.new(0, 0, 1, -24)
+			ToggleFrame.Size = UDim2.new(1, 0, 0, 24)
+			ToggleFrame.ZIndex = 55
+
+			local UICorner2 = Instance.new("UICorner")
+			UICorner2.Name = "UICorner_2"
+			UICorner2.CornerRadius = UDim.new(0, 4)
+			UICorner2.Parent = ToggleFrame
+
+			local DropdownTitle = Instance.new("TextBox")
+			DropdownTitle.Name = "DropdownTitle"
+			DropdownTitle.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+			DropdownTitle.Text = Textbox.State
+			DropdownTitle.PlaceholderText = Textbox.Placeholder
+			DropdownTitle.PlaceholderColor3 = Color3.fromRGB(145,145,145)
+			DropdownTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+			DropdownTitle.TextSize = 13
+			DropdownTitle.ClearTextOnFocus = false
+			DropdownTitle.TextXAlignment = Enum.TextXAlignment.Left
+			DropdownTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			DropdownTitle.BackgroundTransparency = 1
+			DropdownTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			DropdownTitle.BorderSizePixel = 0
+			DropdownTitle.Position = UDim2.fromOffset(4, 0)
+			DropdownTitle.Size = UDim2.new(1, -10, 1, 0)
+			DropdownTitle.ZIndex = 53
+			DropdownTitle.Parent = ToggleFrame
+			DropdownTitle.TextTruncate = Enum.TextTruncate.SplitWord
+
+			ToggleFrame.Parent = NewBox
+			--
+			DropdownTitle.FocusLost:Connect(function()
+				Textbox.Callback(DropdownTitle.Text)
+				Library.Flags[Textbox.Flag] = DropdownTitle.Text
+			end)
+			--
+			local function set(str)
+				DropdownTitle.Text = str
+				Library.Flags[Textbox.Flag] = str
+				Textbox.Callback(str)
+			end
+
+			-- // Return
+			Flags[Textbox.Flag] = set
+			return Textbox
+		end
+		--
+		function Sections:Button(Properties)
+			local Properties = Properties or {}
+			local Button = {
+				Window = self.Window,
+				Page = self.Page,
+				Section = self,
+				Name = Properties.Name or "button",
+				Callback = (
+					Properties.callback
+						or Properties.Callback
+						or Properties.callBack
+						or Properties.CallBack
+						or function() end
+				),
+			}
+			--
+			local NewButton = Instance.new("TextButton")
+			NewButton.Name = "NewButton"
+			NewButton.FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json")
+			NewButton.Text = ""
+			NewButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+			NewButton.TextSize = 14
+			NewButton.AutoButtonColor = false
+			NewButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			NewButton.BackgroundTransparency = 1
+			NewButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			NewButton.BorderSizePixel = 0
+			NewButton.Size = UDim2.new(1, 0, 0, 24)
+			NewButton.ZIndex = 54
+			NewButton.Parent = Button.Section.Elements.SectionContent
+
+			local ToggleFrame = Instance.new("Frame")
+			ToggleFrame.Name = "ToggleFrame"
+			ToggleFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+			ToggleFrame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			ToggleFrame.BorderSizePixel = 0
+			ToggleFrame.Position = UDim2.new(0, 0, 1, -24)
+			ToggleFrame.Size = UDim2.new(1, 0, 0, 24)
+			ToggleFrame.ZIndex = 55
+
+			local UICorner2 = Instance.new("UICorner")
+			UICorner2.Name = "UICorner_2"
+			UICorner2.CornerRadius = UDim.new(0, 4)
+			UICorner2.Parent = ToggleFrame
+
+			local DropdownTitle = Instance.new("TextLabel")
+			DropdownTitle.Name = "DropdownTitle"
+			DropdownTitle.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+			DropdownTitle.Text = Button.Name
+			DropdownTitle.TextColor3 = Color3.fromRGB(200, 200, 200)
+			DropdownTitle.TextSize = 13
+			DropdownTitle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			DropdownTitle.BackgroundTransparency = 1
+			DropdownTitle.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			DropdownTitle.BorderSizePixel = 0
+			DropdownTitle.Size = UDim2.fromScale(1, 1)
+			DropdownTitle.ZIndex = 53
+			DropdownTitle.Parent = ToggleFrame
+
+			ToggleFrame.Parent = NewButton
+			--
+			Library:Connection(NewButton.MouseButton1Down, function()
+				Button.Callback()
+				TweenService:Create(DropdownTitle, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255,255,255)}):Play()
+				task.spawn(function()
+					task.wait(0.1)
+					TweenService:Create(DropdownTitle, TweenInfo.new(0.1, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(200,200,200)}):Play()
+				end)
+			end)
+		end
+		--
+		function Library:Watermark(Properties)
+			local Watermark = {
+				Name = (Properties.Name or Properties.name or "Starhook.club | placeholder");
+				AnimateText = nil;
+			}
+			--
+			local Outline = Instance.new("Frame")
+			Outline.Name = "Outline"
+			Outline.AnchorPoint = Vector2.new(1, 0)
+			Outline.AutomaticSize = Enum.AutomaticSize.X
+			Outline.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+			Outline.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Outline.Position = UDim2.new(1, -10, 0, 10)
+			Outline.Size = UDim2.fromOffset(100, 20)
+			Outline.Visible = false
+			Outline.ZIndex = 50
+			Outline.Parent = Library.ScreenGUI
+
+			local UICorner = Instance.new("UICorner")
+			UICorner.Name = "UICorner"
+			UICorner.CornerRadius = UDim.new(0, 4)
+			UICorner.Parent = Outline
+
+			local UIStroke = Instance.new("UIStroke")
+			UIStroke.Name = "UIStroke"
+			UIStroke.Parent = Outline
+
+			local Inline = Instance.new("Frame")
+			Inline.Name = "Inline"
+			Inline.BackgroundColor3 = Color3.fromRGB(13, 13, 13)
+			Inline.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Inline.BorderSizePixel = 0
+			Inline.Position = UDim2.fromOffset(1, 1)
+			Inline.Size = UDim2.new(1, -2, 1, -2)
+			Inline.ZIndex = 51
+
+			local UICorner2 = Instance.new("UICorner")
+			UICorner2.Name = "UICorner_2"
+			UICorner2.CornerRadius = UDim.new(0, 4)
+			UICorner2.Parent = Inline
+
+			local Title = Instance.new("TextLabel")
+			Title.Name = "Title"
+			Title.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json")
+			Title.RichText = true
+			Title.Text = Watermark.Name
+			Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+			Title.TextSize = 13
+			Title.TextXAlignment = Enum.TextXAlignment.Left
+			Title.AutomaticSize = Enum.AutomaticSize.X
+			Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+			Title.BackgroundTransparency = 1
+			Title.BorderColor3 = Color3.fromRGB(0, 0, 0)
+			Title.BorderSizePixel = 0
+			Title.Position = UDim2.fromOffset(5, 0)
+			Title.Size = UDim2.fromScale(0, 1)
+			Title.Parent = Inline
+
+			local UIPadding = Instance.new("UIPadding")
+			UIPadding.Name = "UIPadding"
+			UIPadding.PaddingRight = UDim.new(0, 6)
+			UIPadding.Parent = Inline
+
+			Inline.Parent = Outline
+			
+			
+			task.spawn(function()
+				while task.wait() do
+					for i = 1, #"Nixius.xyz" do
+						Watermark.AnimateText = string.sub("Nixius.xyz", 1, i) .. "";
+						Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
+						task.wait(0.4);
+					end;
+
+					for i = #"Nixius.xyz" - 1, 1, -1 do
+						Watermark.AnimateText = string.sub("Nixius.xyz", 1, i) .. "";
+						Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
+						task.wait(0.4);
+					end;
+				end;
+			end)
+			-- // Functions
+			function Watermark:UpdateText(NewText)
+				Watermark.Name = NewText
+				Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
+			end;
+			function Watermark:SetVisible(State)
+				Outline.Visible = State;
+			end;
+
+			return Watermark
+		end
+		--
+	end
+end
+
+return Library, Library.Flags;
