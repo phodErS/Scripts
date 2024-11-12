@@ -1,4 +1,5 @@
-
+-- Library
+-- Coded by _notportal
 local Library = {};
 do
 	Library = {
@@ -743,7 +744,7 @@ do
 			Outline.BorderColor3 = Color3.new(0,0,0)
 			Outline.AnchorPoint = Vector2.new(0.5,0.5)
 			Outline.ZIndex = 50
-			Outline.ClipsDescendants = false
+			Outline.ClipsDescendants = true
 			Library.Holder = Outline
 			Library.OldSize = Window.Size
 			--
@@ -810,14 +811,14 @@ do
 
 			local Logo = Instance.new("ImageLabel")
 			Logo.Name = "Logo"
-			Logo.Image = "http://www.roblox.com/asset/?id=96418561036855"
+			Logo.Image = "http://www.roblox.com/asset/?id=17669613413"
 			Logo.ScaleType = Enum.ScaleType.Fit
 			Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Logo.BackgroundTransparency = 1
 			Logo.BorderColor3 = Color3.fromRGB(0, 0, 0)
 			Logo.BorderSizePixel = 0
-			Logo.Position = UDim2.fromOffset(10, 10)
-			Logo.Size = UDim2.fromOffset(50, 50)
+			Logo.Position = UDim2.fromOffset(10, -20)
+			Logo.Size = UDim2.fromOffset(90, 90)
 			Logo.Parent = Holder
 
 			local FadeThing = Instance.new("Frame")
@@ -2566,14 +2567,14 @@ do
 			
 			task.spawn(function()
 				while task.wait() do
-					for i = 1, #"Nixius.xyz" do
-						Watermark.AnimateText = string.sub("Nixius.xyz", 1, i) .. "";
+					for i = 1, #"Starhook.club" do
+						Watermark.AnimateText = string.sub("Starhook.club", 1, i) .. "";
 						Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
 						task.wait(0.4);
 					end;
 
-					for i = #"Nixius.xyz" - 1, 1, -1 do
-						Watermark.AnimateText = string.sub("Nixius.xyz", 1, i) .. "";
+					for i = #"Starhook.club" - 1, 1, -1 do
+						Watermark.AnimateText = string.sub("Starhook.club", 1, i) .. "";
 						Title.Text = Watermark.AnimateText .. " " .. Watermark.Name;
 						task.wait(0.4);
 					end;
