@@ -220,13 +220,16 @@ do
 				--Library.Holder.Visible = Library.Open
 				if Library.Open then
 					Library.Holder.Visible = true
+                    Library.Holder.BackgroundTransparency = 1
 					--game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Library.OldSize.X.Offset,0,40)}):Play()
-					game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Library.OldSize.X.Offset,0,Library.OldSize.Y.Offset)}):Play()
+					game:GetService("TweenService"):Create(Library.Holder,TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),{BackgroundTransparency = 0}):Play()
 				else
 					--game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, Library.OldSize.X.Offset,0,40)}):Play()
-					game:GetService("TweenService"):Create(Library.Holder, TweenInfo.new(0.25, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Size = UDim2.new(0, 0,0,20)}):Play()
-					task.wait(0.25)
-					Library.Holder.Visible = false
+					local fadeOutTween = game:GetService("TweenService"):Create(Library.Holder,TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out),{BackgroundTransparency = 1})
+                    fadeOutTween:Play()
+                    fadeOutTween.Completed:Connect(function()
+				        Library.Holder.Visible = false
+			        end)
 				end
 			end
 		end;
