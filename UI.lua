@@ -742,7 +742,7 @@ do
 			Outline.BorderColor3 = Color3.new(0,0,0)
 			Outline.AnchorPoint = Vector2.new(0.5,0.5)
 			Outline.ZIndex = 50
-			Outline.ClipsDescendants = false
+			Outline.ClipsDescendants = true
 			Library.Holder = Outline
 			Library.OldSize = Window.Size
 			--
