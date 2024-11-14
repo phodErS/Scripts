@@ -1,4 +1,3 @@
-
 local Library = {};
 do
 	Library = {
@@ -106,7 +105,6 @@ do
 		end
         --
 		function Library:UpdateBackgroundOverlay()
-			-- Adjusts background overlay based on the flag
 			if Library.Flags.showbackgroundoverlay then
 				Library.Holder.BackgroundTransparency = 0.5
 			else
@@ -732,14 +730,6 @@ do
 			}
 			--
 			local ScreenGui = Instance.new('ScreenGui', game:GetService("RunService"):IsStudio() and game.Players.LocalPlayer.PlayerGui or game.CoreGui)
-
-			local BackgroundOverlay = Instance.new("Frame", ScreenGui)
-			BackgroundOverlay.BackgroundColor3 = Color3.new(0, 0, 0)
-			BackgroundOverlay.Size = UDim2.new(1, 0, 1, 0)
-			BackgroundOverlay.BackgroundTransparency = 1
-			BackgroundOverlay.Visible = false
-			Library.BackgroundOverlay = BackgroundOverlay
-
 			local Outline = Instance.new('Frame', ScreenGui)
 			local UICorner = Instance.new('UICorner', Outline)
 			local UIStroke = Instance.new('UIStroke', Outline)
