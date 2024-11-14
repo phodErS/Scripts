@@ -5,7 +5,7 @@ do
 		Accent = Color3.fromRGB(76, 162, 252);
 		Pages = {};
 		Sections = {};
-		Flags = { showbackgroundoverlay = true };
+		Flags = {};
 		UnNamedFlags = 0;
 		ThemeObjects = {};
 		Instances = {};
@@ -102,14 +102,6 @@ do
 		function Library.NextFlag()
 			Library.UnNamedFlags = Library.UnNamedFlags + 1
 			return string.format("%.14g", Library.UnNamedFlags)
-		end
-        --
-		function Library:UpdateBackgroundOverlay()
-			if Library.Flags.showbackgroundoverlay then
-				Library.Holder.BackgroundTransparency = 0.5
-			else
-				Library.Holder.BackgroundTransparency = 1
-			end
 		end
 		--
 		function Library:GetConfig()
@@ -223,7 +215,7 @@ do
 		--
 		function Library:SetOpen(bool)
 			if typeof(bool) == 'boolean' then
-				Library.Open = bool
+				Library.Open = bool;
 				--Library.Holder.Visible = Library.Open
 				if Library.Open then
 					Library.Holder.Visible = true
@@ -236,8 +228,7 @@ do
 					Library.Holder.Visible = false
 				end
 			end
-			Library:UpdateBackgroundOverlay()
-		end
+		end;
 		--
 		function Library:ChangeAccent(Color)
 			Library.Accent = Color
@@ -263,8 +254,6 @@ do
 			end;
 		end;
 	end
-
-    Library.Flags.showbackgroundoverlay = not Library.Flags.showbackgroundoverlay
 
 	-- // Colorpicker Element
 	do
@@ -820,7 +809,7 @@ do
 
 			local Logo = Instance.new("ImageLabel")
 			Logo.Name = "Logo"
-			Logo.Image = "http://www.roblox.com/asset/?id=96418561036855"
+			Logo.Image = ""
 			Logo.ScaleType = Enum.ScaleType.Fit
 			Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Logo.BackgroundTransparency = 1
