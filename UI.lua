@@ -1,3 +1,4 @@
+
 local Library = {};
 do
 	Library = {
@@ -5,7 +6,7 @@ do
 		Accent = Color3.fromRGB(76, 162, 252);
 		Pages = {};
 		Sections = {};
-		Flags = {};
+		Flags = { showbackgroundoverlay = true };
 		UnNamedFlags = 0;
 		ThemeObjects = {};
 		Instances = {};
@@ -102,6 +103,15 @@ do
 		function Library.NextFlag()
 			Library.UnNamedFlags = Library.UnNamedFlags + 1
 			return string.format("%.14g", Library.UnNamedFlags)
+		end
+        --
+		function Library:UpdateBackgroundOverlay()
+			-- Adjusts background overlay based on the flag
+			if Library.Flags.showbackgroundoverlay then
+				Library.Holder.BackgroundTransparency = 0.5
+			else
+				Library.Holder.BackgroundTransparency = 1
+			end
 		end
 		--
 		function Library:GetConfig()
@@ -215,7 +225,7 @@ do
 		--
 		function Library:SetOpen(bool)
 			if typeof(bool) == 'boolean' then
-				Library.Open = bool;
+				Library.Open = bool
 				--Library.Holder.Visible = Library.Open
 				if Library.Open then
 					Library.Holder.Visible = true
@@ -228,7 +238,8 @@ do
 					Library.Holder.Visible = false
 				end
 			end
-		end;
+			Library:UpdateBackgroundOverlay()
+		end
 		--
 		function Library:ChangeAccent(Color)
 			Library.Accent = Color
@@ -254,6 +265,8 @@ do
 			end;
 		end;
 	end
+
+    Library.Flags.showbackgroundoverlay = not Library.Flags.showbackgroundoverlay
 
 	-- // Colorpicker Element
 	do
@@ -719,6 +732,14 @@ do
 			}
 			--
 			local ScreenGui = Instance.new('ScreenGui', game:GetService("RunService"):IsStudio() and game.Players.LocalPlayer.PlayerGui or game.CoreGui)
+
+			local BackgroundOverlay = Instance.new("Frame", ScreenGui)
+			BackgroundOverlay.BackgroundColor3 = Color3.new(0, 0, 0)
+			BackgroundOverlay.Size = UDim2.new(1, 0, 1, 0)
+			BackgroundOverlay.BackgroundTransparency = 1
+			BackgroundOverlay.Visible = false
+			Library.BackgroundOverlay = BackgroundOverlay
+
 			local Outline = Instance.new('Frame', ScreenGui)
 			local UICorner = Instance.new('UICorner', Outline)
 			local UIStroke = Instance.new('UIStroke', Outline)
@@ -742,7 +763,7 @@ do
 			Outline.BorderColor3 = Color3.new(0,0,0)
 			Outline.AnchorPoint = Vector2.new(0.5,0.5)
 			Outline.ZIndex = 50
-			Outline.ClipsDescendants = true
+			Outline.ClipsDescendants = false
 			Library.Holder = Outline
 			Library.OldSize = Window.Size
 			--
@@ -809,7 +830,7 @@ do
 
 			local Logo = Instance.new("ImageLabel")
 			Logo.Name = "Logo"
-			Logo.Image = "http://www.roblox.com/asset/?id=17669613413"
+			Logo.Image = "http://www.roblox.com/asset/?id=96418561036855"
 			Logo.ScaleType = Enum.ScaleType.Fit
 			Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 			Logo.BackgroundTransparency = 1
