@@ -1968,8 +1968,8 @@ do
   			function Dropdown:Update(properties)
  			    for key, value in pairs(properties) do
    			        if key == "Options" then
-    		                    Dropdown.Options = value
      			            Dropdown.OptionInsts = {}
+    		                    Dropdown.Options = value
            		            createoptions(Dropdown.Options)
        		                elseif key == "State" then
         	                    Dropdown.State = value
