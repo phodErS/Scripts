@@ -1834,6 +1834,12 @@ do
 			end
 			--
 			local function createoptions(tbl)
+			    for _, optionInst in pairs(Dropdown.OptionInsts) do
+			        if optionInst.button and optionInst.button.Parent then
+      		                    optionInst.button:Destroy()
+        		        end
+    		            end
+    			    Dropdown.OptionInsts = {}
 				for _, option in next, tbl do
 					Dropdown.OptionInsts[option] = {}
 					local TextButton = Instance.new('TextButton', ToggleContent)
@@ -1965,15 +1971,20 @@ do
 				Dropdown.Callback(Chosen)
 			end
                         -- 
-  			function Dropdown:Update(properties)
- 			    for key, value in pairs(properties) do
-   			        if key == "Options" then
-     			            Dropdown.OptionInsts = {}
-    		                    Dropdown.Options = value
-           		            createoptions(Dropdown.Options)
-       		                elseif key == "State" then
-        	                    Dropdown.State = value
-            	                elseif key == "Callback" then
+                        function Dropdown:Update(properties)
+                            for key, value in pairs(properties) do
+                                if key == "Options" then
+                                    for _, optionInstance in pairs(Dropdown.OptionInsts) do
+                                        if optionInstance and optionInstance.Parent then
+                                            optionInstance:Destroy()
+                                        end
+                                    end
+                                    Dropdown.OptionInsts = {}
+                                    Dropdown.Options = value
+                                    createoptions(Dropdown.Options)
+                                elseif key == "State" then
+                                    Dropdown.State = value
+                                elseif key == "Callback" then
                                     Dropdown.Callback = value
                                 elseif key == "Max" then
                                     Dropdown.Max = value
