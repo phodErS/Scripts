@@ -480,7 +480,7 @@ local aa = {
 			Window = nil,
 			WindowFrame = nil,
 			Unloaded = false,
-			Theme = 'Nixius.xyz',
+			Theme = 'Amethyst',
 			DialogOpen = false,
 			UseAcrylic = false,
 			Acrylic = false,
@@ -4274,7 +4274,6 @@ local aa = {
 		local aa, ab, ac, ad, ae = b(47)
 		local af = {
 			Names = {
-                                'Nixius.xyz',
 				'Dark',
 				'Darker',
 				'Light',
