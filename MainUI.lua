@@ -131,7 +131,7 @@ local _, a, b = {}, {
 						{
 							'Amethyst'
 						}
-					}
+					},
 					{
 						63,
 						'ModuleScript',
