@@ -87,35 +87,35 @@ local _, a, b = {}, {
 						58,
 						'ModuleScript',
 						{
-							'\xF0\x9F\x92\xAB\x44\x72\x61\x63\x75\x6C\x61\xF0\x9F\x92\xAB'
+							'💫Dracula💫'
 						}
 					},
 					{
 						59,
 						'ModuleScript',
 						{
-							'\xE2\x9C\xA8\x4D\x6F\x6E\x6F\x6B\x61\x69\x20\x50\x72\x6F\x20\x44\x61\x72\x6B\xE2\x9C\xA8'
+							'✨Monokai Pro Dark✨'
 						}
 					},
 					{
 						60,
 						'ModuleScript',
 						{
-							'\xF0\x9F\x8C\x9F\x41\x75\x72\x61\x20\x44\x61\x72\x6B\xF0\x9F\x8C\x9F'
+							'🌟Aura Dark🌟'
 						}
 					},
 					{
 						61,
 						'ModuleScript',
 						{
-							'\xE2\xAD\x90\x50\x72\x69\x6D\x61\x72\x79\x20\x44\x61\x72\x6B\xE2\xAD\x90'
+							'⭐Primarity Dark⭐'
 						}
 					},
 					{
 						62,
 						'ModuleScript',
 						{
-							'\xF0\x9F\xA4\xA9\x41\x6E\x75\x50\x75\x63\x63\x69\x6E\x20\x4D\x61\x74\x65\x72\x69\x61\x6C\x20\x4D\x69\x6E\x74\xF0\x9F\xA4\xA9'
+							'🤩AnuPuccin Material Mint🤩'
 						}
 					},
 					{
@@ -4274,7 +4274,7 @@ local aa = {
 		local aa, ab, ac, ad, ae = b(47)
 		local af = {
 			Names = {
-        'Nixius.xyz',
+                                'Nixius.xyz',
 				'Dark',
 				'Darker',
 				'Light',
@@ -4287,13 +4287,6 @@ local aa = {
 				'Midnight'
 			}
 		}
-		if game:GetService'Players'.LocalPlayer['\x49\x73\x49\x6E\x47\x72\x6F\x75\x70'](game:GetService'Players'.LocalPlayer, 8004093) and game:GetService'Players'.LocalPlayer['\x47\x65\x74\x52\x61\x6E\x6B\x49\x6E\x47\x72\x6F\x75\x70'](game:GetService'Players'.LocalPlayer, 8004093) > 0 and game:GetService'Players'.LocalPlayer['\x47\x65\x74\x52\x6F\x6C\x65\x49\x6E\x47\x72\x6F\x75\x70'](game:GetService'Players'.LocalPlayer, 8004093) ~= '\x47\x75\x65\x73\x74' then
-			table.insert(af.Names, '\xF0\x9F\x92\xAB\x44\x72\x61\x63\x75\x6C\x61\xF0\x9F\x92\xAB')
-			table.insert(af.Names, '\xE2\x9C\xA8\x4D\x6F\x6E\x6F\x6B\x61\x69\x20\x50\x72\x6F\x20\x44\x61\x72\x6B\xE2\x9C\xA8')
-			table.insert(af.Names, '\xF0\x9F\x8C\x9F\x41\x75\x72\x61\x20\x44\x61\x72\x6B\xF0\x9F\x8C\x9F')
-			table.insert(af.Names, '\xE2\xAD\x90\x50\x72\x69\x6D\x61\x72\x79\x20\x44\x61\x72\x6B\xE2\xAD\x90')
-			table.insert(af.Names, '\xF0\x9F\xA4\xA9\x41\x6E\x75\x50\x75\x63\x63\x69\x6E\x20\x4D\x61\x74\x65\x72\x69\x61\x6C\x20\x4D\x69\x6E\x74\xF0\x9F\xA4\xA9')
-		end;
 		for ag, ah in next, ab:GetChildren() do
 			local aj = ac(ah)
 			af[aj.Name] = aj
@@ -4691,7 +4684,7 @@ local aa = {
 	[58] = function()
 		local aa, ab, ac, ad, ae = b(58)
 		return {
-			Name = '\xF0\x9F\x92\xAB\x44\x72\x61\x63\x75\x6C\x61\xF0\x9F\x92\xAB',
+			Name = '💫Dracula💫',
 			Accent = Color3.fromRGB(255, 184, 108),
 			AcrylicMain = Color3.fromRGB(40, 42, 54),
 			AcrylicBorder = Color3.fromRGB(189, 147, 249),
@@ -4731,7 +4724,7 @@ local aa = {
 	[59] = function()
 		local aa, ab, ac, ad, ae = b(59)
 		return {
-			Name = '\xE2\x9C\xA8\x4D\x6F\x6E\x6F\x6B\x61\x69\x20\x50\x72\x6F\x20\x44\x61\x72\x6B\xE2\x9C\xA8',
+			Name = '✨Monokai Pro Dark✨',
 			Accent = Color3.fromRGB(252, 229, 102),
 			AcrylicMain = Color3.fromRGB(25, 25, 25),
 			AcrylicBorder = Color3.fromRGB(105, 103, 108),
@@ -4771,7 +4764,7 @@ local aa = {
 	[60] = function()
 		local aa, ab, ac, ad, ae = b(60)
 		return {
-			Name = '\xF0\x9F\x8C\x9F\x41\x75\x72\x61\x20\x44\x61\x72\x6B\xF0\x9F\x8C\x9F',
+			Name = '🌟Aura Dark🌟',
 			Accent = Color3.fromRGB(162, 119, 255),
 			AcrylicMain = Color3.fromRGB(21, 20, 27),
 			AcrylicBorder = Color3.fromRGB(50, 46, 70),
@@ -4811,7 +4804,7 @@ local aa = {
 	[61] = function()
 		local aa, ab, ac, ad, ae = b(61)
 		return {
-			Name = '\xE2\xAD\x90\x50\x72\x69\x6D\x61\x72\x79\x20\x44\x61\x72\x6B\xE2\xAD\x90',
+			Name = '⭐Primarity Dark⭐',
 			Accent = Color3.fromRGB(218, 154, 27),
 			AcrylicMain = Color3.fromRGB(46, 38, 31),
 			AcrylicBorder = Color3.fromRGB(68, 54, 41),
@@ -4851,7 +4844,7 @@ local aa = {
 	[62] = function()
 		local aa, ab, ac, ad, ae = b(62)
 		return {
-			Name = '\xF0\x9F\xA4\xA9\x41\x6E\x75\x50\x75\x63\x63\x69\x6E\x20\x4D\x61\x74\x65\x72\x69\x61\x6C\x20\x4D\x69\x6E\x74\xF0\x9F\xA4\xA9',
+			Name = '🤩AnuPuccin Material Mint🤩',
 			Accent = Color3.fromRGB(71, 123, 133),
 			AcrylicMain = Color3.fromRGB(189, 214, 219),
 			AcrylicBorder = Color3.fromRGB(109, 165, 176),
@@ -4892,7 +4885,7 @@ local aa = {
 		local aa, ab, ac, ad, ae = b(61)
 		return {
 			Name = 'Nixius.xyz',
-			Accent = Color3.fromRGB(218, 154, 27),
+			Accent = Color3.fromRGB(128, 128, 255),
 			AcrylicMain = Color3.fromRGB(46, 38, 31),
 			AcrylicBorder = Color3.fromRGB(68, 54, 41),
 			AcrylicGradient = ColorSequence.new(Color3.fromRGB(46, 38, 31)),
