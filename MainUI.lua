@@ -133,7 +133,7 @@ local _, a, b = {}, {
 						}
 					}
 					{
-						69,
+						63,
 						'ModuleScript',
 						{
 							'Nixius.xyz'
