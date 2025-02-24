@@ -4948,10 +4948,7 @@ function Library:CreateWindow(WindowInfo)
         ModalElement.Modal = Library.Toggled
 
         if Library.Toggled then
-            -- Block Roblox game input while menu is open
-            ContextActionService:BindAction("DisableGameInput", function()
-                return Enum.ContextActionResult.Sink
-            end, false, unpack(Enum.UserInputType:GetEnumItems()))
+            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
 
             if not Library.IsMobile then
                 local OldMouseIconEnabled = UserInputService.MouseIconEnabled
@@ -4972,9 +4969,10 @@ function Library:CreateWindow(WindowInfo)
                 end)
             end
         else
-            -- Restore normal game input when menu is closed
-            ContextActionService:UnbindAction("DisableGameInput")
-        
+            if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
+                UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
+            end
+
             TooltipLabel.Visible = false
             for _, Option in pairs(Library.Options) do
                 if Option.Type == "ColorPicker" then
