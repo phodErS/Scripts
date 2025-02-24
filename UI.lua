@@ -4947,38 +4947,31 @@ function Library:CreateWindow(WindowInfo)
     MainFrame.Visible = Library.Toggled
     ModalElement.Modal = Library.Toggled
 
+    RunService:UnbindFromRenderStep("MouseBehavior")
+
     if Library.Toggled then
-        -- Unlock mouse even in first-person
         Library.OldMouseBehavior = UserInputService.MouseBehavior
         UserInputService.MouseBehavior = Enum.MouseBehavior.Default
         UserInputService.MouseIconEnabled = true -- Show cursor
-    else
-        -- Restore original behavior when closing
-        if Library.OldMouseBehavior == Enum.MouseBehavior.LockCenter then
-            UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
-        end
-        UserInputService.MouseIconEnabled = false -- Hide cursor again
-    end
 
-    if Library.Toggled and not Library.IsMobile then
-        local OldMouseIconEnabled = UserInputService.MouseIconEnabled
-        pcall(function()
-            RunService:UnbindFromRenderStep("ShowCursor")
-        end)
+        -- Bind cursor visibility handling
         RunService:BindToRenderStep("ShowCursor", Enum.RenderPriority.Last.Value, function()
             UserInputService.MouseIconEnabled = not Library.ShowCustomCursor
-
             Cursor.Position = UDim2.fromOffset(Mouse.X, Mouse.Y)
             Cursor.Visible = Library.ShowCustomCursor
 
             if not (Library.Toggled and ScreenGui and ScreenGui.Parent) then
-                UserInputService.MouseIconEnabled = OldMouseIconEnabled
+                UserInputService.MouseIconEnabled = false
                 Cursor.Visible = false
                 RunService:UnbindFromRenderStep("ShowCursor")
             end
         end)
-    elseif not Library.Toggled then
+    else
+        -- Restore original mouse behavior when closing
+        UserInputService.MouseBehavior = (Library.OldMouseBehavior == Enum.MouseBehavior.LockCenter) and Enum.MouseBehavior.LockCenter or Enum.MouseBehavior.Default
+        UserInputService.MouseIconEnabled = false -- Hide cursor
         TooltipLabel.Visible = false
+
         for _, Option in pairs(Library.Options) do
             if Option.Type == "ColorPicker" then
                 Option.ColorMenu:Close()
