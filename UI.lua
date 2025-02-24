@@ -4937,49 +4937,45 @@ function Library:CreateWindow(WindowInfo)
     end
 
     function Library:Toggle(Value: boolean?)
-        if typeof(Value) == "boolean" then
-            Library.Toggled = Value
-        else
-            Library.Toggled = not Library.Toggled
-        end
+    if typeof(Value) == "boolean" then
+        Library.Toggled = Value
+    else
+        Library.Toggled = not Library.Toggled
+    end
 
-        MainFrame.Visible = Library.Toggled
-        ModalElement.Modal = Library.Toggled
-        if Library.Toggled then
-            while Library.Toggled == true and task.wait() do
-                UserInputService.MouseBehavior = Enum.MouseBehavior.Default
-                UserInputService.MouseIconEnabled = true
-            end
-        end
+    MainFrame.Visible = Library.Toggled
+    ModalElement.Modal = Library.Toggled
 
-        if Library.Toggled and not Library.IsMobile then
-            local OldMouseIconEnabled = UserInputService.MouseIconEnabled
-            pcall(function()
-                RunService:UnbindFromRenderStep("ShowCursor")
-            end)
+    if Library.Toggled then
+        UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+        UserInputService.MouseIconEnabled = true
+
+        if not Library.IsMobile then
+            RunService:UnbindFromRenderStep("ShowCursor")
+
             RunService:BindToRenderStep("ShowCursor", Enum.RenderPriority.Last.Value, function()
                 UserInputService.MouseIconEnabled = not Library.ShowCustomCursor
-
                 Cursor.Position = UDim2.fromOffset(Mouse.X, Mouse.Y)
                 Cursor.Visible = Library.ShowCustomCursor
 
                 if not (Library.Toggled and ScreenGui and ScreenGui.Parent) then
-                    UserInputService.MouseIconEnabled = OldMouseIconEnabled
+                    UserInputService.MouseIconEnabled = false
                     Cursor.Visible = false
                     RunService:UnbindFromRenderStep("ShowCursor")
                 end
             end)
-        elseif not Library.Toggled then
-            TooltipLabel.Visible = false
-            for _, Option in pairs(Library.Options) do
-                if Option.Type == "ColorPicker" then
-                    Option.ColorMenu:Close()
-                    Option.ContextMenu:Close()
-                elseif Option.Type == "Dropdown" or Option.Type == "KeyPicker" then
-                    Option.Menu:Close()
-                end
+        end
+    else
+        TooltipLabel.Visible = false
+        for _, Option in pairs(Library.Options) do
+            if Option.Type == "ColorPicker" then
+                Option.ColorMenu:Close()
+                Option.ContextMenu:Close()
+            elseif Option.Type == "Dropdown" or Option.Type == "KeyPicker" then
+                Option.Menu:Close()
             end
         end
+    end
     end
 
     if WindowInfo.AutoShow then
