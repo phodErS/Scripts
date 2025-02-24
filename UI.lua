@@ -4496,7 +4496,7 @@ function library:init()
                 {'0 fps', true},
                 {'0ms', true},
             };
-            lock = 'custom';
+            lock = 'Top';
             position = newUDim2(0,0,0,0);
             refreshrate = 25;
         }
