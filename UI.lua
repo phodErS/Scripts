@@ -9,7 +9,6 @@ local UserInputService: UserInputService = cloneref(game:GetService("UserInputSe
 local TextService: TextService = cloneref(game:GetService("TextService"))
 local Teams: Teams = cloneref(game:GetService("Teams"))
 local TweenService: TweenService = cloneref(game:GetService("TweenService"))
-local ContextActionService: ContextActionService = cloneref(game:GetService("ContextActionService"))
 
 local getgenv = getgenv or function()
     return shared
@@ -4938,49 +4937,49 @@ function Library:CreateWindow(WindowInfo)
     end
 
     function Library:Toggle(Value: boolean?)
-    if typeof(Value) == "boolean" then
-        Library.Toggled = Value
-    else
-        Library.Toggled = not Library.Toggled
-    end
+        if typeof(Value) == "boolean" then
+            Library.Toggled = Value
+        else
+            Library.Toggled = not Library.Toggled
+        end
 
-    MainFrame.Visible = Library.Toggled
-    ModalElement.Modal = Library.Toggled
-
-    RunService:UnbindFromRenderStep("MouseBehavior")
-
-    if Library.Toggled then
-        Library.OldMouseBehavior = UserInputService.MouseBehavior
-        UserInputService.MouseBehavior = Enum.MouseBehavior.Default
-        UserInputService.MouseIconEnabled = true -- Show cursor
-
-        -- Bind cursor visibility handling
-        RunService:BindToRenderStep("ShowCursor", Enum.RenderPriority.Last.Value, function()
-            UserInputService.MouseIconEnabled = not Library.ShowCustomCursor
-            Cursor.Position = UDim2.fromOffset(Mouse.X, Mouse.Y)
-            Cursor.Visible = Library.ShowCustomCursor
-
-            if not (Library.Toggled and ScreenGui and ScreenGui.Parent) then
-                UserInputService.MouseIconEnabled = false
-                Cursor.Visible = false
-                RunService:UnbindFromRenderStep("ShowCursor")
-            end
-        end)
-    else
-        -- Restore original mouse behavior when closing
-        UserInputService.MouseBehavior = (Library.OldMouseBehavior == Enum.MouseBehavior.LockCenter) and Enum.MouseBehavior.LockCenter or Enum.MouseBehavior.Default
-        UserInputService.MouseIconEnabled = false -- Hide cursor
-        TooltipLabel.Visible = false
-
-        for _, Option in pairs(Library.Options) do
-            if Option.Type == "ColorPicker" then
-                Option.ColorMenu:Close()
-                Option.ContextMenu:Close()
-            elseif Option.Type == "Dropdown" or Option.Type == "KeyPicker" then
-                Option.Menu:Close()
+        MainFrame.Visible = Library.Toggled
+        ModalElement.Modal = Library.Toggled
+        if Library.Toggled then
+            while Library.Toggled == true and task.wait() do
+                UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+                UserInputService.MouseIconEnabled = true
             end
         end
-    end
+
+        if Library.Toggled and not Library.IsMobile then
+            local OldMouseIconEnabled = UserInputService.MouseIconEnabled
+            pcall(function()
+                RunService:UnbindFromRenderStep("ShowCursor")
+            end)
+            RunService:BindToRenderStep("ShowCursor", Enum.RenderPriority.Last.Value, function()
+                UserInputService.MouseIconEnabled = not Library.ShowCustomCursor
+
+                Cursor.Position = UDim2.fromOffset(Mouse.X, Mouse.Y)
+                Cursor.Visible = Library.ShowCustomCursor
+
+                if not (Library.Toggled and ScreenGui and ScreenGui.Parent) then
+                    UserInputService.MouseIconEnabled = OldMouseIconEnabled
+                    Cursor.Visible = false
+                    RunService:UnbindFromRenderStep("ShowCursor")
+                end
+            end)
+        elseif not Library.Toggled then
+            TooltipLabel.Visible = false
+            for _, Option in pairs(Library.Options) do
+                if Option.Type == "ColorPicker" then
+                    Option.ColorMenu:Close()
+                    Option.ContextMenu:Close()
+                elseif Option.Type == "Dropdown" or Option.Type == "KeyPicker" then
+                    Option.Menu:Close()
+                end
+            end
+        end
     end
 
     if WindowInfo.AutoShow then
