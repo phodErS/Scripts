@@ -4938,51 +4938,52 @@ function Library:CreateWindow(WindowInfo)
     end
 
     function Library:Toggle(Value: boolean?)
-        if typeof(Value) == "boolean" then
-            Library.Toggled = Value
-        else
-            Library.Toggled = not Library.Toggled
+    if typeof(Value) == "boolean" then
+        Library.Toggled = Value
+    else
+        Library.Toggled = not Library.Toggled
+    end
+
+    MainFrame.Visible = Library.Toggled
+    ModalElement.Modal = Library.Toggled
+
+    if Library.Toggled then
+        Library.OldMouseBehavior = UserInputService.MouseBehavior
+        UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+    else
+        if Library.OldMouseBehavior == Enum.MouseBehavior.LockCenter then
+            UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
         end
+    end
 
-        MainFrame.Visible = Library.Toggled
-        ModalElement.Modal = Library.Toggled
+    if Library.Toggled and not Library.IsMobile then
+        local OldMouseIconEnabled = UserInputService.MouseIconEnabled
+        pcall(function()
+            RunService:UnbindFromRenderStep("ShowCursor")
+        end)
+        RunService:BindToRenderStep("ShowCursor", Enum.RenderPriority.Last.Value, function()
+            UserInputService.MouseIconEnabled = not Library.ShowCustomCursor
 
-        if Library.Toggled then
-            UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+            Cursor.Position = UDim2.fromOffset(Mouse.X, Mouse.Y)
+            Cursor.Visible = Library.ShowCustomCursor
 
-            if not Library.IsMobile then
-                local OldMouseIconEnabled = UserInputService.MouseIconEnabled
-                pcall(function()
-                    RunService:UnbindFromRenderStep("ShowCursor")
-                end)
-                RunService:BindToRenderStep("ShowCursor", Enum.RenderPriority.Last.Value, function()
-                    UserInputService.MouseIconEnabled = not Library.ShowCustomCursor
-
-                    Cursor.Position = UDim2.fromOffset(Mouse.X, Mouse.Y)
-                    Cursor.Visible = Library.ShowCustomCursor
-
-                    if not (Library.Toggled and ScreenGui and ScreenGui.Parent) then
-                        UserInputService.MouseIconEnabled = OldMouseIconEnabled
-                        Cursor.Visible = false
-                        RunService:UnbindFromRenderStep("ShowCursor")
-                    end
-                end)
+            if not (Library.Toggled and ScreenGui and ScreenGui.Parent) then
+                UserInputService.MouseIconEnabled = OldMouseIconEnabled
+                Cursor.Visible = false
+                RunService:UnbindFromRenderStep("ShowCursor")
             end
-        else
-            if UserInputService.MouseBehavior ~= Enum.MouseBehavior.LockCenter then
-                UserInputService.MouseBehavior = Enum.MouseBehavior.LockCurrentPosition
-            end
-
-            TooltipLabel.Visible = false
-            for _, Option in pairs(Library.Options) do
-                if Option.Type == "ColorPicker" then
-                    Option.ColorMenu:Close()
-                    Option.ContextMenu:Close()
-                elseif Option.Type == "Dropdown" or Option.Type == "KeyPicker" then
-                    Option.Menu:Close()
-                end
+        end)
+    elseif not Library.Toggled then
+        TooltipLabel.Visible = false
+        for _, Option in pairs(Library.Options) do
+            if Option.Type == "ColorPicker" then
+                Option.ColorMenu:Close()
+                Option.ContextMenu:Close()
+            elseif Option.Type == "Dropdown" or Option.Type == "KeyPicker" then
+                Option.Menu:Close()
             end
         end
+    end
     end
 
     if WindowInfo.AutoShow then
