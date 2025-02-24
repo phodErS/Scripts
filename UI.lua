@@ -4948,12 +4948,16 @@ function Library:CreateWindow(WindowInfo)
     ModalElement.Modal = Library.Toggled
 
     if Library.Toggled then
+        -- Unlock mouse even in first-person
         Library.OldMouseBehavior = UserInputService.MouseBehavior
         UserInputService.MouseBehavior = Enum.MouseBehavior.Default
+        UserInputService.MouseIconEnabled = true -- Show cursor
     else
+        -- Restore original behavior when closing
         if Library.OldMouseBehavior == Enum.MouseBehavior.LockCenter then
             UserInputService.MouseBehavior = Enum.MouseBehavior.LockCenter
         end
+        UserInputService.MouseIconEnabled = false -- Hide cursor again
     end
 
     if Library.Toggled and not Library.IsMobile then
