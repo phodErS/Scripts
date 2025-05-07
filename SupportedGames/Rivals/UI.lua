@@ -3094,9 +3094,9 @@ framework.modules.signals.connection(run_service["RenderStepped"], function(dt)
             local accent = string.format("#%02X%02X%02X", accent_color.R * 255, accent_color.G * 255, accent_color.B * 255);
             local avg_fps = fps:GetValue();
             local avg_ping = math.floor(ping:GetValue());
-            local display_game = "v2";
+            local display_game = "Rivals";
             watermark:update_text(string.format(
-                'Nixius<font color="%s">.xyz</font> | PING <font color="%s">%d</font> | FPS <font color="%s">%d</font> | Build <font color="%s">%s</font>', accent, accent, avg_ping, accent, avg_fps, accent, display_game
+                'Nixius<font color="%s">.xyz</font> | PING <font color="%s">%d</font> | FPS <font color="%s">%d</font> | Game <font color="%s">%s</font>', accent, accent, avg_ping, accent, avg_fps, accent, display_game
             ));
         end;
     end;
