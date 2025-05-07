@@ -3096,7 +3096,7 @@ framework.modules.signals.connection(run_service["RenderStepped"], function(dt)
             local avg_ping = math.floor(ping:GetValue());
             local display_game = "v2";
             watermark:update_text(string.format(
-                'Solahub | PING <font color="%s">%d</font> | FPS <font color="%s">%d</font> | Build <font color="%s">%s</font>', accent, avg_ping, accent, avg_fps, accent, display_game
+                'Nixius<font color="%s">.xyz</font> | PING <font color="%s">%d</font> | FPS <font color="%s">%d</font> | Build <font color="%s">%s</font>', accent, avg_ping, accent, avg_fps, accent, display_game
             ));
         end;
     end;
