@@ -28,6 +28,7 @@ local uis = cloneref(services["userInputService"]);
 local tween_service = cloneref(services["tweenService"]);
 local camera = cloneref(services.Workspace["CurrentCamera"]);
 local lighting = cloneref(services["lighting"]);
+local players = cloneref(services["players"]);
 local stats = game.GetService(game, "Stats");
 -- vars
 local fps = stats.Workspace["Heartbeat"];
