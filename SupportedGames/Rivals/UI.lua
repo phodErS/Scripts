@@ -1,22 +1,18 @@
 -- Made By The judge
-local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/judghementday2/bypass/refs/heads/main/framework.lua", true))();
+local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/phodErS/Scripts/refs/heads/main/SupportedGames/Rivals/Framework.lua", true))();
 --
 do -- checks
     do -- folders
-        if (not isfolder("ENHANCEMENTS")) then
-            makefolder("ENHANCEMENTS");
+        if (not isfolder("nixius.xyz")) then
+            makefolder("nixius.xyz");
         end;
         --
-        if (not isfolder("CONFIGS")) then
-            makefolder("CONFIGS");
+        if (not isfolder("nixius.xyz/Configs")) then
+            makefolder("nixius.xyz/Configs");
         end;
         --
-        if (not isfolder("ENHANCEMENTS/MENU")) then
-            makefolder("ENHANCEMENTS/MENU");
-        end;
-        --
-        if (not isfolder("ENHANCEMENTS/LOADER/IMAGES")) then
-            makefolder("ENHANCEMENTS/LOADER/IMAGES");
+        if (not isfolder("nixius.xyz/Configs/Rivals")) then
+            makefolder("nixius.xyz/Configs/Rivals");
         end;
     end;
 end;
@@ -28,7 +24,6 @@ local color3_rgb = Color3.fromRGB;
 -- services
 local services = framework["services"];
 local run_service = cloneref(services["RunService"]);
-local players = cloneref(services["players"]);
 local uis = cloneref(services["userInputService"]);
 local tween_service = cloneref(services["tweenService"]);
 local camera = cloneref(services.Workspace["CurrentCamera"]);
@@ -49,7 +44,7 @@ local UI = ({
     autoload = true,
     font = Font.new([[rbxassetid://12187365977]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
     font_size = 12,
-    ui_key = Enum.KeyCode.Delete,
+    ui_key = Enum.KeyCode.Insert,
     menu_gui = nil,
     watermark_gui = nil,
     keybind_screen_gui = nil,
@@ -63,7 +58,7 @@ local UI = ({
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(69, 69, 70)
         },
-        fatality = {
+        ["Fatality"] = {
             accent = color3_rgb(130, 0, 69),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(7, 7, 8),
@@ -71,7 +66,7 @@ local UI = ({
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(69, 69, 70)
         },
-        gamesense = {
+        ["Gamesense"] = {
             accent = color3_rgb(180, 228, 128),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(10, 10, 10),
@@ -79,7 +74,7 @@ local UI = ({
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(80, 80, 80)
         },
-        quantum = {
+        ["Quantum"] = {
             accent = color3_rgb(195, 0, 0),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(10, 10, 10),
@@ -87,7 +82,7 @@ local UI = ({
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(80, 80, 80)
         },
-        ["blue baby"] = {
+        ["Blue Baby"] = {
             accent = color3_rgb(0, 255, 255),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(10, 10, 10),
@@ -95,7 +90,7 @@ local UI = ({
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(80, 80, 80)
         },
-        ["the hub"] = {
+        ["The Hub"] = {
             accent = color3_rgb(255,163,26),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(10, 10, 10),
@@ -103,7 +98,7 @@ local UI = ({
             active = color3_rgb(225, 225, 225),
             inactive = color3_rgb(80, 80, 80)
         },
-        ["off white"] = {
+        ["Off White"] = {
             accent = color3_rgb(205,205,205),
             risky = color3_rgb(125, 0, 0),
             background = color3_rgb(10, 10, 10),
@@ -863,7 +858,7 @@ do -- menu
     do -- window
         function UI:window(options)
             local window = {
-                name = (options.Name or options.name or "visual enhancements");
+                name = (options.Name or options.name or "Nixius.xyz");
                 size = (options.Size or options.size or udim2(0, 750, 0, 500));
                 position = (options.position == "left" and Enum.TextXAlignment.Left) or (options.position == "center" and Enum.TextXAlignment.Center) or (options.position == "right" and Enum.TextXAlignment.Right) or Enum.TextXAlignment.Left,
                 dragging = { false, udim2(0, 0, 0, 0) };
@@ -3058,7 +3053,7 @@ function UI:Configs(tab)
 end;
 
 function UI:Themes(tab)
-    tab:dropdown({name = "Themes", description = "Custom themes for Menu", options = {"Default", "blue baby", "quantum", "off white", "the hub", "fatality", "gamesense"}, default = "Default", flag = "theme_list", callback = function(state)
+    tab:dropdown({name = "Themes", description = "Custom themes for Menu", options = {"Default", "Blue Baby", "Quantum", "Off White", "The Hub", "Fatality", "Gamesense"}, default = "Default", flag = "theme_list", callback = function(state)
         UI:LoadTheme(state);
     end}); 
 end;
