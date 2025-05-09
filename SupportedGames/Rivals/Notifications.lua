@@ -130,7 +130,7 @@ do
             BackgroundColor3 = Color3.fromRGB(255, 255, 255),
             BackgroundTransparency = 1.000,
             Position = notificationPositions["Middle"],
-            Size = UDim2.new(0, 236, 0, 415),
+            Size = UDim2.new(0, 436, 0, 215),
             ClipsDescendants = true
         })
     end
