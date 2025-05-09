@@ -1053,8 +1053,19 @@ do -- menu
                 end;
 
                 function NKeyList:Position(NewPositionX, NewPositionY)
+                    if typeof(NewPositionX) == "number" then
+                        NewPositionX = UDim.new(NewPositionX, 0)
+                    elseif typeof(NewPositionX) ~= "nil" then
+                         NewPositionX = NewPositionX.X
+                    end
+                    if typeof(NewPositionY) == "number" then
+                        NewPositionY = UDim.new(NewPositionY, 0)
+                    elseif typeof(NewPositionY) ~= "nil" then
+                        NewPositionY = NewPositionY.Y
+                    end
+
                     if NewPositionX ~= nil then
-                        Background.Position = UDim2.new(NewPositionX.X.Scale, NewPositionX.X.Offset, Background.Position.Y.Scale, Background.Position.Y.Offset)
+                        Background.Position = UDim2.new(NewPositionX.Scale, NewPositionX.Offset, Background.Position.Y.Scale, Background.Position.Y.Offset)
                     end
                     if NewPositionY ~= nil then
                         Background.Position = UDim2.new(Background.Position.X.Scale, Background.Position.X.Offset, NewPositionY.Scale, NewPositionY.Offset)
