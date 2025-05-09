@@ -5,7 +5,6 @@ local insert, find, remove = table.insert, table.find, table.remove
 local format = string.format
 local newInstance = Instance.new
 local fromRGB = Color3.fromRGB
-local notificationPositions = {["Middle"] = UDim2.new(0.5, 0, 0.7, 0)}
 
 function protectScreenGui(screenGui)
     if syn and syn.protect_gui then
@@ -26,18 +25,24 @@ function createObject(className, properties)
     return instance
 end
 
-function fadeObject(object, onTweenCompleted, direction)
+function fadeObject(object, onTweenCompleted, direction, screenWidth)
     local originalPosition = object.Position
     local startPosition, endPosition = originalPosition, originalPosition
     local transparencyGoal = { TextTransparency = 0, TextStrokeTransparency = 0 }
+    local startX, endX = -1, 2
+
+    if screenWidth then
+        startX = -1 * (screenWidth / 460)  -- Adjust start X position based on screen width
+        endX = 1 + (screenWidth / 460) -- Adjust end X position based on screen width.  1 = 100% + offset
+    end
 
     if direction == "left" then
-        startPosition = UDim2.new(-1, 0, originalPosition.Y.Scale, originalPosition.Y.Offset)
+        startPosition = UDim2.new(startX, 0, originalPosition.Y.Scale, originalPosition.Y.Offset)
         object.Position = startPosition
         object.TextTransparency = 1
         object.TextStrokeTransparency = 1
     elseif direction == "right" then
-        endPosition = UDim2.new(2, 0, originalPosition.Y.Scale, originalPosition.Y.Offset)
+        endPosition = UDim2.new(endX, 0, originalPosition.Y.Scale, originalPosition.Y.Offset)
         transparencyGoal = { TextTransparency = 1, TextStrokeTransparency = 1 }
     end
 
@@ -65,6 +70,7 @@ do
                 notificationsFrame = nil,
                 activeNotifications = {},
                 notificationHolder = nil,
+                screenWidth = 0
             }
         }
         for setting, value in next, settings do
@@ -109,15 +115,18 @@ do
 
         protectScreenGui(notifications_screenGui)
 
+        self.ui.screenWidth = getgenv().notifications_screenGui.AbsoluteSize.X
+
         self.ui.notificationHolder = createObject("Frame", {
             Name = "notificationHolder",
             Parent = notifications_screenGui,
-            AnchorPoint = Vector2.new(0.5, 0),
-            Position = UDim2.new(0.5, 0, 0.7, 0),
-            Size = UDim2.new(1, 0, 0, 250),
+            AnchorPoint = Vector2.new(0.5, 0.5),
+            Position = UDim2.new(0.5, 0, 0.5, 0),
+            Size = UDim2.new(1, 0, 1, 0),
             BackgroundColor3 = fromRGB(255, 255, 255),
             BackgroundTransparency = 1,
             ClipsDescendants = true,
+            ZIndex = 1
         })
 
         self.ui.notificationsFrame = createObject("Frame", {
@@ -127,7 +136,8 @@ do
             Position = UDim2.new(0.5, 0, 0, 0),
             Size = UDim2.new(0, 460, 0, 250),
             BackgroundTransparency = 1,
-            ClipsDescendants = true
+            ClipsDescendants = true,
+            ZIndex = 2
         })
     end
 
@@ -172,7 +182,7 @@ do
             Font = self.TextFont or Enum.Font.SourceSans,
             TextColor3 = self.TextColor or Color3.new(1, 1, 1),
             TextSize = self.TextSize or 16,
-            TextStrokeColor3 = self.TextStrokeColor or Color3.new(0, 0, 0),
+            TextStrokeColor3 = self.TextStrokeColor or 0.new(0, 0, 0),
             TextStrokeTransparency = self.TextStrokeTransparency or 0.5,
             RichText = true,
             TextXAlignment = Enum.TextXAlignment.Center,
@@ -190,9 +200,9 @@ do
                     end
                     notification:Destroy()
                     self:UpdateNotificationPositions()
-                end, "right")
+                end, "right", self.ui.screenWidth)
             end)
-        end, "left")
+        end, "left", self.ui.screenWidth)
 
         self:UpdateNotificationPositions()
     end
