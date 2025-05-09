@@ -2999,7 +2999,10 @@ function UI:Configs(tab)
     local function cfg_list()
         local List = {}
         for _, file in ipairs(listfiles("nixius.xyz/Configs/Rivals")) do
-            List[#List + 1] = file:match("Rivals\\(.*)%.cfg");
+            local name = file:match("[/\\]Rivals[/\\](.*)%.cfg")
+            if name then
+                List[#List + 1] = name
+            end
         end;
         if #List ~= #CurrentList or table.concat(List) ~= table.concat(CurrentList) then
             CurrentList = List;
