@@ -2992,7 +2992,7 @@ end;
 local watermark = UI:watermark({ name = 'Solahub' });
 
 function UI:Configs(tab)
-    tab:textbox({ flag = "cfg_name", name = "config name" });
+    tab:textbox({ flag = "cfg_name", name = "Config Name" });
     local ConfigList = tab:listbox({ flag = "cfg_list", options = {}, scrollingmax = 5 });
     --
     local CurrentList = {};
