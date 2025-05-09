@@ -1,4 +1,5 @@
 -- Made By The judge
+-- Edited By Nivex
 local framework = loadstring(game:HttpGet("https://raw.githubusercontent.com/phodErS/Scripts/refs/heads/main/SupportedGames/Rivals/Framework.lua", true))();
 --
 do -- checks
