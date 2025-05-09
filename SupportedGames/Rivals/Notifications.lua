@@ -1,69 +1,75 @@
 -- Made By laagginq
 -- Edited By Nivex
-local tweenService, coreGui = game:GetService("TweenService"), game:GetService("CoreGui")
-local insert, find, remove = table.insert, table.find, table.remove
-local format = string.format
+local TweenService = game:GetService("TweenService")
+local CoreGui = game:GetService("CoreGui")
+
+local insert, remove, find = table.insert, table.remove, table.find
 local newInstance = Instance.new
-local fromRGB = Color3.fromRGB
-local notificationPositions = {["Middle"] = UDim2.new(0.4, 0, 0.65, 0)}
+
+local notificationPosition = UDim2.new(0.4, 0, 0.65, 0)
 
 function protectScreenGui(screenGui)
     if syn and syn.protect_gui then
         syn.protect_gui(screenGui)
-        screenGui.Parent = coreGui
+        screenGui.Parent = CoreGui
     elseif gethui then
         screenGui.Parent = gethui()
     else
-        screenGui.Parent = coreGui
+        screenGui.Parent = CoreGui
     end
 end
 
 function createObject(className, properties)
     local instance = newInstance(className)
-    for index, value in next, properties do
-        instance[index] = value
+    for k, v in pairs(properties) do
+        instance[k] = v
     end
     return instance
 end
 
-function fadeInObject(object, finalPosition)
-    object.Position = UDim2.new(-0.3, 0, 0, finalPosition.Y.Offset)
-    object.TextTransparency = 1
-    object.TextStrokeTransparency = 1
+function fadeIn(notification, targetPosition)
+    notification.Position = UDim2.new(-0.3, 0, 0, targetPosition.Y.Offset)
+    notification.TextTransparency = 1
+    notification.TextStrokeTransparency = 1
 
-    local tweenIn = tweenService:Create(object, TweenInfo.new(0.4, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-        Position = finalPosition,
+    local tween = TweenService:Create(notification, TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+        Position = targetPosition,
         TextTransparency = 0,
         TextStrokeTransparency = 0
     })
-    tweenIn:Play()
+    tween:Play()
 end
 
-function fadeOutObject(object, onComplete)
-    local tweenOut = tweenService:Create(object, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.In), {
-        Position = UDim2.new(1.5, 0, 0, object.Position.Y.Offset),
+function fadeOut(notification, onComplete)
+    local tween = TweenService:Create(notification, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
+        Position = UDim2.new(1.3, 0, 0, notification.Position.Y.Offset),
         TextTransparency = 1,
         TextStrokeTransparency = 1
     })
-    tweenOut.Completed:Connect(function()
+    tween.Completed:Connect(function()
         if onComplete then onComplete() end
     end)
-    tweenOut:Play()
+    tween:Play()
 end
 
 local notifications = {}
 
 do
     function notifications.new(settings)
-        assert(settings and typeof(settings) == "table", "Expected table for settings")
+        assert(typeof(settings) == "table", "Expected settings table")
         local self = {
+            NotificationLifetime = 4,
+            TextColor = Color3.new(1, 1, 1),
+            TextSize = 18,
+            TextStrokeTransparency = 0.5,
+            TextStrokeColor = Color3.new(0, 0, 0),
+            TextFont = Enum.Font.SourceSansBold,
             ui = {
-                notificationsFrame = nil,
-                activeNotifications = {},
+                activeNotifications = {}
             }
         }
 
-        for k, v in next, settings do
+        for k, v in pairs(settings) do
             self[k] = v
         end
 
@@ -71,24 +77,24 @@ do
         return self
     end
 
-    function notifications:SetNotificationLifetime(number)
-        self.NotificationLifetime = number
+    function notifications:SetNotificationLifetime(num)
+        self.NotificationLifetime = num
     end
 
-    function notifications:SetTextColor(color3)
-        self.TextColor = color3
+    function notifications:SetTextColor(color)
+        self.TextColor = color
     end
 
-    function notifications:SetTextSize(number)
-        self.TextSize = number
+    function notifications:SetTextSize(size)
+        self.TextSize = size
     end
 
-    function notifications:SetTextStrokeTransparency(number)
-        self.TextStrokeTransparency = number
+    function notifications:SetTextStrokeTransparency(val)
+        self.TextStrokeTransparency = val
     end
 
-    function notifications:SetTextStrokeColor(color3)
-        self.TextStrokeColor = color3
+    function notifications:SetTextStrokeColor(color)
+        self.TextStrokeColor = color
     end
 
     function notifications:SetTextFont(font)
@@ -96,45 +102,45 @@ do
     end
 
     function notifications:BuildNotificationUI()
-        if notifications_screenGui then
-            notifications_screenGui:Destroy()
+        if getgenv().notifications_screenGui then
+            getgenv().notifications_screenGui:Destroy()
         end
 
         getgenv().notifications_screenGui = createObject("ScreenGui", {
-            ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+            ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
+            ResetOnSpawn = false
         })
 
-        protectScreenGui(notifications_screenGui)
+        protectScreenGui(getgenv().notifications_screenGui)
 
         self.ui.notificationsFrame = createObject("Frame", {
-            Name = "notificationsFrame",
-            Parent = notifications_screenGui,
-            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+            Parent = getgenv().notifications_screenGui,
             BackgroundTransparency = 1,
-            Position = notificationPositions["Middle"],
-            Size = UDim2.new(0, 320, 0, 400),
-            ClipsDescendants = true
+            Position = notificationPosition,
+            Size = UDim2.new(0, 300, 0, 500),
+            ClipsDescendants = false,
+            Visible = true
         })
     end
 
     function notifications:UpdateNotificationPositions()
         task.defer(function()
             local yOffset = 0
-            for _, notification in ipairs(self.ui.activeNotifications) do
-                if notification and notification.Parent then
-                    local goal = UDim2.new(0, 10, 0, yOffset)
-                    local tween = tweenService:Create(notification, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
+            for _, notif in ipairs(self.ui.activeNotifications) do
+                if notif and notif.Parent then
+                    local goal = UDim2.new(0, 0, 0, yOffset)
+                    local tween = TweenService:Create(notif, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
                         Position = goal
                     })
                     tween:Play()
-                    yOffset += notification.AbsoluteSize.Y + 10
+                    yOffset += notif.AbsoluteSize.Y + 10
                 end
             end
         end)
     end
 
     function notifications:Notify(text)
-        local notifHeight = 40
+        local notifHeight = 32
         local yOffset = 0
         for _, n in ipairs(self.ui.activeNotifications) do
             yOffset += n.AbsoluteSize.Y + 10
@@ -143,10 +149,9 @@ do
         local notification = createObject("TextLabel", {
             Name = "notification",
             Parent = self.ui.notificationsFrame,
-            BackgroundColor3 = Color3.fromRGB(30, 30, 30),
-            BackgroundTransparency = 0,
-            Size = UDim2.new(1, -20, 0, notifHeight),
-            Position = UDim2.new(0, 10, 0, yOffset),
+            BackgroundTransparency = 1,
+            Size = UDim2.new(1, 0, 0, notifHeight),
+            Position = UDim2.new(0, 0, 0, yOffset),
             Text = text,
             Font = self.TextFont,
             TextColor3 = self.TextColor,
@@ -156,19 +161,11 @@ do
             TextXAlignment = Enum.TextXAlignment.Left
         })
 
-        local corner = Instance.new("UICorner", notification)
-        corner.CornerRadius = UDim.new(0, 6)
-
-        local padding = Instance.new("UIPadding", notification)
-        padding.PaddingLeft = UDim.new(0, 10)
-        padding.PaddingRight = UDim.new(0, 10)
-
         insert(self.ui.activeNotifications, notification)
-
-        fadeInObject(notification, notification.Position)
+        fadeIn(notification, notification.Position)
 
         task.delay(self.NotificationLifetime, function()
-            fadeOutObject(notification, function()
+            fadeOut(notification, function()
                 local index = find(self.ui.activeNotifications, notification)
                 if index then
                     remove(self.ui.activeNotifications, index)
