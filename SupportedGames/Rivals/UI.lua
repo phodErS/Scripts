@@ -158,9 +158,9 @@ function UI:AttachTheme(obj, props)
 end;
 function UI:GetSelectedThemeAndAccent()
     local activeTheme = self.currentTheme or "Default";
-    local accentColor = self.themes[activeTheme].accent ;
+    local accentColor = self.themes[activeTheme].accent;
     return activeTheme, accentColor;
-end;
+end
 --
 local flags = {};
 UI.__index = UI;
