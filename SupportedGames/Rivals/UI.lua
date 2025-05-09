@@ -3010,8 +3010,8 @@ function UI:Configs(tab)
     tab:button({ Name = "create", Callback = function()
         pcall(function()
             local config_name = UI.flags["cfg_name"];
-            if config_name ~= "" and not isfile("CONFIGS/" .. config_name .. ".cfg") then
-                writefile("CONFIGS/" .. config_name .. ".cfg", UI:GetConfig());
+            if config_name ~= "" and not isfile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg") then
+                writefile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg", UI:GetConfig());
                 library:notification("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3022,7 +3022,7 @@ function UI:Configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                writefile("CONFIGS/" .. selected_config .. ".cfg", UI:GetConfig());
+                writefile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg", UI:GetConfig());
                 library:notification("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3033,7 +3033,7 @@ function UI:Configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                UI:LoadConfig(readfile("CONFIGS/" .. selected_config .. ".cfg"));
+                UI:LoadConfig(readfile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg"));
                 library:notification("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
@@ -3044,7 +3044,7 @@ function UI:Configs(tab)
         pcall(function()
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
-                delfile("CONFIGS/" .. selected_config .. ".cfg");
+                delfile("nixius.xyz/Configs/Rivals//" .. selected_config .. ".cfg");
                 library:notification("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
                 cfg_list()
             end;
