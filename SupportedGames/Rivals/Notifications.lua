@@ -182,7 +182,7 @@ do
             Font = self.TextFont or Enum.Font.SourceSans,
             TextColor3 = self.TextColor or Color3.new(1, 1, 1),
             TextSize = self.TextSize or 16,
-            TextStrokeColor3 = self.TextStrokeColor or 0.new(0, 0, 0),
+            TextStrokeColor3 = self.TextStrokeColor or fromRGB(0, 0, 0),
             TextStrokeTransparency = self.TextStrokeTransparency or 0.5,
             RichText = true,
             TextXAlignment = Enum.TextXAlignment.Center,
