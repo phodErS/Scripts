@@ -115,7 +115,8 @@ do
             BackgroundTransparency = 1,
             Position = UDim2.new(0, 450, 0.7, 0),
             Size = UDim2.new(0, 1000, 0, 300),
-            ClipsDescendants = true
+            ClipsDescendants = true,
+            ZIndex = 999
         })
     end
 
