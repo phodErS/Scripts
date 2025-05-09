@@ -158,13 +158,14 @@ do
             BackgroundColor3 = Color3.fromRGB(255, 255, 255),
             BackgroundTransparency = 1.000,
             Size = UDim2.new(0, 222, 0, 20),
-            Position = UDim2.new(0, 0, 0, 0), -- Will be repositioned
+            Position = UDim2.new(0, 0, 0, 0),
             Text = text,
             Font = self.TextFont,
             TextColor3 = self.TextColor,
             TextSize = self.TextSize,
             TextStrokeColor3 = self.TextStrokeColor,
-            TextStrokeTransparency = self.TextStrokeTransparency
+            TextStrokeTransparency = self.TextStrokeTransparency,
+            RichText = true
         })
 
         insert(self.ui.activeNotifications, notification)
