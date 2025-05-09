@@ -2998,8 +2998,8 @@ function UI:Configs(tab)
     local CurrentList = {};
     local function cfg_list()
         local List = {}
-        for _, file in ipairs(listfiles("CONFIGS")) do
-            List[#List + 1] = file:match("CONFIGS\\(.*)%.cfg");
+        for _, file in ipairs(listfiles("nixius.xyz/Configs/Rivals")) do
+            List[#List + 1] = file:match("Rivals\\(.*)%.cfg");
         end;
         if #List ~= #CurrentList or table.concat(List) ~= table.concat(CurrentList) then
             CurrentList = List;
@@ -3012,7 +3012,7 @@ function UI:Configs(tab)
             local config_name = UI.flags["cfg_name"];
             if config_name ~= "" and not isfile("CONFIGS/" .. config_name .. ".cfg") then
                 writefile("CONFIGS/" .. config_name .. ".cfg", UI:GetConfig());
-                --library:notification("created config [".. config_name .."].", 5, color3_new(0, 1, 0))
+                library:notification("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
         end);
@@ -3023,7 +3023,7 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 writefile("CONFIGS/" .. selected_config .. ".cfg", UI:GetConfig());
-                --library:notification("saved config [".. selected_config .."].", 5, color3_new(0, 1, 0))
+                library:notification("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
         end);
@@ -3034,7 +3034,7 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 UI:LoadConfig(readfile("CONFIGS/" .. selected_config .. ".cfg"));
-                --library:notification("loaded config [".. selected_config .."].", 5, color3_new(0, 1, 0))
+                library:notification("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
         end);
@@ -3045,7 +3045,7 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 delfile("CONFIGS/" .. selected_config .. ".cfg");
-                --library:notification("deleted config [".. selected_config .."].", 5, color3_new(1, 0, 0))
+                library:notification("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
                 cfg_list()
             end;
         end);
