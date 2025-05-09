@@ -1051,6 +1051,15 @@ do -- menu
                 function NKeyList:SetVisible(State)
                     Background.Visible = State;
                 end;
+
+                function NKeyList:Position(NewPositionX, NewPositionY)
+                    if NewPositionX ~= nil then
+                        Background.Position = UDim2.new(NewPositionX.X.Scale, NewPositionX.X.Offset, Background.Position.Y.Scale, Background.Position.Y.Offset)
+                    end
+                    if NewPositionY ~= nil then
+                        Background.Position = UDim2.new(Background.Position.X.Scale, Background.Position.X.Offset, NewPositionY.Scale, NewPositionY.Offset)
+                    end
+                end
                 
                 function NKeyList:NewKey(Key, Name)
                     local KName = Instance.new("TextLabel")
