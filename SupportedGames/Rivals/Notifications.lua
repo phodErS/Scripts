@@ -5,6 +5,7 @@ local insert, find, remove = table.insert, table.find, table.remove
 local format = string.format
 local newInstance = Instance.new
 local fromRGB = Color3.fromRGB
+local notificationPositions = {["Middle"] = UDim2.new(0.445, 0, 0.7, 0)}; 
 
 function protectScreenGui(screenGui)
     if syn and syn.protect_gui then
