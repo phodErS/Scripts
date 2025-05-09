@@ -133,7 +133,10 @@ do
     end
 
     function notifications:Notify(text, ...)
-        local formatted = select("#", ...) > 0 and format(text, ...) or text
+        local formatted = text
+        if select("#", ...) > 0 then
+            formatted = format(text, ...)
+        end
 
         local notification = createObject("TextLabel", {
             Name = "notification",
