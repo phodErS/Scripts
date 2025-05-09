@@ -43,7 +43,7 @@ Instance_manager = framework.modules.instance_manager
 signals = framework.modules.signals
 --
 local UI = ({
-    autoload = false,
+    autoload = true,
     font = Font.new([[rbxassetid://12187365977]], Enum.FontWeight.SemiBold, Enum.FontStyle.Normal),
     font_size = 12,
     ui_key = Enum.KeyCode.Insert,
