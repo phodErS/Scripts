@@ -5,7 +5,7 @@ local insert, find, remove = table.insert, table.find, table.remove
 local format = string.format
 local newInstance = Instance.new
 local fromRGB = Color3.fromRGB
-local notificationPositions = {["Middle"] = UDim2.new(0.445, 0, 0.7, 0)}; 
+local notificationPositions = {["Middle"] = UDim2.new(0.445, 0, 0.7, 0)};
 
 function protectScreenGui(screenGui)
     if syn and syn.protect_gui then
@@ -41,11 +41,11 @@ function fadeObject(object, onTweenCompleted, direction)
         transparencyGoal = { TextTransparency = 1, TextStrokeTransparency = 1 }
     end
 
-    local tweenPosition = tweenService:Create(object, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
+    local tweenPosition = tweenService:Create(object, TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {
         Position = endPosition
     })
 
-    local tweenFade = tweenService:Create(object, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), transparencyGoal)
+    local tweenFade = tweenService:Create(object, TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), transparencyGoal)
 
     tweenPosition:Play()
     tweenFade:Play()
@@ -98,23 +98,23 @@ do
     end
 
     function notifications:BuildNotificationUI()
-        if notifications_screenGui then
-            notifications_screenGui:Destroy()
+        if getgenv().notifications_screenGui then
+            getgenv().notifications_screenGui:Destroy()
         end
 
         getgenv().notifications_screenGui = createObject("ScreenGui", {
             ZIndexBehavior = Enum.ZIndexBehavior.Sibling
         })
 
-        protectScreenGui(notifications_screenGui)
+        protectScreenGui(getgenv().notifications_screenGui)
 
         self.ui.notificationsFrame = createObject("Frame", {
             Name = "notificationsFrame",
-            Parent = notifications_screenGui,
+            Parent = getgenv().notifications_screenGui,
             BackgroundColor3 = fromRGB(255, 255, 255),
             BackgroundTransparency = 1,
-            Position = notificationPositions["Middle"],
-            Size = UDim2.new(0, 460, 0, 250),
+            Position = UDim2.new(0, 450, 0.7, 0),
+            Size = UDim2.new(0, 1000, 0, 300),
             ClipsDescendants = true
         })
     end
@@ -148,7 +148,7 @@ do
             TextStrokeColor3 = self.TextStrokeColor or fromRGB(0, 0, 0),
             TextStrokeTransparency = self.TextStrokeTransparency or 0.5,
             RichText = true,
-            TextXAlignment = Enum.TextXAlignment.Left,
+            TextXAlignment = Enum.TextXAlignment.Center,
         })
 
         insert(self.ui.activeNotifications, notification)
