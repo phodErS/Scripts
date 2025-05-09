@@ -152,7 +152,7 @@ do
             TextStrokeTransparency = self.TextStrokeTransparency or 0.5,
             RichText = true,
             TextXAlignment = Enum.TextXAlignment.Center,
-            ZIndex = 10
+            ZIndex = 999
         })
 
         insert(self.ui.activeNotifications, notification)
