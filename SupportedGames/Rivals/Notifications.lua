@@ -116,7 +116,7 @@ do
             Position = UDim2.new(0, 450, 0.7, 0),
             Size = UDim2.new(0, 1000, 0, 300),
             ClipsDescendants = true,
-            ZIndex = 999
+            ZIndex = -99999
         })
     end
 
@@ -153,7 +153,7 @@ do
             TextStrokeTransparency = self.TextStrokeTransparency or 0.5,
             RichText = true,
             TextXAlignment = Enum.TextXAlignment.Center,
-            ZIndex = 999
+            ZIndex = -99999
         })
 
         insert(self.ui.activeNotifications, notification)
