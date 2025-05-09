@@ -987,7 +987,7 @@ do -- menu
                 local Tab = Instance.new("Frame")
                 local UIListLayout = Instance.new("UIListLayout")
     
-                keybind.Name = "KeyBind List"
+                keybind.Name = "Keybind List"
                 keybind.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
                 keybind.IgnoreGuiInset = Enum.ScreenInsets.DeviceSafeInsets
                 UI.keybind_screen_gui = keybind
@@ -3076,9 +3076,11 @@ end;
 function UI:Menu(tab)
     tab:keybind({name = "Menu Keybind", description = "Open/Hide Menu", default = UI.ui_key, usekey = true, ignore = true, callback = function(state) UI.ui_key = state end});
     tab:toggle({name = "Watermark", description = "Shows watermark", default = true, flag = "show watermark", callback = function(state) watermark:SetVisible(state); end});
-    tab:toggle({name = "Keybinds", description = "Shows keybinds", default = true, flag = "show keybinds", callback = function(state) UI.keybind_list:SetVisible(state) end});
     tab:slider({name = "Horizontal", min = 0, max = 100, default = 50, decimals = 1, suffix = "px", flag = "watermark_x", callback = function(state) watermark:Position(state / 100, nil) end});
     tab:slider({name = "Vertical", min = 0, max = 100, default = 5, decimals = 1, suffix = "px", flag = "watermark_y", callback = function(state) watermark:Position(nil, state / 100) end});
+    tab:toggle({name = "Keybinds", description = "Shows keybinds", default = true, flag = "show keybinds", callback = function(state) UI.keybind_list:SetVisible(state) end});
+    tab:slider({name = "Horizontal", min = 0, max = 100, default = 7, decimals = 1, suffix = "px", flag = "keybind_x", callback = function(state) UI.keybind_list:Position(state / 100, nil) end});
+    tab:slider({name = "Vertical", min = 0, max = 100, default = 50, decimals = 1, suffix = "px", flag = "keybind_y", callback = function(state) UI.keybind_list:Position(nil, state / 100) end});
 end;
 --
 local loops = {
