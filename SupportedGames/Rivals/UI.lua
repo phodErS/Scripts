@@ -1025,7 +1025,7 @@ do -- menu
                 Name.BorderSizePixel = 0
                 Name.Size = UDim2.new(1, 0, 0, 25)
                 Name.FontFace = UI.font
-                Name.Text = "KeyBind List"
+                Name.Text = "Keybind List"
                 Name.TextStrokeTransparency = 0
                 Name.TextColor3 = Color3.fromRGB(255, 255, 255)
                 Name.TextSize = UI.font_size
