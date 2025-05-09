@@ -1,3 +1,5 @@
+-- Made By laagginq
+-- Edited By Nivex
 local tweenService, coreGui = game:GetService("TweenService"), game:GetService("CoreGui");
 
 local insert, find, remove = table.insert, table.find, table.remove
@@ -35,16 +37,18 @@ function fadeObject(object, onTweenCompleted, direction)
     local endPosition = object.Position
     local startPosition = endPosition
     if direction == "right" then
-        startPosition = UDim2.new(1.5, 0, endPosition.Y.Scale, endPosition.Y.Offset) -- Move off-screen to the right
+        startPosition = UDim2.new(1.5, 0, endPosition.Y.Scale, endPosition.Y.Offset)
     elseif direction == "left" then
         startPosition = UDim2.new(-0.5, 0, endPosition.Y.Scale, endPosition.Y.Offset)
+    elseif direction == "none" then
+        startPosition = endPosition
     end
-    object.Position = startPosition; -- set the start position
+    object.Position = startPosition;
 
     local tweenInformation = tweenService:Create(object, TweenInfo.new(0.3, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
         Position = endPosition,
-        TextTransparency = (direction == "none") and 0 or 1,
-        TextStrokeTransparency = (direction == "none") and 0 or 1
+        TextTransparency = (direction == "none" or direction == "left") and 0 or 1,
+        TextStrokeTransparency = (direction == "none" or direction == "left") and 0 or 1
     });
 
     tweenInformation.Completed:Connect(onTweenCompleted);
@@ -153,10 +157,12 @@ do
         });
 
         fadeObject(notification, function()
-            fadeObject(notification, function()
-                notification:Destroy();
-            end, "right");
-        end, "none");
+            task.delay(self.NotificationLifetime, function()
+                fadeObject(notification, function()
+                    notification:Destroy();
+                end, "right");
+            end);
+        end, "left");
     end
 end
 
