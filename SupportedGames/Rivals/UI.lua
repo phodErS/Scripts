@@ -391,10 +391,10 @@ do -- menu
 
         function watermark:Position(NewPositionX, NewPositionY)
             if NewPositionX ~= nil then
-                self.HorizontalPosition = NewPositionX
+                self.HorizontalPosition = (self.HorizontalPosition or NewPositionX) + (NewPositionX - (self.HorizontalPosition or NewPositionX)) * 0.5
             end
             if NewPositionY ~= nil then
-                self.VerticalPosition = NewPositionY
+                self.VerticalPosition = (self.VerticalPosition or NewPositionY) + (NewPositionY - (self.VerticalPosition or NewPositionY)) * 0.5
             end
             outline.Position = udim2(self.HorizontalPosition, 0, self.VerticalPosition, 0);
         end
@@ -1054,10 +1054,10 @@ do -- menu
 
                 function NKeyList:Position(NewPositionX, NewPositionY)
                     if NewPositionX ~= nil then
-                        self.HorizontalPosition = (self.HorizontalPosition or NewPositionX) + (NewPositionX - (self.HorizontalPosition or NewPositionX)) * 0.1
+                        self.HorizontalPosition = (self.HorizontalPosition or NewPositionX) + (NewPositionX - (self.HorizontalPosition or NewPositionX)) * 0.5
                     end
                     if NewPositionY ~= nil then
-                        self.VerticalPosition = (self.VerticalPosition or NewPositionY) + (NewPositionY - (self.VerticalPosition or NewPositionY)) * 0.1
+                        self.VerticalPosition = (self.VerticalPosition or NewPositionY) + (NewPositionY - (self.VerticalPosition or NewPositionY)) * 0.5
                     end
                     Background.Position = udim2(self.HorizontalPosition, 0, self.VerticalPosition, 0);
                 end
