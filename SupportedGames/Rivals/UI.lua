@@ -3104,8 +3104,8 @@ function UI:Configs(tab)
             local config_name = UI.flags["cfg_name"];
             if config_name ~= "" and not isfile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg") then
                 writefile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg", UI:GetConfig());
-                UI:Notify("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
+                UI:Notify("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
             end;
         end);
     end});
@@ -3115,8 +3115,8 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 writefile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg", UI:GetConfig());
-                UI:Notify("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
+                UI:Notify("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
             end;
         end);
     end});
@@ -3126,8 +3126,8 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 UI:LoadConfig(readfile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg"));
-                UI:Notify("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
+                UI:Notify("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
             end;
         end);
     end});
@@ -3137,8 +3137,8 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 delfile("nixius.xyz/Configs/Rivals//" .. selected_config .. ".cfg");
-                UI:Notify("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
                 cfg_list()
+                UI:Notify("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
             end;
         end);
     end});
