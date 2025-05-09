@@ -3105,7 +3105,7 @@ function UI:Configs(tab)
             if config_name ~= "" and not isfile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg") then
                 writefile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg", UI:GetConfig());
                 cfg_list()
-                UI:Notify("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
+                UI:Notify("🆕 Created Config [ " .. config_name .. " ]", 5, Color3.fromRGB(0, 1, 0))
             end;
         end);
     end});
@@ -3116,7 +3116,7 @@ function UI:Configs(tab)
             if selected_config then
                 writefile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg", UI:GetConfig());
                 cfg_list()
-                UI:Notify("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
+                UI:Notify("💾 Saved Config [ " .. selected_config .. " ]", 5, Color3.fromRGB(0, 1, 0))
             end;
         end);
     end});
@@ -3127,7 +3127,7 @@ function UI:Configs(tab)
             if selected_config then
                 UI:LoadConfig(readfile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg"));
                 cfg_list()
-                UI:Notify("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
+                UI:Notify("📂 Loaded Config [ " .. selected_config .. " ]", 5, Color3.fromRGB(0, 1, 0))
             end;
         end);
     end});
@@ -3138,7 +3138,7 @@ function UI:Configs(tab)
             if selected_config then
                 delfile("nixius.xyz/Configs/Rivals//" .. selected_config .. ".cfg");
                 cfg_list()
-                UI:Notify("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
+                UI:Notify("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, Color3.fromRGB(1, 0, 0))
             end;
         end);
     end});
