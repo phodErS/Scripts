@@ -32,8 +32,8 @@ function fadeObject(object, onTweenCompleted, direction, screenWidth)
     local startX, endX = -1, 2
 
     if screenWidth then
-        startX = -1 * (screenWidth / 460)  -- Adjust start X position based on screen width
-        endX = 1 + (screenWidth / 460) -- Adjust end X position based on screen width.  1 = 100% + offset
+        startX = -1 * (screenWidth / 460)
+        endX = 1 + (screenWidth / 460)
     end
 
     if direction == "left" then
@@ -70,7 +70,8 @@ do
                 notificationsFrame = nil,
                 activeNotifications = {},
                 notificationHolder = nil,
-                screenWidth = 0
+                screenWidth = 0,
+                screenHeight = 0
             }
         }
         for setting, value in next, settings do
@@ -116,6 +117,7 @@ do
         protectScreenGui(notifications_screenGui)
 
         self.ui.screenWidth = getgenv().notifications_screenGui.AbsoluteSize.X
+        self.ui.screenHeight = getgenv().notifications_screenGui.AbsoluteSize.Y
 
         self.ui.notificationHolder = createObject("Frame", {
             Name = "notificationHolder",
@@ -132,9 +134,9 @@ do
         self.ui.notificationsFrame = createObject("Frame", {
             Name = "notificationsFrame",
             Parent = self.ui.notificationHolder,
-            AnchorPoint = Vector2.new(0.5, 0),
-            Position = UDim2.new(0.5, 0, 0, 0),
-            Size = UDim2.new(0, 460, 0, 250),
+            AnchorPoint = Vector2.new(0.5, 0.5),  -- Center the frame
+            Position = UDim2.new(0.5, 0, 0.5, 0),      -- Position in the center
+            Size = UDim2.new(1, 0, 0, 28), -- Make the frame full width, and only tall enough for one line of text
             BackgroundTransparency = 1,
             ClipsDescendants = true,
             ZIndex = 2
@@ -145,7 +147,7 @@ do
         local yOffset = 0
         for _, notification in ipairs(self.ui.activeNotifications) do
             if notification and notification.Parent then
-                local goal = UDim2.new(0.5, 0, 0, yOffset)
+                local goal = UDim2.new(0.5, 0, 0.5, yOffset) -- Keep it centered
                 tweenService:Create(notification, TweenInfo.new(0.35, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut), {
                     Position = goal
                 }):Play()
@@ -176,8 +178,8 @@ do
             Name = "notification",
             Parent = self.ui.notificationsFrame,
             BackgroundTransparency = 1,
-            Size = UDim2.new(1, -10, 0, 28),
-            Position = UDim2.new(0.5, 0, 0, 0),
+            Size = UDim2.new(1, 0, 1, 1), -- Full size of the frame.
+            Position = UDim2.new(0.5, 0, 0.5, 0),  -- center
             Text = formatted,
             Font = self.TextFont or Enum.Font.SourceSans,
             TextColor3 = self.TextColor or Color3.new(1, 1, 1),
@@ -186,7 +188,8 @@ do
             TextStrokeTransparency = self.TextStrokeTransparency or 0.5,
             RichText = true,
             TextXAlignment = Enum.TextXAlignment.Center,
-            TextYAlignment = Enum.TextYAlignment.Top
+            TextYAlignment = Enum.TextYAlignment.Center, -- center
+            TextScaled = true
         })
 
         insert(self.ui.activeNotifications, notification)
