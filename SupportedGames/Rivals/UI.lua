@@ -322,6 +322,84 @@ do -- other
 end
 --
 do -- menu
+	function UI:Notify(Text, Duration, Color)
+		local Objects = {};
+		Objects["notification"] = Instance.new("Frame")
+		Objects["notification"].Name = "notification"
+		Objects["notification"].Size = UDim2.new(0, 0, 0, 18)
+		Objects["notification"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Objects["notification"].BorderSizePixel = 0
+		Objects["notification"].BackgroundColor3 = Library.Background
+		Objects["notification"].Parent = Library.NotificationHolder
+		Objects["notification"].ClipsDescendants = true;
+
+		Library:AddToRegistry(Objects["notification"], {
+			BackgroundColor3 = "Background";
+		})
+
+		Objects["UIStroke"] = Instance.new("UIStroke")
+		Objects["UIStroke"].Color = Library.Border
+		Objects["UIStroke"].LineJoinMode = Enum.LineJoinMode.Miter
+		Objects["UIStroke"].ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+		Objects["UIStroke"].Parent = Objects["notification"]
+		Objects["UIStroke"].Enabled = false;
+
+		Library:AddToRegistry(Objects["UIStroke"], {
+			Color = "Border";
+		})
+
+		Objects["liner"] = Instance.new("Frame")
+		Objects["liner"].Name = "liner"
+		Objects["liner"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Objects["liner"].Size = UDim2.new(0, 1, 1, 0)
+		Objects["liner"].BorderSizePixel = 0
+		Objects["liner"].BackgroundColor3 = Color
+		Objects["liner"].Parent = Objects["notification"]
+
+		Objects["text"] = Instance.new("TextLabel")
+		Objects["text"].FontFace = LibFont
+		Objects["text"].TextColor3 = Color3.fromRGB(255, 255, 255)
+		Objects["text"].BorderColor3 = Color3.fromRGB(0, 0, 0)
+		Objects["text"].Text = Text
+		Objects["text"].Name = "text"
+		Objects["text"].Size = UDim2.new(0, 100, 0, 13)
+		Objects["text"].AnchorPoint = Vector2.new(0, 0.5)
+		Objects["text"].Position = UDim2.new(0, 7, 0.5, 0)
+		Objects["text"].BackgroundTransparency = 1
+		Objects["text"].TextXAlignment = Enum.TextXAlignment.Left
+		Objects["text"].BorderSizePixel = 0
+		Objects["text"].TextSize = 12
+		Objects["text"].TextTransparency = 1
+		Objects["text"].BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+		Objects["text"].Parent = Objects["notification"]
+
+		Library:AddToRegistry(Objects["text"], {
+			TextColor3 = "Text";
+		})
+
+		Objects["UIStroke2"] = Instance.new("UIStroke")
+		Objects["UIStroke2"].LineJoinMode = Enum.LineJoinMode.Miter
+		Objects["UIStroke2"].Parent = Objects["text"]
+
+		task.spawn(function()
+			Objects["UIStroke"].Enabled = true;
+			local Tween1 = tween_service:Create(Objects["notification"], TweenInfo.new(0.265, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {Size = UDim2.new(0, Objects["text"].TextBounds.X + 14, 0, 18)});
+			Tween1:Play();
+			Tween1.Completed:Wait();
+			local Tween2 = tween_service:Create(Objects["text"], TweenInfo.new(0.26, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {TextTransparency  = 0});
+			Tween2:Play();
+			Tween2.Completed:Wait();
+
+			task.delay(Duration, function()
+				local Tween3 = tween_service:Create(Objects["notification"], TweenInfo.new(0.26, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {Size  = UDim2.new(0,0,0,18)});
+				Tween3:Play();
+				Tween3.Completed:Wait();
+				Library:RemoveFromRegistry(Objects["notification"]);
+				Objects["notification"]:Destroy();
+			end);
+		end);
+	end;
+    --
     function UI:watermark(properties)
         local watermark = {
             name = (properties.Name or properties.name or "watermark text | placeholder");
@@ -3025,7 +3103,7 @@ function UI:Configs(tab)
             local config_name = UI.flags["cfg_name"];
             if config_name ~= "" and not isfile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg") then
                 writefile("nixius.xyz/Configs/Rivals/" .. config_name .. ".cfg", UI:GetConfig());
-                --library:notification("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
+                UI:Notify("🆕 Created Config [ " .. config_name .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
         end);
@@ -3036,7 +3114,7 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 writefile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg", UI:GetConfig());
-                --library:notification("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
+                UI:Notify("💾 Saved Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
         end);
@@ -3047,7 +3125,7 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 UI:LoadConfig(readfile("nixius.xyz/Configs/Rivals/" .. selected_config .. ".cfg"));
-                --library:notification("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
+                UI:Notify("📂 Loaded Config [ " .. selected_config .. " ]", 5, color3_new(0, 1, 0))
                 cfg_list()
             end;
         end);
@@ -3058,7 +3136,7 @@ function UI:Configs(tab)
             local selected_config = UI.flags["cfg_list"];
             if selected_config then
                 delfile("nixius.xyz/Configs/Rivals//" .. selected_config .. ".cfg");
-                --library:notification("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
+                UI:Notify("🗑️ Deleted Config [ " .. selected_config .. " ]", 5, color3_new(1, 0, 0))
                 cfg_list()
             end;
         end);
